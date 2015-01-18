@@ -5,24 +5,23 @@ package Enumerators;
  *
  */
 public enum Sides {
-	Town("Town", false), Mafia("Mafia", true), Triad("Triad", true), Neutral(
-			"Neutral", true);
+	Town("Town"), Mafia("Mafia"), Triad("Triad"), Neutral(
+			"Neutral");
 
 	//The side written out as a string
 	private final String side;
-	//Determines if the side is suspicious for the sheriff
-	private boolean suspicious;
 
-	Sides(String side, boolean suspicious) {
+	/** 
+	 * @param side : String name of side
+	 */
+	Sides(String side) {
 		this.side = side;
-		this.suspicious = suspicious;
 	}
 
+	/**
+	 * return side as a string
+	 */
 	public String toString() {
 		return side;
-	}
-
-	public boolean suspicious() {
-		return suspicious;
 	}
 }

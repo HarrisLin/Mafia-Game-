@@ -29,7 +29,7 @@ public class Investigator extends Character{
 	@Override
 	public String doAction() {
 		String target_name = targets.get(0).getName();
-		String result =  GameEngine.getCharacter(targets.get(0)).getCharacterRoll()	;
+		String result =  GameEngine.getCharacter(targets.get(0)).getRoleString()	;
 		return "Player " + target_name + " is a " + result + ".";
 	}
 	
