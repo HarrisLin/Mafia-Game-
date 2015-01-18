@@ -2,7 +2,6 @@ package GameEngine;
 
 import java.util.List;
 
-import Enumerators.Investigations;
 import Enumerators.Roles;
 
 /**
@@ -18,8 +17,6 @@ public abstract class Character {
 	private boolean alive;
 	// Determines if character is night immune
 	private boolean invulnerable;
-	// Determines the investigation of a player via detective
-	private List<Investigations> investigation;
 	// Lists of target the player has chosen to perform night actions on
 	protected List<Player> targets;
 
@@ -33,7 +30,6 @@ public abstract class Character {
 		this.role = role;
 		alive = true;
 		invulnerable = role.checkInvulnerable();
-		investigation = role.getInvestigations();
 	}
 
 	/**
@@ -48,12 +44,10 @@ public abstract class Character {
 	 * @param investigation
 	 *            : Investigation message
 	 */
-	protected Character(Roles role, boolean invulnerable,
-			List<Investigations> investigation) {
+	protected Character(Roles role, boolean invulnerable) {
 		this.role = role;
 		alive = true;
 		this.invulnerable = invulnerable;
-		this.investigation = investigation;
 	}
 
 	/**
@@ -79,15 +73,6 @@ public abstract class Character {
 	 */
 	public boolean checkInvulnerable() {
 		return invulnerable;
-	}
-
-	/**
-	 * Investigates this player
-	 * 
-	 * @return the investigation message
-	 */
-	public List<Investigations> investigate() {
-		return investigation;
 	}
 
 	/**
