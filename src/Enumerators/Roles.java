@@ -1,8 +1,5 @@
 package Enumerators;
 
-import java.util.List;
-
-
 /**
  * All the roles as a enumerator Also includes which sides the role belongs to
  * as an enumerator inside the enumerator.
@@ -42,7 +39,6 @@ public enum Roles {
 	private Sides side;
 	private String role;
 	private boolean invulnerable;
-	private List<Investigations> investigation;
 
 	/**
 	 * Constructor
@@ -53,7 +49,6 @@ public enum Roles {
 		this.side = side;
 		this.role = role;
 		invulnerable = false;
-		investigation = Investigations.doInvestigation(this);
 	}
 	/**
 	 * Constructor for characters with night invulnerability
@@ -65,7 +60,6 @@ public enum Roles {
 		this.side = side;
 		this.role = role;
 		this.invulnerable = invulnerable;
-		investigation = Investigations.doInvestigation(this);
 	}
 	/**
 	 * 
@@ -80,14 +74,6 @@ public enum Roles {
 	 */
 	public String toString() {
 		return role;
-	}
-	
-	/**
-	 * 
-	 * @return all the possible investigations results for the role
-	 */
-	public List<Investigations> getInvestigations() {
-		return investigation;
 	}
 	
 	/**
