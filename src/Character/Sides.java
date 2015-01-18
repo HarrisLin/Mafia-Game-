@@ -7,7 +7,7 @@ public enum Sides {
 	Sides(String side){
 		this.side = side;
 	}
-	
+		
 	public String toString(){
 		return side;
 	}

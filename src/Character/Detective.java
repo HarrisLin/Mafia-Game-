@@ -8,8 +8,8 @@ import GameEngine.GameEngine;
 
 public class Detective extends Character{
 
-	Detective() {
-		super("Detective", Roles.Detective);
+	Detective(String player) {
+		super(player, Roles.Detective);
 	}
 
 	/**
