@@ -12,7 +12,8 @@ import GameEngine.GameEngine;
  */
 public class Investigator extends Character {
 	// game options
-	private final boolean detectsExactRole;
+	private final Investigator.OptionDetectRole detectsExactRole;
+	private final Investigator.OptionKnowPerson detectsTargetName;
 
 	/**
 	 * Investigator.
@@ -20,19 +21,11 @@ public class Investigator extends Character {
 	 * @param gameOption - Investigator.Options.DETECT_EXACT_ROLE: the investigator will discover the exact role of his target
 	 *                    - Investigator.Options.DETECT_VAGUE_ROLE: the investigator will discover a hint for the role of his target
 	 */
-	Investigator(Investigator.Options gameOption) {
+	Investigator(Investigator.OptionDetectRole gameOptionDetectRole, Investigator.OptionKnowPerson gameOptionKnowPerson) {
 		super(Roles.Investigator);
 
-		switch (gameOption) {
-		case DETECT_EXACT_ROLE: 
-			detectsExactRole = true;
-			break;
-		case DETECT_VAGUE_ROLE:
-			detectsExactRole = false;
-			break;
-		default:
-			detectsExactRole = true;
-		}
+		detectsExactRole = gameOptionDetectRole;
+		detectsTargetName = gameOptionKnowPerson;
 	}
 	
 	/**
@@ -42,7 +35,8 @@ public class Investigator extends Character {
 	 */
 	Investigator() {
 		super(Roles.Investigator);
-		detectsExactRole = true;
+		detectsExactRole = Investigator.OptionDetectRole.DETECT_VAGUE_ROLE;
+		detectsTargetName = Investigator.OptionKnowPerson.TARGET_NAME_NOT_GIVEN;
 	}
 
 	@Override
@@ -72,7 +66,11 @@ public class Investigator extends Character {
 	/**
 	 * The game options for Investigators
 	 */
-	public static enum Options {
-		DETECT_EXACT_ROLE, DETECT_VAGUE_ROLE
+	public static enum OptionDetectRole {
+		DETECT_EXACT_ROLE, DETECT_VAGUE_ROLE, DETECT_LIST_OF_ROLE
+	}
+	
+	public static enum OptionKnowPerson {
+		TARGET_NAME_GIVEN, TARGET_NAME_NOT_GIVEN
 	}
 }
