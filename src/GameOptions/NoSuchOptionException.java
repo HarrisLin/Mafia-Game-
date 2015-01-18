@@ -1,4 +1,4 @@
-package GameEngine;
+package GameOptions;
 
 public class NoSuchOptionException extends Exception {
 
