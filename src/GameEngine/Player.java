@@ -14,9 +14,9 @@ import java.util.List;
 public class Player {
 
 	// Class-wide validation map of human player names
-	static private ArrayList<String> valid_names = new ArrayList<String>();
+	static private final ArrayList<String> valid_names = new ArrayList<String>();
 	
-	private String name;
+	private final String name;
 	
 	/**
 	 * Player.get
@@ -35,7 +35,7 @@ public class Player {
 	 * Player.getAllPlayers
 	 * @return A list of all registered players
 	 */
-	public static List getAllPlayers() {
+	public static List<Player> getAllPlayers() {
 		List<Player> list = new ArrayList<Player>();
 		for (String name : valid_names) {
 			list.add(new Player(name));
