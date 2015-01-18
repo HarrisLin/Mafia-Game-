@@ -2,19 +2,20 @@ package Character;
 
 import java.util.List;
 
+import Enumerators.Roles;
 import GameEngine.Character;
 import GameEngine.Player;
 import GameEngine.GameEngine;
 
-public class Detective extends Character{
+/**
+ * The detective investigates a single Player target to discover his/her role
+ */
+public class Investigator extends Character{
 
-	Detective() {
+	Investigator() {
 		super(Roles.Detective);
 	}
 
-	/**
-	 * The detective investigates a single Player target to discover his/her role
-	 */
 	@Override
 	public boolean setTarget(List<Player> targets) {
 		// The detective can only target a single Player
@@ -28,7 +29,7 @@ public class Detective extends Character{
 	@Override
 	public String doAction() {
 		String target_name = targets.get(0).getName();
-		String result =  GameEngine.getCharacter(targets.get(0)).getCharacterRoll();
+		String result =  GameEngine.getCharacter(targets.get(0)).getCharacterRoll()	;
 		return "Player " + target_name + " is a " + result + ".";
 	}
 	

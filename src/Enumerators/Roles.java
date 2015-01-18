@@ -1,4 +1,7 @@
-package Character;
+package Enumerators;
+
+import java.util.List;
+
 
 /**
  * All the roles as a enumerator Also includes which sides the role belongs to
@@ -21,7 +24,7 @@ public enum Roles {
 			"Agent"), Beguiler(Sides.Mafia, "Beguiler"), Blackmailer(
 			Sides.Mafia, "Blackmailer"), Consigliere(Sides.Mafia, "Consigliere"), Consort(
 			Sides.Mafia, "Consort"), Disguiser(Sides.Mafia, "Disguiser"), Framer(
-			Sides.Mafia, "Framer"), Godfather(Sides.Mafia, "Godfather"), Janitor(
+			Sides.Mafia, "Framer"), Godfather(Sides.Mafia, "Godfather", true), Janitor(
 			Sides.Mafia, "Janitor"), Kidnapper(Sides.Mafia, "Kidnapper"), Mafioso(
 			Sides.Mafia, "Mafioso"), Administrator(Sides.Triad, "Administrator"), Deceiver(
 			Sides.Triad, "Deceiver"), DragonHead(Sides.Triad, "DragonHead"), Enforcer(
@@ -36,19 +39,69 @@ public enum Roles {
 			Sides.Neutral, "SerialKiller"), Survivor(Sides.Neutral, "Survivor"), Witch(
 			Sides.Neutral, "Witch"), WitchDoctor(Sides.Neutral, "WitchDoctor");
 
-	Sides side;
-	String roll;
+	private Sides side;
+	private String role;
+	private boolean invulnerable;
+	private List<Investigations> investigation;
 
-	Roles(Sides side, String roll) {
+	/**
+	 * Constructor
+	 * @param side : Side of the character
+	 * @param role : Role as a string
+	 */
+	Roles(Sides side, String role) {
 		this.side = side;
-		this.roll = roll;
+		this.role = role;
+		invulnerable = false;
+		investigation = Investigations.doInvestigation(this);
 	}
-
+	/**
+	 * Constructor for characters with night invulnerability
+	 * @param side : Side of the character
+	 * @param role : Role as a string
+	 * @param invulnerable : Invulnerability of the role
+	 */
+	Roles(Sides side, String role, boolean invulnerable) {
+		this.side = side;
+		this.role = role;
+		this.invulnerable = invulnerable;
+		investigation = Investigations.doInvestigation(this);
+	}
+	/**
+	 * 
+	 * @return the side of the character
+	 */
 	public Sides getSide() {
 		return side;
 	}
 	
+	/**
+	 * Returns role as a string
+	 */
 	public String toString() {
-		return roll;
+		return role;
+	}
+	/**
+	 * 
+	 * @return true if role is suspicious and false if not
+	 */
+	public boolean checkCrime() {
+		return side.suspicious();
+	}
+	
+	/**
+	 * 
+	 * @return all the possible investigations results for the role
+	 */
+	public List<Investigations> getInvestigations() {
+		return investigation;
+	}
+	
+	/**
+	 * 
+	 * @return true if role is invulnerable and false if not
+	 */
+	public boolean checkInvulnerable() {
+		return invulnerable;
 	}
 }
