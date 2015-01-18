@@ -9,7 +9,6 @@ import Character.Roles;
  *
  */
 public abstract class Character {
-	private String name;
 	private Roles role;
 	private boolean alive;
 	
@@ -17,11 +16,9 @@ public abstract class Character {
 
 	/**
 	 * Constructor for the character
-	 * @param name : Name of the player (ex. Harris Pheg)
 	 * @param role : Role of the player (ex. Detective)
 	 */
-	protected Character(String name, Roles role){
-		this.name = name;
+	protected Character(Roles role){
 		this.role = role;
 		alive = true;
 	}
@@ -40,12 +37,6 @@ public abstract class Character {
 		return alive;
 	}
 	
-	/**
-	 * @return the name of the player (ex. Harris Pheg)
-	 */
-	public String getCharacterName() {
-		return name;
-	}
 	/**
 	 * 
 	 * @return the name of the roll (ex. Detective)

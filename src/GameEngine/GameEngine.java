@@ -11,7 +11,7 @@ import java.util.Map;
  * - Keeping a map of all Players and their Character role
  * - Assigning roles to all Players
  * - Acting as an interface to allow human players to set targets for their actions
- * - Invoking the actions of all Characters when it is night-time
+ * - Invoking the actions	 of all Characters when it is night-time
  */
 public class GameEngine {
 	

@@ -91,5 +91,4 @@ public class Player {
 	public int hashCode() {
 		return name.hashCode();
 	}
-	
 }
