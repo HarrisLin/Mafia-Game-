@@ -55,9 +55,14 @@ public abstract class Character {
 
 	/**
 	 * Kills the character; s/he will no longer be alive
+	 * return TRUE if killed and FALSE if not killed
 	 */
-	public void kill() {
-		alive = false;
+	public boolean kill() {
+		if(!invulnerable) {
+			alive = false;
+			return true;
+		}
+		return false;
 	}
 
 	/**
