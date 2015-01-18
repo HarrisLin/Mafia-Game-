@@ -1,7 +1,9 @@
 package GameEngine;
 
 import java.util.List;
+import java.util.Random;
 
+import Enumerators.Investigations;
 import Enumerators.Roles;
 
 /**
@@ -17,9 +19,12 @@ public abstract class Character {
 	private boolean alive;
 	// Determines if character is night immune
 	private boolean invulnerable;
+	//List of possible investigation results for this character
+	private List<Investigations> investigation;
 	// Lists of target the player has chosen to perform night actions on
 	protected List<Player> targets;
-
+	//Random number generator for investigation or other purposes
+	Random indexGenerator;
 	/**
 	 * Constructor for the character with default game options
 	 * 
@@ -30,6 +35,7 @@ public abstract class Character {
 		this.role = role;
 		alive = true;
 		invulnerable = role.checkInvulnerable();
+		investigation = Investigations.doInvestigation(role);
 	}
 
 	/**
@@ -39,15 +45,12 @@ public abstract class Character {
 	 *            : Role of the player (ex. Detective)
 	 * @param invulnerable
 	 *            : Night invulnerability On/Off
-	 * @param suspicious
-	 *            : Suspicious Yes/No
-	 * @param investigation
-	 *            : Investigation message
 	 */
 	protected Character(Roles role, boolean invulnerable) {
 		this.role = role;
 		alive = true;
 		this.invulnerable = invulnerable;
+		investigation = Investigations.doInvestigation(role);
 	}
 
 	/**
@@ -74,7 +77,17 @@ public abstract class Character {
 	public boolean checkInvulnerable() {
 		return invulnerable;
 	}
-
+	
+	/**
+	 * 
+	 * @return a random investigation of possible investigations
+	 */
+	public String getInvestigation() {
+		Investigations investigate;
+		int index = indexGenerator.nextInt(investigation.size());
+		investigate = investigation.get(index);
+		return investigate.toString().toLowerCase();
+	}
 	/**
 	 * 
 	 * @return the name of the roll (ex. Detective)

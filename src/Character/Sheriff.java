@@ -5,17 +5,17 @@ import java.util.List;
 import Enumerators.Roles;
 import Enumerators.Sides;
 import GameEngine.Character;
-import GameEngine.NoSuchOptionException;
 import GameEngine.Player;
 import GameEngine.GameEngine;
-import GameEngine.GameOptions;
+import GameOptions.GameOptions;
+import GameOptions.NoSuchOptionException;
 
 /**
  * The Sheriff targets a Player and determines if they are Suspicious or Not
  * Suspicious
  */
 public class Sheriff extends Character {
-
+	//Game options
 	boolean detectsMafia;
 	boolean detectsTriad;
 	boolean detectsArsonist;
@@ -58,9 +58,7 @@ public class Sheriff extends Character {
 
 	@Override
 	public String doAction() {
-		String target_name = targets.get(0).getName();
 		String result;
-
 		Roles targetRole = GameEngine.getCharacter(targets.get(0))
 				.getCharacterRole();
 		if (detectsArsonist && targetRole == Roles.Arsonist) {
@@ -76,6 +74,6 @@ public class Sheriff extends Character {
 		} else {
 			result = "not suspicious";
 		}
-		return "Player " + target_name + " is " + result + ".";
+		return "The outcome of your results suggests your target is " + result + ".";
 	}
 }
