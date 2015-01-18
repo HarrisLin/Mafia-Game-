@@ -34,7 +34,7 @@ public abstract class Character {
 	protected Character(Roles role) {
 		this.role = role;
 		alive = true;
-		invulnerable = role.checkInvulnerable();
+		invulnerable = false;
 		investigation = Investigations.doInvestigation(role);
 	}
 

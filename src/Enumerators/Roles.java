@@ -21,7 +21,7 @@ public enum Roles {
 			"Agent"), Beguiler(Sides.Mafia, "Beguiler"), Blackmailer(
 			Sides.Mafia, "Blackmailer"), Consigliere(Sides.Mafia, "Consigliere"), Consort(
 			Sides.Mafia, "Consort"), Disguiser(Sides.Mafia, "Disguiser"), Framer(
-			Sides.Mafia, "Framer"), Godfather(Sides.Mafia, "Godfather", true), Janitor(
+			Sides.Mafia, "Framer"), Godfather(Sides.Mafia, "Godfather"), Janitor(
 			Sides.Mafia, "Janitor"), Kidnapper(Sides.Mafia, "Kidnapper"), Mafioso(
 			Sides.Mafia, "Mafioso"), Administrator(Sides.Triad, "Administrator"), Deceiver(
 			Sides.Triad, "Deceiver"), DragonHead(Sides.Triad, "DragonHead"), Enforcer(
@@ -38,7 +38,6 @@ public enum Roles {
 
 	private Sides side;
 	private String role;
-	private boolean invulnerable;
 
 	/**
 	 * Constructor
@@ -48,19 +47,8 @@ public enum Roles {
 	Roles(Sides side, String role) {
 		this.side = side;
 		this.role = role;
-		invulnerable = false;
 	}
-	/**
-	 * Constructor for characters with night invulnerability
-	 * @param side : Side of the character
-	 * @param role : Role as a string
-	 * @param invulnerable : Invulnerability of the role
-	 */
-	Roles(Sides side, String role, boolean invulnerable) {
-		this.side = side;
-		this.role = role;
-		this.invulnerable = invulnerable;
-	}
+	
 	/**
 	 * 
 	 * @return the side of the character
@@ -74,13 +62,5 @@ public enum Roles {
 	 */
 	public String toString() {
 		return role;
-	}
-	
-	/**
-	 * 
-	 * @return true if role is invulnerable and false if not
-	 */
-	public boolean checkInvulnerable() {
-		return invulnerable;
 	}
 }
