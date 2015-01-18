@@ -8,8 +8,8 @@ import GameEngine.GameEngine;
 
 public class Detective extends Character{
 
-	Detective(String player) {
-		super(player, Roles.Detective);
+	Detective() {
+		super(Roles.Detective);
 	}
 
 	/**
@@ -28,7 +28,7 @@ public class Detective extends Character{
 	@Override
 	public String doAction() {
 		String target_name = targets.get(0).getName();
-		String result =  GameEngine.getCharacter(targets.get(0)).getCharacterName();
+		String result =  GameEngine.getCharacter(targets.get(0)).getCharacterRoll();
 		return "Player " + target_name + " is a " + result + ".";
 	}
 	
