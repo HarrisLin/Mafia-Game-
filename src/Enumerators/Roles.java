@@ -81,13 +81,6 @@ public enum Roles {
 	public String toString() {
 		return role;
 	}
-	/**
-	 * 
-	 * @return true if role is suspicious and false if not
-	 */
-	public boolean checkCrime() {
-		return side.suspicious();
-	}
 	
 	/**
 	 * 

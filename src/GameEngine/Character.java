@@ -18,8 +18,6 @@ public abstract class Character {
 	private boolean alive;
 	// Determines if character is night immune
 	private boolean invulnerable;
-	// Determines if the player is suspicious via sheriff
-	private boolean suspicious;
 	// Determines the investigation of a player via detective
 	private List<Investigations> investigation;
 	// Lists of target the player has chosen to perform night actions on
@@ -35,7 +33,6 @@ public abstract class Character {
 		this.role = role;
 		alive = true;
 		invulnerable = role.checkInvulnerable();
-		suspicious = role.getSide().suspicious();
 		investigation = role.getInvestigations();
 	}
 
@@ -51,12 +48,11 @@ public abstract class Character {
 	 * @param investigation
 	 *            : Investigation message
 	 */
-	protected Character(Roles role, boolean invulnerable, boolean suspicious,
+	protected Character(Roles role, boolean invulnerable,
 			List<Investigations> investigation) {
 		this.role = role;
 		alive = true;
 		this.invulnerable = invulnerable;
-		this.suspicious = suspicious;
 		this.investigation = investigation;
 	}
 
@@ -86,15 +82,6 @@ public abstract class Character {
 	}
 
 	/**
-	 * Check if player is suspicious
-	 * 
-	 * @return true if suspicious, false if not
-	 */
-	public boolean checkSuspicious() {
-		return suspicious;
-	}
-
-	/**
 	 * Investigates this player
 	 * 
 	 * @return the investigation message
@@ -107,8 +94,16 @@ public abstract class Character {
 	 * 
 	 * @return the name of the roll (ex. Detective)
 	 */
-	public String getCharacterRoll() {
+	public String getRoleString() {
 		return role.toString();
+	}
+
+	/**
+	 * 
+	 * @return the roll of the character
+	 */
+	public Roles getCharacterRole() {
+		return role;
 	}
 
 	/**
