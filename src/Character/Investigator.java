@@ -12,7 +12,7 @@ import GameEngine.GameEngine;
  */
 public class Investigator extends Character {
 	// game options
-	private final boolean detectsExactRole;
+	private final Investigator.OptionDetectRole detectsExactRole;
 
 	/**
 	 * Investigator.
@@ -20,19 +20,13 @@ public class Investigator extends Character {
 	 * @param gameOption - Investigator.Options.DETECT_EXACT_ROLE: the investigator will discover the exact role of his target
 	 *                    - Investigator.Options.DETECT_VAGUE_ROLE: the investigator will discover a hint for the role of his target
 	 */
-	Investigator(Investigator.Options gameOption) {
+<<<<<<< HEAD
+	public Investigator(Investigator.OptionDetectRole gameOptionDetectRole, Investigator.OptionKnowPerson gameOptionKnowPerson) {
+=======
+	Investigator(Investigator.OptionDetectRole gameOptionDetectRole) {
+>>>>>>> 06ad43801ff44cc1f72aaebf2a654756e474bf57
 		super(Roles.Investigator);
-
-		switch (gameOption) {
-		case DETECT_EXACT_ROLE: 
-			detectsExactRole = true;
-			break;
-		case DETECT_VAGUE_ROLE:
-			detectsExactRole = false;
-			break;
-		default:
-			detectsExactRole = true;
-		}
+		detectsExactRole = gameOptionDetectRole;
 	}
 	
 	/**
@@ -40,9 +34,9 @@ public class Investigator extends Character {
 	 *  Default constructor. The default setting for an Investigator is that
 	 *  the exact role of his target is revealed.
 	 */
-	Investigator() {
+	public Investigator() {
 		super(Roles.Investigator);
-		detectsExactRole = true;
+		detectsExactRole = Investigator.OptionDetectRole.DETECT_VAGUE_ROLE;
 	}
 
 	@Override
@@ -58,12 +52,15 @@ public class Investigator extends Character {
 	@Override
 	public String doAction() {
 		String result;
-		if (detectsExactRole) {
+		switch(detectsExactRole) {
+		case DETECT_EXACT_ROLE:
 			result = GameEngine.getCharacter(targets.get(0)).getRoleString();
-		} else {
-			//**NOT IMPLIMENTED YET**
-			// if escort/consort/liaison DOES NOT block a town member && target
-			// role is escort/consort/liaison, result = soliciting
+			break;
+		case DETECT_VAGUE_ROLE:
+			result = GameEngine.getCharacter(targets.get(0)).getInvestigation();
+			break;
+		case DETECT_LIST_OF_ROLE:
+		default:
 			result = GameEngine.getCharacter(targets.get(0)).getInvestigation();
 		}
 		return "The result of your investigation yeilded a role of " + result + ".";
@@ -72,7 +69,7 @@ public class Investigator extends Character {
 	/**
 	 * The game options for Investigators
 	 */
-	public static enum Options {
-		DETECT_EXACT_ROLE, DETECT_VAGUE_ROLE
+	public static enum OptionDetectRole {
+		DETECT_EXACT_ROLE, DETECT_VAGUE_ROLE, DETECT_LIST_OF_ROLE
 	}
 }

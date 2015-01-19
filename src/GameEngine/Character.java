@@ -21,7 +21,7 @@ public abstract class Character {
 	private boolean invulnerable;
 	//List of possible investigation results for this character
 	private List<Investigations> investigation;
-	// Lists of target the player has chosen to perform night actions on
+	// Lists of target the player has chosen to perform night actions or lynching 
 	protected List<Player> targets;
 	//Random number generator for investigation or other purposes
 	Random indexGenerator;
@@ -55,9 +55,14 @@ public abstract class Character {
 
 	/**
 	 * Kills the character; s/he will no longer be alive
+	 * return TRUE if killed and FALSE if not killed
 	 */
-	public void kill() {
-		alive = false;
+	public boolean kill() {
+		if(!invulnerable) {
+			alive = false;
+			return true;
+		}
+		return false;
 	}
 
 	/**
