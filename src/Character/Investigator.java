@@ -13,7 +13,6 @@ import GameEngine.GameEngine;
 public class Investigator extends Character {
 	// game options
 	private final Investigator.OptionDetectRole detectsExactRole;
-	private final Investigator.OptionKnowPerson detectsTargetName;
 
 	/**
 	 * Investigator.
@@ -21,11 +20,13 @@ public class Investigator extends Character {
 	 * @param gameOption - Investigator.Options.DETECT_EXACT_ROLE: the investigator will discover the exact role of his target
 	 *                    - Investigator.Options.DETECT_VAGUE_ROLE: the investigator will discover a hint for the role of his target
 	 */
+<<<<<<< HEAD
 	public Investigator(Investigator.OptionDetectRole gameOptionDetectRole, Investigator.OptionKnowPerson gameOptionKnowPerson) {
+=======
+	Investigator(Investigator.OptionDetectRole gameOptionDetectRole) {
+>>>>>>> 06ad43801ff44cc1f72aaebf2a654756e474bf57
 		super(Roles.Investigator);
-
 		detectsExactRole = gameOptionDetectRole;
-		detectsTargetName = gameOptionKnowPerson;
 	}
 	
 	/**
@@ -36,7 +37,6 @@ public class Investigator extends Character {
 	public Investigator() {
 		super(Roles.Investigator);
 		detectsExactRole = Investigator.OptionDetectRole.DETECT_VAGUE_ROLE;
-		detectsTargetName = Investigator.OptionKnowPerson.TARGET_NAME_NOT_GIVEN;
 	}
 
 	@Override
@@ -52,12 +52,15 @@ public class Investigator extends Character {
 	@Override
 	public String doAction() {
 		String result;
-		if (detectsExactRole) {
+		switch(detectsExactRole) {
+		case DETECT_EXACT_ROLE:
 			result = GameEngine.getCharacter(targets.get(0)).getRoleString();
-		} else {
-			//**NOT IMPLIMENTED YET**
-			// if escort/consort/liaison DOES NOT block a town member && target
-			// role is escort/consort/liaison, result = soliciting
+			break;
+		case DETECT_VAGUE_ROLE:
+			result = GameEngine.getCharacter(targets.get(0)).getInvestigation();
+			break;
+		case DETECT_LIST_OF_ROLE:
+		default:
 			result = GameEngine.getCharacter(targets.get(0)).getInvestigation();
 		}
 		return "The result of your investigation yeilded a role of " + result + ".";
@@ -68,9 +71,5 @@ public class Investigator extends Character {
 	 */
 	public static enum OptionDetectRole {
 		DETECT_EXACT_ROLE, DETECT_VAGUE_ROLE, DETECT_LIST_OF_ROLE
-	}
-	
-	public static enum OptionKnowPerson {
-		TARGET_NAME_GIVEN, TARGET_NAME_NOT_GIVEN
 	}
 }
