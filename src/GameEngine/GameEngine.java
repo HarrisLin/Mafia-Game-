@@ -1,5 +1,6 @@
 package GameEngine;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,8 @@ import java.util.Map;
 public class GameEngine {
 
 	private static Map<Player, Character> player_character_map = new HashMap<Player, Character>();
-
+	//List of players still alive, used for setTarget() method in Character Class
+	public static List<Player> AliveList = new ArrayList<Player>();
 	/**
 	 * GameEngine.registerPlayer Registers a player into the game.
 	 * 
@@ -50,6 +52,7 @@ public class GameEngine {
 	 */
 	public static void assignCharacter(Player player, Character character) {
 		player_character_map.put(player, character);
+		AliveList.add(player);
 	}
 
 	/**
@@ -64,7 +67,18 @@ public class GameEngine {
 	public static boolean setTarget(Player player, List<Player> targets) {
 		return player_character_map.get(player).setTarget(targets);
 	}
-
+	/**
+	 * GameEngine.vote
+	 * 
+	 * @param player
+	 *            The player performing the action
+	 * @param targets
+	 *            The target(s) of the action
+	 * @return true if target was successfully set, false otherwise
+	 */
+	public static boolean vote(Player player, List<Player> lynches) {
+		return player_character_map.get(player).setTarget(lynches);
+	}
 	/**
 	 * GameEngine.performNightActions Makes each character perform his/her night
 	 * action
