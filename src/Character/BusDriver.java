@@ -19,11 +19,14 @@ public class BusDriver extends Character {
 
 	@Override
 	public boolean setTarget(List<Player> targets) {
-		// The detective can only target a single Player
+		//bus driver must only target 2 people
 		if (targets.size() != 2) {
 			return false;
 		}
-		this.targets = targets;
+		if(!GameEngine.AliveList.containsAll(targets)){
+			return false;
+		}
+		this.targets = new ArrayList<Player>(targets);
 		return true;
 	}
 	/**
