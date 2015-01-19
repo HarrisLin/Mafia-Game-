@@ -21,7 +21,7 @@ public abstract class Character {
 	private boolean invulnerable;
 	// List of possible investigation results for this character
 	private List<Investigations> investigation;
-	// Lists of target the player has chosen to perform night actions on
+	// Lists of target the player has chosen to perform night actions or lynching 
 	protected List<Player> targets;
 	// Random number generator for investigation or other purposes
 	Random indexGenerator;
