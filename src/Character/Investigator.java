@@ -21,7 +21,7 @@ public class Investigator extends Character {
 	 * @param gameOption - Investigator.Options.DETECT_EXACT_ROLE: the investigator will discover the exact role of his target
 	 *                    - Investigator.Options.DETECT_VAGUE_ROLE: the investigator will discover a hint for the role of his target
 	 */
-	Investigator(Investigator.OptionDetectRole gameOptionDetectRole, Investigator.OptionKnowPerson gameOptionKnowPerson) {
+	public Investigator(Investigator.OptionDetectRole gameOptionDetectRole, Investigator.OptionKnowPerson gameOptionKnowPerson) {
 		super(Roles.Investigator);
 
 		detectsExactRole = gameOptionDetectRole;
@@ -33,7 +33,7 @@ public class Investigator extends Character {
 	 *  Default constructor. The default setting for an Investigator is that
 	 *  the exact role of his target is revealed.
 	 */
-	Investigator() {
+	public Investigator() {
 		super(Roles.Investigator);
 		detectsExactRole = Investigator.OptionDetectRole.DETECT_VAGUE_ROLE;
 		detectsTargetName = Investigator.OptionKnowPerson.TARGET_NAME_NOT_GIVEN;
