@@ -42,4 +42,10 @@ public class SerialKiller extends Character {
 		return "You've attempted to kill " + targets.get(0).getName();
 	}
 
+	@Override
+	public boolean vote(List<Player> lynches) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

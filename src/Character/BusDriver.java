@@ -37,4 +37,10 @@ public class BusDriver extends Character {
 		target2List.addAll(tempSwap);
 		return "Your night action has been received.";
 	}
+
+	@Override
+	public boolean vote(List<Player> lynches) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
