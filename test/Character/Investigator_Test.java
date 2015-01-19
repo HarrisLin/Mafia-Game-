@@ -23,9 +23,9 @@ public class Investigator_Test {
 		GameEngine.registerPlayer("Connie");
 		GameEngine.registerPlayer("Kaibo");
 		GameEngine.assignCharacter(Player.get("Derek"), new Investigator(
-				Investigator.DetectRoleOption.DETECT_EXACT_ROLE));
+				GameOptions.InvestigatorOptions.DetectRole.DETECT_EXACT_ROLE));
 		GameEngine.assignCharacter(Player.get("Connie"), new Investigator(
-				Investigator.DetectRoleOption.DETECT_VAGUE_ROLE));
+				GameOptions.InvestigatorOptions.DetectRole.DETECT_VAGUE_ROLE));
 		GameEngine.assignCharacter(Player.get("Harris"), new Investigator());
 		GameEngine.assignCharacter(Player.get("Andy"), new Arsonist());
 		GameEngine.assignCharacter(Player.get("Kaibo"), new Mayor());
@@ -44,46 +44,44 @@ public class Investigator_Test {
 	}
 
 	@Test
-	public void testInvestigation_exact_role() {
+	public void test_exact_role() {
 		// make Derek investigate Harris
 		assertEquals(GameEngine.getCharacter(Player.get("Derek")).doAction(),
 				"The result of your investigation yeilded a role of Investigator.");
 	}
 
 	@Test
-	public void testInvestigation_vague_role() {
+	public void test_vague_role1() {
 		// make Harris investigate Andy
 		boolean test;
-		String gameMessage = GameEngine.getCharacter(Player.get("Harris")).doAction();
+		String gameMessage = GameEngine.getCharacter(Player.get("Harris"))
+				.doAction();
 		String startSentense = "The result of your investigation suggests a role guilty of ";
-		if(gameMessage.equals(startSentense + "murder" + ".")) {
+		if (gameMessage.equals(startSentense + "murder" + ".")) {
 			test = true;
-		}
-		else if(gameMessage.equals(startSentense + "arson" + ".")) {
+		} else if (gameMessage.equals(startSentense + "arson" + ".")) {
 			test = true;
-		}
-		else if(gameMessage.equals(startSentense + "destruction of property" + ".")) {
+		} else if (gameMessage.equals(startSentense + "destruction of property"
+				+ ".")) {
 			test = true;
-		}
-		else if(gameMessage.equals(startSentense + "trespassing" + ".")) {
+		} else if (gameMessage.equals(startSentense + "trespassing" + ".")) {
 			test = true;
-		}
-		else {
+		} else {
 			test = false;
 		}
 		assertTrue(test);
 	}
-	
+
 	@Test
-	public void testInvestigation_vague_role1() {
-		// make Harris investigate Andy
+	public void test_vague_role2() {
+		// make Connie investigate Kaibo
 		boolean test;
-		String gameMessage = GameEngine.getCharacter(Player.get("Connie")).doAction();
+		String gameMessage = GameEngine.getCharacter(Player.get("Connie"))
+				.doAction();
 		String startSentense = "The result of your investigation suggests a role guilty of ";
-		if(gameMessage.equals(startSentense + "corruption" + ".")) {
+		if (gameMessage.equals(startSentense + "corruption" + ".")) {
 			test = true;
-		}
-		else {
+		} else {
 			test = false;
 		}
 		assertTrue(test);
