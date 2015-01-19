@@ -16,20 +16,22 @@ public class Investigator extends Character {
 	private final Investigator.DetectRoleOption detectsExactRole;
 
 	/**
-	 * Investigator.
-	 * Game Option constructor.
-	 * @param gameOption - Investigator.Options.DETECT_EXACT_ROLE: the investigator will discover the exact role of his target
-	 *                    - Investigator.Options.DETECT_VAGUE_ROLE: the investigator will discover a hint for the role of his target
+	 * Investigator. Game Option constructor.
+	 * 
+	 * @param gameOption
+	 *            - Investigator.Options.DETECT_EXACT_ROLE: the investigator
+	 *            will discover the exact role of his target -
+	 *            Investigator.Options.DETECT_VAGUE_ROLE: the investigator will
+	 *            discover a hint for the role of his target
 	 */
 	Investigator(Investigator.DetectRoleOption gameOptionDetectRole) {
 		super(Roles.Investigator);
 		detectsExactRole = gameOptionDetectRole;
 	}
-	
+
 	/**
-	 *  Investigator
-	 *  Default constructor. The default setting for an Investigator is that
-	 *  the exact role of his target is revealed.
+	 * Investigator Default constructor. The default setting for an Investigator
+	 * is that the exact role of his target is revealed.
 	 */
 	public Investigator() {
 		super(Roles.Investigator);
@@ -50,19 +52,24 @@ public class Investigator extends Character {
 	@Override
 	public String doAction() {
 		String result;
-		switch(detectsExactRole) {
+		switch (detectsExactRole) {
 		case DETECT_EXACT_ROLE:
-			result = GameEngine.getCharacter(targets.get(0)).getRoleString();
+			result = "The result of your investigation yeilded a role of "
+					+ GameEngine.getCharacter(targets.get(0)).getRoleString()
+					+ ".";
 			break;
 		case DETECT_VAGUE_ROLE:
-			result = GameEngine.getCharacter(targets.get(0)).getInvestigation();
+			result = "The result of your investigation suggests a role guilty of "
+					+ GameEngine.getCharacter(targets.get(0))
+							.getInvestigation() + ".";
 			break;
 		default:
-			result = GameEngine.getCharacter(targets.get(0)).getInvestigation();
+			result = GameEngine.getCharacter(targets.get(0)).getInvestigation()
+					+ ".";
 		}
-		return "The result of your investigation yeilded a role of " + result + ".";
+		return result;
 	}
-	
+
 	/**
 	 * The game options for Investigators
 	 */

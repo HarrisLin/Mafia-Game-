@@ -32,7 +32,7 @@ public abstract class Character {
 	// Target the player has chosen to vote for lynch
 	protected Player lynchTarget;
 	// Random number generator for investigation or other purposes
-	Random indexGenerator;
+	private Random indexGenerator;
 
 	/**
 	 * Constructor for the character with default game options
@@ -148,6 +148,7 @@ public abstract class Character {
 	 */
 	public String getInvestigation() {
 		Investigations investigate;
+		indexGenerator = new Random();
 		int index = indexGenerator.nextInt(investigation.size());
 		investigate = investigation.get(index);
 		return investigate.toString().toLowerCase();
