@@ -20,10 +20,8 @@ public class BusDriver extends Character {
 	@Override
 	public boolean setTarget(List<Player> targets) {
 		//bus driver must only target 2 people
-		if (targets.size() != 2) {
-			return false;
-		}
-		if(!GameEngine.alive_player.containsAll(targets)){
+		if (targets.size() != 2
+				|| !GameEngine.alive_player.containsAll(targets)) {
 			return false;
 		}
 		this.targets = new ArrayList<Player>(targets);

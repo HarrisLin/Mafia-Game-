@@ -1,5 +1,6 @@
 package Character;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Enumerators.Roles;
@@ -38,10 +39,11 @@ public class Investigator extends Character {
 	@Override
 	public boolean setTarget(List<Player> targets) {
 		// The detective can only target a single Player
-		if (targets.size() != 1) {
+		if (targets.size() != 1
+				|| !GameEngine.alive_player.containsAll(targets)) {
 			return false;
 		}
-		this.targets = targets;
+		this.targets = new ArrayList<Player>(targets);
 		return true;
 	}
 
@@ -55,7 +57,6 @@ public class Investigator extends Character {
 		case DETECT_VAGUE_ROLE:
 			result = GameEngine.getCharacter(targets.get(0)).getInvestigation();
 			break;
-		case DETECT_LIST_OF_ROLE:
 		default:
 			result = GameEngine.getCharacter(targets.get(0)).getInvestigation();
 		}
@@ -66,6 +67,6 @@ public class Investigator extends Character {
 	 * The game options for Investigators
 	 */
 	public static enum DetectRoleOption {
-		DETECT_EXACT_ROLE, DETECT_VAGUE_ROLE, DETECT_LIST_OF_ROLE
+		DETECT_EXACT_ROLE, DETECT_VAGUE_ROLE
 	}
 }
