@@ -67,7 +67,18 @@ public class GameEngine {
 	public static boolean setTarget(Player player, List<Player> targets) {
 		return player_character_map.get(player).setTarget(targets);
 	}
-
+	/**
+	 * GameEngine.vote
+	 * 
+	 * @param player
+	 *            The player performing the action
+	 * @param targets
+	 *            The target(s) of the action
+	 * @return true if target was successfully set, false otherwise
+	 */
+	public static boolean vote(Player player, List<Player> lynches) {
+		return player_character_map.get(player).setTarget(lynches);
+	}
 	/**
 	 * GameEngine.performNightActions Makes each character perform his/her night
 	 * action
