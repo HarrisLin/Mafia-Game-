@@ -1,5 +1,6 @@
 package GameEngine;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,8 @@ import java.util.Map;
 public class GameEngine {
 
 	private static Map<Player, Character> player_character_map = new HashMap<Player, Character>();
-
+	//List of players still alive, used for setTarget() method in Character Class
+	public static List<Player> AliveList = new ArrayList<Player>();
 	/**
 	 * GameEngine.registerPlayer Registers a player into the game.
 	 * 
@@ -50,6 +52,7 @@ public class GameEngine {
 	 */
 	public static void assignCharacter(Player player, Character character) {
 		player_character_map.put(player, character);
+		AliveList.add(player);
 	}
 
 	/**
