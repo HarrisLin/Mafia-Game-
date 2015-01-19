@@ -1,18 +1,16 @@
 package GameOptions;
 
-
 /**
  * Options for the sheriff role
  * 
  * @author pacified
  *
  */
-public class SheriffOptions implements Options {
-	private boolean detectsMafia;
-	private boolean detectsTriad;
-	private boolean detectsArsonist;
-	private boolean detectsCultist;
-	private boolean detectsMassMurderer;
+public class SheriffOptions implements RoleOptions {
+	private DetectMafia detectsMafia;
+	private DetectArsonist detectsArsonist;
+	private DetectCultist detectsCultist;
+	private DetectMassMurderer detectsMassMurderer;
 
 	/**
 	 * Constructor with default options
@@ -25,47 +23,12 @@ public class SheriffOptions implements Options {
 	 * Default options
 	 */
 	private void defaultOptions() {
-		detectsMafia = true;
-		detectsTriad = true;
-		detectsArsonist = true;
-		detectsCultist = true;
-		detectsMassMurderer = true;
+		detectsMafia = DetectMafia.DETECT_MAFIA_ON;
+		detectsArsonist = DetectArsonist.DETECT_ARSONIST_ON;
+		detectsCultist = DetectCultist.DETECT_CULTIST_ON;
+		detectsMassMurderer = DetectMassMurderer.DETECT_MASSMURDERER_ON;
 	}
-	/**
-	 * @return true if option is ON and false if option is OFF
-	 */
-	public boolean detectsMafia() {
-		return detectsMafia;
-	}
-
-	/**
-	 * @return true if option is ON and false if option is OFF
-	 */
-	public boolean detectsTriad() {
-		return detectsTriad;
-	}
-
-	/**
-	 * @return true if option is ON and false if option is OFF
-	 */
-	public boolean detectsArsonist() {
-		return detectsArsonist;
-	}
-
-	/**
-	 * @return true if option is ON and false if option is OFF
-	 */
-	public boolean detectsCultist() {
-		return detectsCultist;
-	}
-
-	/**
-	 * @return true if option is ON and false if option is OFF
-	 */
-	public boolean detectsMassMurderer() {
-		return detectsMassMurderer;
-	}
-
+	
 	/**
 	 * Change options corresponding to which number the option is
 	 * 
@@ -81,19 +44,16 @@ public class SheriffOptions implements Options {
 			defaultOptions();
 			break;
 		case 1:
-			detectsMafia = !detectsMafia;
+			detectsMafia = detectsMafia.getNext();
 			break;
 		case 2:
-			detectsTriad = !detectsTriad;
+			detectsArsonist = detectsArsonist.getNext();
 			break;
 		case 3:
-			detectsArsonist = !detectsArsonist;
+			detectsCultist = detectsCultist.getNext();
 			break;
 		case 4:
-			detectsCultist = !detectsCultist;
-			break;
-		case 5:
-			detectsMassMurderer = !detectsMassMurderer;
+			detectsMassMurderer = detectsMassMurderer.getNext();
 			break;
 		default:
 			return false;
@@ -111,20 +71,70 @@ public class SheriffOptions implements Options {
 	 *             if there is no such option
 	 */
 	@Override
-	public boolean getOptions(int option) throws NoSuchOptionException {
+	public Options getOptions(int option) throws NoSuchOptionException {
 		switch (option) {
 		case 1:
 			return detectsMafia;
 		case 2:
-			return detectsTriad;
-		case 3:
 			return detectsArsonist;
-		case 4:
+		case 3:
 			return detectsCultist;
-		case 5:
+		case 4:
 			return detectsMassMurderer;
 		default:
 			throw new NoSuchOptionException();
 		}
 	}
+	
+	public static enum DetectMafia implements Options {
+		DETECT_MAFIA_ON, DETECT_MAFIA_OFF;
+
+		/**
+		 * 
+		 * @return next enum or if last enum return first enum
+		 */
+		public DetectMafia getNext() {
+			return this.ordinal() < DetectMafia.values().length - 1 ? DetectMafia
+					.values()[this.ordinal() + 1] : DetectMafia.values()[0];
+		}
+	}
+	public static enum DetectArsonist implements Options {
+		DETECT_ARSONIST_ON, DETECT_ARSONIST_OFF;
+
+		/**
+		 * 
+		 * @return next enum or if last enum return first enum
+		 */
+		public DetectArsonist getNext() {
+			return this.ordinal() < DetectArsonist.values().length - 1 ? DetectArsonist
+					.values()[this.ordinal() + 1] : DetectArsonist.values()[0];
+		}
+	}
+	
+	public static enum DetectCultist implements Options {
+		DETECT_CULTIST_ON, DETECT_CULTIST_OFF;
+
+		/**
+		 * 
+		 * @return next enum or if last enum return first enum
+		 */
+		public DetectCultist getNext() {
+			return this.ordinal() < DetectCultist.values().length - 1 ? DetectCultist
+					.values()[this.ordinal() + 1] : DetectCultist.values()[0];
+		}
+	}
+	
+	public static enum DetectMassMurderer implements Options {
+		DETECT_MASSMURDERER_ON, DETECT_MASSMURDERER_OFF;
+
+		/**
+		 * 
+		 * @return next enum or if last enum return first enum
+		 */
+		public DetectMassMurderer getNext() {
+			return this.ordinal() < DetectMassMurderer.values().length - 1 ? DetectMassMurderer
+					.values()[this.ordinal() + 1] : DetectMassMurderer.values()[0];
+		}
+	}
+	
 }
