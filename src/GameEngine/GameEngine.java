@@ -49,18 +49,26 @@ public class GameEngine {
 	/**
 	 * GameEngine.assignCharacters Randomly assigns a character role to all
 	 * players
+	 * @return TRUE if characters successfully assigned and FALSE it not
 	 */
-	public static void assignCharacters() {
+	public static boolean assignCharacters() {
 		// TODO: implement me!
+		return true;
 	}
 
 	/**
 	 * GameEngine.assignCharacter Assigns a single character role to a single
 	 * player
+	 * 
+	 * @return TRUE if characters successfully assigned and FALSE it not
 	 */
-	public static void assignCharacter(Player player, Character character) {
+	public static boolean assignCharacter(Player player, Character character) {
+		if(!Player.getAllPlayers().contains(player) || player == null || character == null) {
+			return false;
+		}
 		player_character_map.put(player, character);
 		alive_player.add(player);
+		return true;
 	}
 
 	/**

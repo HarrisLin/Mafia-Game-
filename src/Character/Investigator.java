@@ -7,13 +7,14 @@ import Enumerators.Roles;
 import GameEngine.Character;
 import GameEngine.Player;
 import GameEngine.GameEngine;
+import GameOptions.InvestigatorOptions.DetectRole;
 
 /**
  * The detective investigates a single Player target to discover his/her role
  */
 public class Investigator extends Character {
 	// game options
-	private final GameOptions.InvestigatorOptions.DetectRole detectsExactRole;
+	private final GameOptions.Options detectsRole;
 
 	/**
 	 * Investigator. Game Option constructor.
@@ -24,9 +25,9 @@ public class Investigator extends Character {
 	 *            Investigator.Options.DETECT_VAGUE_ROLE: the investigator will
 	 *            discover a hint for the role of his target
 	 */
-	Investigator(GameOptions.InvestigatorOptions.DetectRole gameOptionDetectRole) {
+	Investigator(GameOptions.Options detectsRole) {
 		super(Roles.Investigator);
-		detectsExactRole = gameOptionDetectRole;
+		this.detectsRole = detectsRole;
 	}
 
 	/**
@@ -35,7 +36,7 @@ public class Investigator extends Character {
 	 */
 	public Investigator() {
 		super(Roles.Investigator);
-		detectsExactRole = GameOptions.InvestigatorOptions.DetectRole.DETECT_VAGUE_ROLE;
+		detectsRole = GameOptions.InvestigatorOptions.DetectRole.DETECT_VAGUE_ROLE;
 	}
 
 	@Override
@@ -52,7 +53,8 @@ public class Investigator extends Character {
 	@Override
 	public String doAction() {
 		String result;
-		switch (detectsExactRole) {
+		GameOptions.InvestigatorOptions.DetectRole detect = (DetectRole) detectsRole;
+		switch (detect) {
 		case DETECT_EXACT_ROLE:
 			result = "The result of your investigation yeilded a role of "
 					+ GameEngine.getCharacter(targets.get(0)).getRoleString()
