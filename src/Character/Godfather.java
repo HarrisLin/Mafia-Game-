@@ -16,7 +16,7 @@ public class Godfather extends Character {
 	Godfather() {
 		super(Roles.Godfather, true);
 	}
-	/*
+	/**
 	 * Sets target for night action, target size must equal 1
 	 * @return returns true if target was successfully set, else false
 	 * @see GameEngine.Character#setTarget(java.util.List)
@@ -31,7 +31,7 @@ public class Godfather extends Character {
 			return false;
 		}
 	}
-	/*
+	/**
 	 * Performs kill action on target list
 	 * @see GameEngine.Character#doAction()
 	 */
