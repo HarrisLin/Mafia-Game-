@@ -7,7 +7,8 @@ import GameEngine.Character;
 import GameEngine.GameEngine;
 import GameEngine.Player;
 
-/*
+/**
+ * 
  * SerialKiller targets one person to kill at night and is immune at night.
  */
 
@@ -23,7 +24,7 @@ public class SerialKiller extends Character {
 		return(targets.size() == 1);
 	}
 
-	/*
+	/**
 	 * questionable-- alive status of victim is important or not?
 	 */
 	@Override
