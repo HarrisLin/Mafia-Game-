@@ -15,7 +15,7 @@ public class SheriffOptions implements RoleOptions {
 	/**
 	 * Constructor with default options
 	 */
-	SheriffOptions() {
+	public SheriffOptions() {
 		defaultOptions();
 	}
 	

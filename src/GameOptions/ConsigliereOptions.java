@@ -1,16 +1,10 @@
 package GameOptions;
 
-/**
- * Options for the investigator role
- * 
- * @author pacified
- *
- */
-public class InvestigatorOptions implements RoleOptions {
+public class ConsigliereOptions implements RoleOptions {
 
 	private DetectRole detectsRole;
 
-	public InvestigatorOptions() {
+	public ConsigliereOptions() {
 		defaultOptions();
 	}
 

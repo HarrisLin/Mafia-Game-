@@ -34,10 +34,9 @@ public class Mayor extends Character {
 	 * @return vote count
 	 */
 	public int getRevealed() {
-		if(revealed) {
+		if (revealed) {
 			return vote_count;
-		}
-		else {
+		} else {
 			return 1;
 		}
 	}
@@ -52,9 +51,5 @@ public class Mayor extends Character {
 	public String doAction() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-	
-	public static enum VoteCountOptions {
-		VOTE_COUNT_2, VOTE_COUNT_3, VOTE_COUNT_4
 	}
 }

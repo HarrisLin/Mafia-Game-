@@ -1,8 +1,11 @@
 package Character;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import Enumerators.Roles;
 import GameEngine.Character;
+import GameEngine.GameEngine;
 import GameEngine.Player;
 
 public class Veteran extends Character {
@@ -12,8 +15,12 @@ public class Veteran extends Character {
 
 	@Override
 	public boolean setTarget(List<Player> targets) {
-		// TODO Auto-generated method stub
-		return false;
+		if (targets.size() != 1
+				|| GameEngine.getCharacter(targets.get(0)) != this) {
+			return false;
+		}
+		this.targets = new ArrayList<Player>(targets);
+		return true;
 	}
 
 	@Override

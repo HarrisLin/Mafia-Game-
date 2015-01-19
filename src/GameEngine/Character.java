@@ -155,14 +155,23 @@ public abstract class Character {
 	}
 
 	/**
-	 * Is this bug safe?
-	 * 
+	 *
 	 * @return the players who have visited this character that night
 	 */
 	public List<Player> getVistors() {
 		return new ArrayList<Player>(visitors);
 	}
 
+	/**
+	 * 
+	 * @param player who visited this character
+	 * @return TRUE
+	 */
+	public boolean addVisitor(Player player) {
+		visitors.add(player);
+		return true;
+	}
+	
 	/**
 	 * 
 	 * @return the name of the roll (ex. Detective)

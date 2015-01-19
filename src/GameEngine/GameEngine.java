@@ -46,6 +46,14 @@ public class GameEngine {
 	public static List<Player> getAlivePlayer() {
 		return new ArrayList<Player>(alive_player);
 	}
+	
+	/**
+	 * @return TRUE if successfully killed and FALSE if not
+	 */
+	public static boolean killPlayer(Player player) {
+		return alive_player.remove(player);
+	}
+	
 	/**
 	 * GameEngine.assignCharacters Randomly assigns a character role to all
 	 * players
