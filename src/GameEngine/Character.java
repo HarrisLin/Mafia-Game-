@@ -19,12 +19,13 @@ public abstract class Character {
 	private boolean alive;
 	// Determines if character is night immune
 	private boolean invulnerable;
-	//List of possible investigation results for this character
+	// List of possible investigation results for this character
 	private List<Investigations> investigation;
 	// Lists of target the player has chosen to perform night actions on
 	protected List<Player> targets;
-	//Random number generator for investigation or other purposes
+	// Random number generator for investigation or other purposes
 	Random indexGenerator;
+
 	/**
 	 * Constructor for the character with default game options
 	 * 
@@ -54,11 +55,20 @@ public abstract class Character {
 	}
 
 	/**
-	 * Kills the character; s/he will no longer be alive
-	 * return TRUE if killed and FALSE if not killed
+	 * **UNSAFE METHOD** Used to change targets of character via bus driver
+	 * Change if can change to bug safe method.
+	 * @return 
+	 */
+	public List<Player> getTargets() {
+		return targets;
+	}
+
+	/**
+	 * Kills the character; s/he will no longer be alive return TRUE if killed
+	 * and FALSE if not killed
 	 */
 	public boolean kill() {
-		if(!invulnerable) {
+		if (!invulnerable) {
 			alive = false;
 			return true;
 		}
@@ -82,7 +92,7 @@ public abstract class Character {
 	public boolean checkInvulnerable() {
 		return invulnerable;
 	}
-	
+
 	/**
 	 * 
 	 * @return a random investigation of possible investigations
@@ -93,6 +103,7 @@ public abstract class Character {
 		investigate = investigation.get(index);
 		return investigate.toString().toLowerCase();
 	}
+
 	/**
 	 * 
 	 * @return the name of the roll (ex. Detective)
