@@ -68,4 +68,10 @@ public class Investigator extends Character {
 	public static enum OptionDetectRole {
 		DETECT_EXACT_ROLE, DETECT_VAGUE_ROLE, DETECT_LIST_OF_ROLE
 	}
+
+	@Override
+	public boolean vote(List<Player> lynches) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

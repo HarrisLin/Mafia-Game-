@@ -76,4 +76,10 @@ public class Sheriff extends Character {
 		}
 		return "The outcome of your results suggests your target is " + result + ".";
 	}
+
+	@Override
+	public boolean vote(List<Player> lynches) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

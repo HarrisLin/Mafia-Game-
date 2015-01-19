@@ -40,4 +40,9 @@ public class Godfather extends Character {
 		GameEngine.getCharacter(targets.get(0)).kill();	
 		return "You've attempted to kill your target" + targets.get(0).getName();
 	}
+	@Override
+	public boolean vote(List<Player> lynches) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
