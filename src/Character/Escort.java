@@ -29,10 +29,14 @@ public class Escort extends Character {
 		this.targets = new ArrayList<Player>(targets);
 		return true;
 	}
-
+	
+	/**
+	 * Removes target's targets
+	 */
 	@Override
 	public String doAction() {
+		//GameEngine.getCharacter(targets.get(0)).addVisitor(this);
 		GameEngine.getCharacter(targets.get(0)).getTargets().clear();
-		return "Thank you for performing your action you filthy whore";
+		return "Thank you for performing your action you filthy whore.";
 	}
 }

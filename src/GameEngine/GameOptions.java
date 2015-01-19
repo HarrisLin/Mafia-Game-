@@ -1,6 +1,11 @@
-package GameOptions;
+package GameEngine;
 
 import Enumerators.Roles;
+import GameOptions.InvestigatorOptions;
+import GameOptions.NoSuchOptionException;
+import GameOptions.Options;
+import GameOptions.RoleOptions;
+import GameOptions.SheriffOptions;
 
 /**
  * Game options for the game.

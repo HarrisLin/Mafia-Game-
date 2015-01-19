@@ -1,8 +1,10 @@
 package Character;
+import java.util.ArrayList;
 import java.util.List;
 
 import Enumerators.Roles;
 import GameEngine.Character;
+import GameEngine.GameEngine;
 import GameEngine.Player;
 
 public class Witch extends Character {
@@ -12,8 +14,12 @@ public class Witch extends Character {
 
 	@Override
 	public boolean setTarget(List<Player> targets) {
-		// TODO Auto-generated method stub
-		return false;
+		if (targets.size() != 2
+				|| !GameEngine.alive_player.containsAll(targets)) {
+			return false;
+		}
+		this.targets = new ArrayList<Player>(targets);
+		return true;
 	}
 
 	@Override

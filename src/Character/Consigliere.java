@@ -7,13 +7,14 @@ import Enumerators.Roles;
 import GameEngine.Character;
 import GameEngine.Player;
 import GameEngine.GameEngine;
+import GameOptions.ConsigliereOptions.DetectRole;
 
 /**
- * The detective investigates a single Player target to discover his/her role
+ * The consigliere investigates a single Player target to discover his/her role
  */
 public class Consigliere extends Character {
 	// game options
-	private final Consigliere.DetectRoleOption detectsExactRole;
+	private final GameOptions.Options detectsRole;
 
 	/**
 	 *  Investigator
@@ -22,7 +23,7 @@ public class Consigliere extends Character {
 	 */
 	public Consigliere() {
 		super(Roles.Investigator);
-		detectsExactRole = Consigliere.DetectRoleOption.DETECT_VAGUE_ROLE;
+		detectsRole = GameOptions.ConsigliereOptions.DetectRole.DETECT_VAGUE_ROLE;
 	}
 
 	@Override
@@ -39,7 +40,8 @@ public class Consigliere extends Character {
 	@Override
 	public String doAction() {
 		String result;
-		switch(detectsExactRole) {
+		GameOptions.ConsigliereOptions.DetectRole detect = (DetectRole) detectsRole;
+		switch(detect) {
 		case DETECT_EXACT_ROLE:
 			result = GameEngine.getCharacter(targets.get(0)).getRoleString();
 			break;
@@ -50,12 +52,5 @@ public class Consigliere extends Character {
 			result = GameEngine.getCharacter(targets.get(0)).getInvestigation();
 		}
 		return "The result of your investigation yeilded a role of " + result + ".";
-	}
-	
-	/**
-	 * The game options for Investigators
-	 */
-	public static enum DetectRoleOption {
-		DETECT_EXACT_ROLE, DETECT_VAGUE_ROLE
 	}
 }
