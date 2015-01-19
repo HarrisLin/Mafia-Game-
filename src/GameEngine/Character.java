@@ -21,8 +21,10 @@ public abstract class Character {
 	private boolean invulnerable;
 	// List of possible investigation results for this character
 	private List<Investigations> investigation;
-	// Lists of target the player has chosen to perform night actions or lynching 
+	// Lists of target the player has chosen to perform night actions  
 	protected List<Player> targets;
+	// Lists of target the player has chosen to perform lynches  
+	protected List<Player> lynches;
 	// Random number generator for investigation or other purposes
 	Random indexGenerator;
 
@@ -126,6 +128,13 @@ public abstract class Character {
 	 * @return
 	 */
 	public abstract boolean setTarget(List<Player> targets);
+	/**
+	 * 
+	 * @param lynches
+	 * @return
+	 */
+	public abstract boolean vote(List<Player> lynches);
+
 
 	/**
 	 * 

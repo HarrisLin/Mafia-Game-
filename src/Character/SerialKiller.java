@@ -1,5 +1,6 @@
 package Character;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Enumerators.Roles;
@@ -14,14 +15,22 @@ import GameEngine.Player;
 
 public class SerialKiller extends Character {
 
-	SerialKiller(){
+	SerialKiller() {
 		super(Roles.SerialKiller, true);
 	}
 
 	@Override
 	public boolean setTarget(List<Player> targets) {
-		this.targets = targets;
-		return(targets.size() == 1);
+		if (targets.size() == 1) {
+			if (GameEngine.AliveList.contains(targets.get(0))) {
+				this.targets = new ArrayList<Player>(targets);
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -29,11 +38,14 @@ public class SerialKiller extends Character {
 	 */
 	@Override
 	public String doAction() {
-		Character victim = GameEngine.getCharacter(targets.get(0));
-		if(victim.checkAlive() == true){
-			victim.kill();
-		}
-		return null;
+		GameEngine.getCharacter(targets.get(0)).kill();
+		return "You've attempted to kill " + targets.get(0).getName();
 	}
-	
+
+	@Override
+	public boolean vote(List<Player> lynches) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

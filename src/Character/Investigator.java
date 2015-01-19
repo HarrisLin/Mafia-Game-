@@ -20,7 +20,7 @@ public class Investigator extends Character {
 	 * @param gameOption - Investigator.Options.DETECT_EXACT_ROLE: the investigator will discover the exact role of his target
 	 *                    - Investigator.Options.DETECT_VAGUE_ROLE: the investigator will discover a hint for the role of his target
 	 */
-	public Investigator(Investigator.OptionDetectRole gameOptionDetectRole) {
+	Investigator(Investigator.OptionDetectRole gameOptionDetectRole) {
 		super(Roles.Investigator);
 		detectsExactRole = gameOptionDetectRole;
 	}
@@ -67,5 +67,11 @@ public class Investigator extends Character {
 	 */
 	public static enum OptionDetectRole {
 		DETECT_EXACT_ROLE, DETECT_VAGUE_ROLE, DETECT_LIST_OF_ROLE
+	}
+
+	@Override
+	public boolean vote(List<Player> lynches) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
