@@ -23,13 +23,12 @@ public class Godfather extends Character {
 	 */
 	@Override
 	public boolean setTarget(List<Player> targets) {
-		if(targets.size() == 1)
-		{
-			this.targets = new ArrayList<Player>(targets);
-			return true;
-		}else{
+		if (targets.size() != 1
+				|| !GameEngine.alive_player.containsAll(targets)) {
 			return false;
 		}
+		this.targets = new ArrayList<Player>(targets);
+		return true;
 	}
 	/**
 	 * Performs kill action on target list

@@ -1,5 +1,6 @@
 package GameEngine;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -21,9 +22,12 @@ public abstract class Character {
 	private boolean invulnerable;
 	// List of possible investigation results for this character
 	private List<Investigations> investigation;
-	// Lists of target the player has chosen to perform night actions  
+	// For the lookout and detective class, this is a count for all the visitors
+	// of the character that night (be sure to clear this every night)
+	private List<Player> visitors;
+	// Lists of target the player has chosen to perform night actions
 	protected List<Player> targets;
-	// Lists of target the player has chosen to perform lynches  
+	// Lists of target the player has chosen to perform lynches
 	protected Player lynchTarget;
 	// Random number generator for investigation or other purposes
 	Random indexGenerator;
@@ -39,6 +43,7 @@ public abstract class Character {
 		alive = true;
 		invulnerable = false;
 		investigation = Investigations.doInvestigation(role);
+		visitors = new ArrayList<Player>();
 	}
 
 	/**
@@ -59,19 +64,20 @@ public abstract class Character {
 	/**
 	 * **UNSAFE METHOD** Used to change targets of character via bus driver
 	 * Change if can change to bug safe method.
-	 * @return 
+	 * 
+	 * @return
 	 */
 	public List<Player> getTargets() {
 		return targets;
 	}
-	
+
 	/**
 	 * 
 	 * @param lynches
 	 * @return TRUE if lynch target selected successfully or FALSE if not
 	 */
 	public boolean vote(Player lynchVote) {
-		if(GameEngine.getCharacter(lynchVote).checkAlive()) {
+		if (GameEngine.getCharacter(lynchVote).checkAlive()) {
 			lynchTarget = lynchVote;
 			return true;
 		}
@@ -117,6 +123,15 @@ public abstract class Character {
 		int index = indexGenerator.nextInt(investigation.size());
 		investigate = investigation.get(index);
 		return investigate.toString().toLowerCase();
+	}
+
+	/**
+	 * Is this bug safe?
+	 * 
+	 * @return the players who have visited this character that night
+	 */
+	public List<Player> getVistors() {
+		return new ArrayList<Player>(visitors);
 	}
 
 	/**

@@ -21,16 +21,12 @@ public class SerialKiller extends Character {
 
 	@Override
 	public boolean setTarget(List<Player> targets) {
-		if (targets.size() == 1) {
-			if (GameEngine.alive_player.contains(targets.get(0))) {
-				this.targets = new ArrayList<Player>(targets);
-				return true;
-			} else {
-				return false;
-			}
-		} else {
+		if (targets.size() != 1
+				|| !GameEngine.alive_player.containsAll(targets)) {
 			return false;
 		}
+		this.targets = new ArrayList<Player>(targets);
+		return true;
 	}
 
 	/**
