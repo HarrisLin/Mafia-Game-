@@ -15,8 +15,10 @@ import java.util.Map;
 public class GameEngine {
 
 	private static Map<Player, Character> player_character_map = new HashMap<Player, Character>();
-	//List of players still alive, used for setTarget() method in Character Class
+	// List of players still alive, used for setTarget() method in Character
+	// Class
 	public static List<Player> alive_player = new ArrayList<Player>();
+
 	/**
 	 * GameEngine.registerPlayer Registers a player into the game.
 	 * 
@@ -37,7 +39,7 @@ public class GameEngine {
 	public static Character getCharacter(Player player) {
 		return player_character_map.get(player);
 	}
-	
+
 	/**
 	 * GameEngine.assignCharacters Randomly assigns a character role to all
 	 * players
@@ -67,6 +69,7 @@ public class GameEngine {
 	public static boolean setTarget(Player player, List<Player> targets) {
 		return player_character_map.get(player).setTarget(targets);
 	}
+
 	/**
 	 * GameEngine.vote
 	 * 
@@ -76,15 +79,29 @@ public class GameEngine {
 	 *            The target(s) of the action
 	 * @return true if target was successfully set, false otherwise
 	 */
-	public static boolean vote(Player player, List<Player> lynches) {
-		return player_character_map.get(player).setTarget(lynches);
+	public static boolean vote(Player player, Player target) {
+		return player_character_map.get(player).vote(target);
 	}
+
 	/**
 	 * GameEngine.performNightActions Makes each character perform his/her night
 	 * action
+	 * 
+	 * @return summary of all the deaths, last wills, etc.
 	 */
-	public static void performNightActions() {
+	public static String performNightActions() {
 		// TODO: implement me!
+		return null;
 	}
 
+	/**
+	 * Accumulates all the votes of the remaining players and if the mayor is
+	 * revealed then count his vote weighted
+	 * 
+	 * @return the player lynched
+	 */
+	public static Player lynch() {
+		// TODO: implement me!
+		return null;
+	}
 }
