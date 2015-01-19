@@ -27,7 +27,7 @@ public abstract class Character {
 	private List<Player> visitors;
 	// Lists of target the player has chosen to perform night actions
 	protected List<Player> targets;
-	// Lists of target the player has chosen to perform lynches
+	// Target the player has chosen to vote for lynch
 	protected Player lynchTarget;
 	// Random number generator for investigation or other purposes
 	Random indexGenerator;
@@ -62,10 +62,10 @@ public abstract class Character {
 	}
 
 	/**
-	 * **UNSAFE METHOD** Used to change targets of character via bus driver
-	 * Change if can change to bug safe method.
+	 * **UNSAFE METHOD** Used to change targets of character via bus driver and
+	 * other character that require to modify target list 
 	 * 
-	 * @return
+	 * @return list of night action targets of the player
 	 */
 	public List<Player> getTargets() {
 		return targets;

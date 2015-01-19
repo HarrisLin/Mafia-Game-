@@ -7,8 +7,10 @@ import Enumerators.Roles;
 import GameEngine.Character;
 import GameEngine.GameEngine;
 import GameEngine.Player;
+
 /**
- * Bus driver swap two characters' target list
+ * Bus driver swap two characters' in everyone's target list
+ * 
  * @author pacified
  *
  */
@@ -19,7 +21,7 @@ public class BusDriver extends Character {
 
 	@Override
 	public boolean setTarget(List<Player> targets) {
-		//bus driver must only target 2 people
+		// bus driver must only target 2 people
 		if (targets.size() != 2
 				|| !GameEngine.alive_player.containsAll(targets)) {
 			return false;
@@ -27,18 +29,25 @@ public class BusDriver extends Character {
 		this.targets = new ArrayList<Player>(targets);
 		return true;
 	}
+
 	/**
-	 * Swap two characters' target list
+	 * Swap two characters' in everyone's target list
+	 * 
 	 */
 	@Override
 	public String doAction() {
-		List<Player> target1List = GameEngine.getCharacter(targets.get(0)).getTargets();
-		List<Player> target2List = GameEngine.getCharacter(targets.get(1)).getTargets();
-		List<Player> tempSwap = new ArrayList<Player>(GameEngine.getCharacter(targets.get(0)).getTargets());
-		target1List.clear();
-		target1List.addAll(target2List);
-		target2List.clear();
-		target2List.addAll(tempSwap);
+		for (Player iterator : GameEngine.getAlivePlayer()) {
+			Character character = GameEngine.getCharacter(iterator);
+			List<Player> players = character.getTargets();
+			for(int i = 0; i < players.size(); i++) {
+				if(players.get(i).equals(targets.get(0))) {
+					players.set(i, targets.get(1));
+				}
+				else if(players.get(i).equals(targets.get(1))) {
+					players.set(i, targets.get(0));
+				}
+			}
+		}
 		return "Your night action has been received.";
 	}
 }
