@@ -41,6 +41,12 @@ public class GameEngine {
 	}
 
 	/**
+	 * @return list of all the character
+	 */
+	public static List<Player> getAlivePlayer() {
+		return new ArrayList<Player>(alive_player);
+	}
+	/**
 	 * GameEngine.assignCharacters Randomly assigns a character role to all
 	 * players
 	 */
