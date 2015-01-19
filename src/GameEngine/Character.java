@@ -24,7 +24,7 @@ public abstract class Character {
 	// Lists of target the player has chosen to perform night actions  
 	protected List<Player> targets;
 	// Lists of target the player has chosen to perform lynches  
-	protected List<Player> lynches;
+	protected Player lynchTarget;
 	// Random number generator for investigation or other purposes
 	Random indexGenerator;
 
@@ -63,6 +63,19 @@ public abstract class Character {
 	 */
 	public List<Player> getTargets() {
 		return targets;
+	}
+	
+	/**
+	 * 
+	 * @param lynches
+	 * @return TRUE if lynch target selected successfully or FALSE if not
+	 */
+	public boolean vote(Player lynchVote) {
+		if(GameEngine.getCharacter(lynchVote).checkAlive()) {
+			lynchTarget = lynchVote;
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -128,13 +141,6 @@ public abstract class Character {
 	 * @return
 	 */
 	public abstract boolean setTarget(List<Player> targets);
-	/**
-	 * 
-	 * @param lynches
-	 * @return
-	 */
-	public abstract boolean vote(List<Player> lynches);
-
 
 	/**
 	 * 

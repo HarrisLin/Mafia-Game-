@@ -5,8 +5,14 @@ import java.util.List;
 import Enumerators.Roles;
 import GameEngine.Character;
 import GameEngine.Player;
-import GameEngine.GameEngine;
 
+/**
+ * Mayor is part of the town that has power to higher weighted vote when
+ * revealed
+ * 
+ * @author kaibro
+ *
+ */
 public class Mayor extends Character {
 
 	private boolean revealed;
@@ -14,27 +20,8 @@ public class Mayor extends Character {
 
 	Mayor() {
 		super(Roles.Mayor);
-		getRevealed(false);
+		revealed = false;
 		vote_count = 3;
-	}
-
-	@Override
-	public boolean vote(List<Player> lynches) {
-		if (getRevealed(false)) {
-			if (lynches.size() != 1) {
-				return false;
-			}
-			this.lynches = lynches;
-			return true;
-		} else if (getRevealed(true)) {
-			if (targets.size() != vote_count) {
-				return false;
-			}
-			for (int i = 0; i < vote_count; i++)
-				this.lynches = lynches;
-			return true;
-		} else
-			return false;
 	}
 
 	public boolean Revealed() {
@@ -42,9 +29,17 @@ public class Mayor extends Character {
 		return revealed;
 	}
 
-	public boolean getRevealed(boolean revealed) {
-		this.revealed = revealed;
-		return revealed;
+	/**
+	 * 
+	 * @return vote count
+	 */
+	public int getRevealed() {
+		if(revealed) {
+			return vote_count;
+		}
+		else {
+			return 1;
+		}
 	}
 
 	@Override
@@ -57,5 +52,9 @@ public class Mayor extends Character {
 	public String doAction() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public static enum VoteCountOptions {
+		VOTE_COUNT_2, VOTE_COUNT_3, VOTE_COUNT_4
 	}
 }

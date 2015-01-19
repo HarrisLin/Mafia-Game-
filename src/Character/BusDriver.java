@@ -23,7 +23,7 @@ public class BusDriver extends Character {
 		if (targets.size() != 2) {
 			return false;
 		}
-		if(!GameEngine.AliveList.containsAll(targets)){
+		if(!GameEngine.alive_player.containsAll(targets)){
 			return false;
 		}
 		this.targets = new ArrayList<Player>(targets);
@@ -42,11 +42,5 @@ public class BusDriver extends Character {
 		target2List.clear();
 		target2List.addAll(tempSwap);
 		return "Your night action has been received.";
-	}
-
-	@Override
-	public boolean vote(List<Player> lynches) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 }

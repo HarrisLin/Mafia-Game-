@@ -12,7 +12,7 @@ import GameEngine.GameEngine;
  */
 public class Investigator extends Character {
 	// game options
-	private final Investigator.OptionDetectRole detectsExactRole;
+	private final Investigator.DetectRoleOption detectsExactRole;
 
 	/**
 	 * Investigator.
@@ -20,7 +20,7 @@ public class Investigator extends Character {
 	 * @param gameOption - Investigator.Options.DETECT_EXACT_ROLE: the investigator will discover the exact role of his target
 	 *                    - Investigator.Options.DETECT_VAGUE_ROLE: the investigator will discover a hint for the role of his target
 	 */
-	Investigator(Investigator.OptionDetectRole gameOptionDetectRole) {
+	Investigator(Investigator.DetectRoleOption gameOptionDetectRole) {
 		super(Roles.Investigator);
 		detectsExactRole = gameOptionDetectRole;
 	}
@@ -32,7 +32,7 @@ public class Investigator extends Character {
 	 */
 	public Investigator() {
 		super(Roles.Investigator);
-		detectsExactRole = Investigator.OptionDetectRole.DETECT_VAGUE_ROLE;
+		detectsExactRole = Investigator.DetectRoleOption.DETECT_VAGUE_ROLE;
 	}
 
 	@Override
@@ -65,13 +65,7 @@ public class Investigator extends Character {
 	/**
 	 * The game options for Investigators
 	 */
-	public static enum OptionDetectRole {
+	public static enum DetectRoleOption {
 		DETECT_EXACT_ROLE, DETECT_VAGUE_ROLE, DETECT_LIST_OF_ROLE
-	}
-
-	@Override
-	public boolean vote(List<Player> lynches) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 }

@@ -22,7 +22,7 @@ public class SerialKiller extends Character {
 	@Override
 	public boolean setTarget(List<Player> targets) {
 		if (targets.size() == 1) {
-			if (GameEngine.AliveList.contains(targets.get(0))) {
+			if (GameEngine.alive_player.contains(targets.get(0))) {
 				this.targets = new ArrayList<Player>(targets);
 				return true;
 			} else {
@@ -41,11 +41,4 @@ public class SerialKiller extends Character {
 		GameEngine.getCharacter(targets.get(0)).kill();
 		return "You've attempted to kill " + targets.get(0).getName();
 	}
-
-	@Override
-	public boolean vote(List<Player> lynches) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }
