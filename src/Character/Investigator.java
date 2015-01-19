@@ -13,7 +13,7 @@ import GameEngine.GameEngine;
  */
 public class Investigator extends Character {
 	// game options
-	private final Investigator.DetectRoleOption detectsExactRole;
+	private final GameOptions.InvestigatorOptions.DetectRole detectsExactRole;
 
 	/**
 	 * Investigator. Game Option constructor.
@@ -24,7 +24,7 @@ public class Investigator extends Character {
 	 *            Investigator.Options.DETECT_VAGUE_ROLE: the investigator will
 	 *            discover a hint for the role of his target
 	 */
-	Investigator(Investigator.DetectRoleOption gameOptionDetectRole) {
+	Investigator(GameOptions.InvestigatorOptions.DetectRole gameOptionDetectRole) {
 		super(Roles.Investigator);
 		detectsExactRole = gameOptionDetectRole;
 	}
@@ -35,7 +35,7 @@ public class Investigator extends Character {
 	 */
 	public Investigator() {
 		super(Roles.Investigator);
-		detectsExactRole = Investigator.DetectRoleOption.DETECT_VAGUE_ROLE;
+		detectsExactRole = GameOptions.InvestigatorOptions.DetectRole.DETECT_VAGUE_ROLE;
 	}
 
 	@Override
@@ -68,12 +68,5 @@ public class Investigator extends Character {
 					+ ".";
 		}
 		return result;
-	}
-
-	/**
-	 * The game options for Investigators
-	 */
-	public static enum DetectRoleOption {
-		DETECT_EXACT_ROLE, DETECT_VAGUE_ROLE
 	}
 }

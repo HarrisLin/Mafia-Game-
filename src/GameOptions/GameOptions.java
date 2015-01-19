@@ -11,8 +11,8 @@ import Enumerators.Roles;
 public class GameOptions {
 
 	// Options for the roles as classes in the game options class
-	private static Options sheriff;
-	private static Options investigator;
+	private static RoleOptions sheriff;
+	private static RoleOptions investigator;
 
 	/**
 	 * Constructor
@@ -76,7 +76,7 @@ public class GameOptions {
 	 * @return true if the option is ON and false if the option is OFF
 	 * @throws NoSuchOptionException
 	 */
-	public static boolean getOptions(Roles role, int option)
+	public static Options getOptions(Roles role, int option)
 			throws NoSuchOptionException {
 		switch (role) {
 		case Sheriff:
