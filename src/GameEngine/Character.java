@@ -20,6 +20,8 @@ public abstract class Character {
 	private boolean alive;
 	// Determines if character is night immune
 	private boolean invulnerable;
+	// Determines of character is doused or not
+	private boolean doused;
 	// List of possible investigation results for this character
 	private List<Investigations> investigation;
 	// For the lookout and detective class, this is a count for all the visitors
@@ -41,6 +43,7 @@ public abstract class Character {
 	protected Character(Roles role) {
 		this.role = role;
 		alive = true;
+		doused = false;
 		invulnerable = false;
 		investigation = Investigations.doInvestigation(role);
 		visitors = new ArrayList<Player>();
@@ -57,8 +60,10 @@ public abstract class Character {
 	protected Character(Roles role, boolean invulnerable) {
 		this.role = role;
 		alive = true;
+		doused = false;
 		this.invulnerable = invulnerable;
 		investigation = Investigations.doInvestigation(role);
+		visitors = new ArrayList<Player>();
 	}
 
 	/**
@@ -85,6 +90,13 @@ public abstract class Character {
 	}
 
 	/**
+	 * 
+	 * @return target player of which this character wishes to lynch
+	 */
+	public Player getLynchTarget() {
+		return lynchTarget;
+	}
+	/**
 	 * Kills the character; s/he will no longer be alive return TRUE if killed
 	 * and FALSE if not killed
 	 */
@@ -96,6 +108,22 @@ public abstract class Character {
 		return false;
 	}
 
+	/**
+	 * Douses the target
+	 * @return TRUE
+	 */
+	public boolean douse() {
+		return doused = true;
+	}
+	
+	/**
+	 * 
+	 * @return TRUE if character is doused and FALSE if not
+	 */
+	public boolean isDoused() {
+		return doused;
+	}
+	
 	/**
 	 * Check if player is alive or dead
 	 * 
