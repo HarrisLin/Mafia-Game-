@@ -7,7 +7,11 @@ import Enumerators.Roles;
 import GameEngine.Character;
 import GameEngine.GameEngine;
 import GameEngine.Player;
-
+/**
+ * Bus driver swap two characters' target list
+ * @author pacified
+ *
+ */
 public class BusDriver extends Character {
 	BusDriver() {
 		super(Roles.BusDriver);
@@ -22,7 +26,9 @@ public class BusDriver extends Character {
 		this.targets = targets;
 		return true;
 	}
-
+	/**
+	 * Swap two characters' target list
+	 */
 	@Override
 	public String doAction() {
 		List<Player> target1List = GameEngine.getCharacter(targets.get(0)).getTargets();
