@@ -53,6 +53,11 @@ NOTE: Assign characters, perform all night time actions, lynch, etc.
 
 - Make GUI
 NOTE: I DON'T KNOW HOW :D
+derek: (try NetBeans, it has a visual GUI maker)
+
+- Finish CLI
+This will give us a basic way of playing the game until we develop a GUI
+We can test all of our features this way to make sure our GameEngine works
 
 7) Features to consider and not implemented yet :
 - Catagories : Make list of players still in play as a catagory instead of listing role.
