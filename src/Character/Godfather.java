@@ -6,6 +6,7 @@ import java.util.List;
 import Enumerators.Roles;
 import GameEngine.Character;
 import GameEngine.GameEngine;
+import GameEngine.GameMessage;
 import GameEngine.Player;
 
 //****************************************************************
@@ -19,7 +20,7 @@ import GameEngine.Player;
 public class Godfather extends Character {
 
 	Godfather(Player player) {
-		super(Roles.Godfather, player, true);
+		super(Roles.Godfather, player, true, true);
 	}
 	/**
 	 * Sets target for night action, target size must equal 1
@@ -41,6 +42,9 @@ public class Godfather extends Character {
 	 */
 	@Override
 	public String doAction() {
+		if(targets.isEmpty()) {
+			return GameMessage.noAction();
+		}
 		String message = "You've attempted to kill your target" + targets.get(0).getName();
 		GameEngine.getCharacter(targets.get(0)).addVisitor(getPlayer());
 		GameEngine.getCharacter(targets.get(0)).kill();	

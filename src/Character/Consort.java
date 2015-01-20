@@ -6,6 +6,7 @@ import java.util.List;
 import Enumerators.Roles;
 import GameEngine.Character;
 import GameEngine.GameEngine;
+import GameEngine.GameMessage;
 import GameEngine.Player;
 
 //****************************************************************
@@ -40,6 +41,12 @@ public class Consort extends Character {
 	 */
 	@Override
 	public String doAction() {
+		if(targets.isEmpty()) {
+			return GameMessage.noAction();
+		}
+		if(targets.isEmpty()) {
+			return GameMessage.noAction();
+		}
 		String message = "Thank you for performing your action you filthy whore.";
 		if(this.isRoleBlocked()) {
 			return message;

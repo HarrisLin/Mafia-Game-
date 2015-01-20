@@ -5,6 +5,7 @@ import java.util.List;
 
 import Enumerators.Roles;
 import GameEngine.Character;
+import GameEngine.GameMessage;
 import GameEngine.Player;
 import GameEngine.GameEngine;
 import GameOptions.ConsigliereOptions.DetectRole;
@@ -38,6 +39,9 @@ public class Consigliere extends Character {
 
 	@Override
 	public String doAction() {
+		if(targets.isEmpty()) {
+			return GameMessage.noAction();
+		}
 		String result;
 		GameOptions.ConsigliereOptions.DetectRole detect = (DetectRole) detectsRole;
 		switch (detect) {

@@ -6,7 +6,13 @@ import java.util.List;
 import Enumerators.Roles;
 import GameEngine.Character;
 import GameEngine.GameEngine;
+import GameEngine.GameMessage;
 import GameEngine.Player;
+
+//****************************************************************
+//DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE
+//this is a tag for all the characters/classes that are done
+//*****************************************************************
 
 /**
  * 
@@ -34,7 +40,11 @@ public class SerialKiller extends Character {
 	 */
 	@Override
 	public String doAction() {
+		if(targets.isEmpty()) {
+			return GameMessage.noAction();
+		}
 		String message = "You've attempted to kill " + targets.get(0).getName();
+		GameEngine.getCharacter(targets.get(0)).addVisitor(getPlayer());
 		if(this.isRoleBlocked()) {
 			return message;
 		}

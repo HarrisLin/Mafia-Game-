@@ -5,14 +5,15 @@ import java.util.List;
 
 import Enumerators.Roles;
 import GameEngine.Character;
+import GameEngine.GameMessage;
 import GameEngine.Player;
 import GameEngine.GameEngine;
 import GameOptions.InvestigatorOptions.DetectRole;
 
-// ****************************************************************
+// *****************************************************************
 // DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE
-// this is a tag for all the characters/classes that are done
-//*****************************************************************
+// this is a tag for all the characters/classes that are done(｡◕‿◕｡)
+// *****************************************************************
 
 /**
  * The detective investigates a single Player target to discover his/her role
@@ -57,6 +58,9 @@ public class Investigator extends Character {
 
 	@Override
 	public String doAction() {
+		if(targets.isEmpty()) {
+			return GameMessage.noAction();
+		}
 		String message = "Cannot get your results";
 		if (this.isRoleBlocked()) {
 			return message;

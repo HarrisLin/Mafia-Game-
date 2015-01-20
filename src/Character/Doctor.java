@@ -6,6 +6,7 @@ import java.util.List;
 import Enumerators.Roles;
 import GameEngine.Character;
 import GameEngine.GameEngine;
+import GameEngine.GameMessage;
 import GameEngine.Player;
 
 //****************************************************************
@@ -31,6 +32,9 @@ public class Doctor extends Character {
 
 	@Override
 	public String doAction() {
+		if(targets.isEmpty()) {
+			return GameMessage.noAction();
+		}
 		String message = "Thanks doc";
 		if (this.isRoleBlocked()) {
 			return message;

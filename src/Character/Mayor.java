@@ -6,6 +6,11 @@ import Enumerators.Roles;
 import GameEngine.Character;
 import GameEngine.Player;
 
+//****************************************************************
+//DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE
+//this is a tag for all the characters/classes that are done
+//*****************************************************************
+
 /**
  * Mayor is part of the town that has power to higher weighted vote when
  * revealed
