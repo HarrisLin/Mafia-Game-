@@ -43,7 +43,7 @@ public class Godfather extends Character {
 	@Override
 	public String doAction() {
 		if(targets.isEmpty()) {
-			return GameMessage.noAction();
+			return GameMessage.NO_ACTION;
 		}
 		String message = "You've attempted to kill your target" + targets.get(0).getName();
 		GameEngine.getCharacter(targets.get(0)).addVisitor(getPlayer());
