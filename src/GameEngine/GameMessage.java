@@ -12,16 +12,9 @@ package GameEngine;
  */
 public class GameMessage {
 
-	private static String gameMessage;
-
 	/**
 	 * A message displayed when character has no targets and no action is
 	 * performed
-	 * 
-	 * @return String
 	 */
-	public static String noAction() {
-		gameMessage = "No action has been registered.";
-		return gameMessage;
-	}
+	public static final String NO_ACTION = "No action has been registered.";
 }

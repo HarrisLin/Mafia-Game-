@@ -43,7 +43,7 @@ public class BusDriver extends Character {
 	@Override
 	public String doAction() {
 		if(targets.isEmpty()) {
-			return GameMessage.noAction();
+			return GameMessage.NO_ACTION;
 		}
 		String message = "Your night action has been received.";
 		if(this.isRoleBlocked()) {

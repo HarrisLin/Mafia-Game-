@@ -40,7 +40,7 @@ public class Consigliere extends Character {
 	@Override
 	public String doAction() {
 		if(targets.isEmpty()) {
-			return GameMessage.noAction();
+			return GameMessage.NO_ACTION;
 		}
 		String result;
 		GameOptions.ConsigliereOptions.DetectRole detect = (DetectRole) detectsRole;
