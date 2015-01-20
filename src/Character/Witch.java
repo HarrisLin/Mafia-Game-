@@ -8,8 +8,8 @@ import GameEngine.GameEngine;
 import GameEngine.Player;
 
 public class Witch extends Character {
-	Witch() {
-		super(Roles.Witch);
+	Witch(Player player) {
+		super(Roles.Witch, player);
 	}
 
 	@Override

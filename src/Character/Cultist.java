@@ -8,8 +8,8 @@ import Enumerators.Roles;
 
 public class Cultist extends Character {
 
-	Cultist() {
-		super(Roles.Cultist);
+	Cultist(Player player) {
+		super(Roles.Cultist, player);
 	}
 
 	@Override

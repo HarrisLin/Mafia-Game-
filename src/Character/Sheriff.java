@@ -23,8 +23,8 @@ public class Sheriff extends Character {
 	/**
 	 * Default constructor that set options to default
 	 */
-	Sheriff() {
-		super(Roles.Sheriff);
+	Sheriff(Player player) {
+		super(Roles.Sheriff, player);
 		detectsMafia = GameOptions.SheriffOptions.DetectMafia.DETECT_MAFIA_ON;
 		detectsArsonist = GameOptions.SheriffOptions.DetectArsonist.DETECT_ARSONIST_ON;
 		detectsCultist = GameOptions.SheriffOptions.DetectCultist.DETECT_CULTIST_ON;
@@ -39,11 +39,11 @@ public class Sheriff extends Character {
 	 * @param detectsCultist
 	 * @param detectsMassMurderer
 	 */
-	Sheriff(GameOptions.Options detectsMafia,
+	Sheriff(Player player, GameOptions.Options detectsMafia,
 			GameOptions.Options detectsArsonist,
 			GameOptions.Options detectsCultist,
 			GameOptions.Options detectsMassMurderer) {
-		super(Roles.Sheriff);
+		super(Roles.Sheriff, player);
 		this.detectsMafia = detectsMafia;
 		this.detectsArsonist = detectsArsonist;
 		this.detectsCultist = detectsCultist;
@@ -63,6 +63,7 @@ public class Sheriff extends Character {
 
 	@Override
 	public String doAction() {
+		GameEngine.getCharacter(targets.get(0)).addVisitor(getPlayer());
 		String result;
 		Roles targetRole = GameEngine.getCharacter(targets.get(0))
 				.getCharacterRole();

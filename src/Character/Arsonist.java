@@ -15,8 +15,8 @@ import GameEngine.Player;
  *
  */
 public class Arsonist extends Character {
-	Arsonist() {
-		super(Roles.Arsonist, true);
+	Arsonist(Player player) {
+		super(Roles.Arsonist, player, true);
 	}
 
 	/**

@@ -8,8 +8,8 @@ import GameEngine.GameEngine;
 import GameEngine.Player;
 
 public class Vigilante extends Character {
-	Vigilante() {
-		super(Roles.Vigilante);
+	Vigilante(Player player) {
+		super(Roles.Vigilante, player);
 	}
 
 	@Override

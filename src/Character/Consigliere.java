@@ -17,12 +17,11 @@ public class Consigliere extends Character {
 	private final GameOptions.Options detectsRole;
 
 	/**
-	 *  Investigator
-	 *  Default constructor. The default setting for an Investigator is that
-	 *  the exact role of his target is revealed.
+	 * Default constructor. The default setting for a consigliere is that the
+	 * vague role of his target is revealed.
 	 */
-	public Consigliere() {
-		super(Roles.Investigator);
+	public Consigliere(Player player) {
+		super(Roles.Investigator, player);
 		detectsRole = GameOptions.ConsigliereOptions.DetectRole.DETECT_VAGUE_ROLE;
 	}
 
@@ -41,7 +40,7 @@ public class Consigliere extends Character {
 	public String doAction() {
 		String result;
 		GameOptions.ConsigliereOptions.DetectRole detect = (DetectRole) detectsRole;
-		switch(detect) {
+		switch (detect) {
 		case DETECT_EXACT_ROLE:
 			result = GameEngine.getCharacter(targets.get(0)).getRoleString();
 			break;
@@ -51,6 +50,7 @@ public class Consigliere extends Character {
 		default:
 			result = GameEngine.getCharacter(targets.get(0)).getInvestigation();
 		}
-		return "The result of your investigation yeilded a role of " + result + ".";
+		return "The result of your investigation yeilded a role of " + result
+				+ ".";
 	}
 }

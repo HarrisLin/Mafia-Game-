@@ -8,8 +8,8 @@ import GameEngine.GameEngine;
 import GameEngine.Player;
 
 public class Lookout extends Character {
-	Lookout() {
-		super(Roles.Lookout);
+	Lookout(Player player) {
+		super(Roles.Lookout, player);
 	}
 
 	@Override

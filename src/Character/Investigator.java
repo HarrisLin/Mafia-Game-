@@ -17,6 +17,15 @@ public class Investigator extends Character {
 	private final GameOptions.Options detectsRole;
 
 	/**
+	 * Investigator Default constructor. The default setting for an Investigator
+	 * is that the exact role of his target is revealed.
+	 */
+	public Investigator(Player player) {
+		super(Roles.Investigator, player);
+		detectsRole = GameOptions.InvestigatorOptions.DetectRole.DETECT_VAGUE_ROLE;
+	}
+
+	/**
 	 * Investigator. Game Option constructor.
 	 * 
 	 * @param gameOption
@@ -25,20 +34,11 @@ public class Investigator extends Character {
 	 *            Investigator.Options.DETECT_VAGUE_ROLE: the investigator will
 	 *            discover a hint for the role of his target
 	 */
-	Investigator(GameOptions.Options detectsRole) {
-		super(Roles.Investigator);
+	Investigator(Player player, GameOptions.Options detectsRole) {
+		super(Roles.Investigator, player);
 		this.detectsRole = detectsRole;
 	}
-
-	/**
-	 * Investigator Default constructor. The default setting for an Investigator
-	 * is that the exact role of his target is revealed.
-	 */
-	public Investigator() {
-		super(Roles.Investigator);
-		detectsRole = GameOptions.InvestigatorOptions.DetectRole.DETECT_VAGUE_ROLE;
-	}
-
+	
 	@Override
 	public boolean setTarget(List<Player> targets) {
 		// The detective can only target a single Player
@@ -52,6 +52,7 @@ public class Investigator extends Character {
 
 	@Override
 	public String doAction() {
+		GameEngine.getCharacter(targets.get(0)).addVisitor(getPlayer());
 		String result;
 		GameOptions.InvestigatorOptions.DetectRole detect = (DetectRole) detectsRole;
 		switch (detect) {

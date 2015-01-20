@@ -7,8 +7,8 @@ import GameEngine.Character;
 import GameEngine.Player;
 
 public class Detective extends Character {
-	Detective() {
-		super(Roles.Detective);
+	Detective(Player player) {
+		super(Roles.Detective, player);
 	}
 
 	@Override
