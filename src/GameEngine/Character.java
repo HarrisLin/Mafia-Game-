@@ -206,6 +206,7 @@ public abstract class Character {
 	 */
 	public boolean kill() {
 		if (!invulnerable && !healed) {
+			GameEngine.killPlayer(getPlayer());
 			alive = false;
 			return true;
 		}
@@ -252,7 +253,7 @@ public abstract class Character {
 	}
 
 	// *************************************
-	// find vote
+	// find vote find lynch
 	// METHODS THAT HAVE TO DO WITH VOTING
 	// *************************************
 	/**
@@ -276,10 +277,10 @@ public abstract class Character {
 		return lynchTarget;
 	}
 
-	// *******************************
+	// ***********************************************
 	// find last will
-	// LAST WILL WILL BE CHANGED HERE
-	// *******************************
+	// LAST WILL WILL BE CHANGED UPDATED OBTAINED HERE
+	// ***********************************************
 	/**
 	 * Updates last will
 	 * 

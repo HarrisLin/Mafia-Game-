@@ -6,12 +6,15 @@ import java.util.List;
 import Enumerators.Roles;
 import Enumerators.Sides;
 import GameEngine.Character;
+import GameEngine.GameMessage;
 import GameEngine.Player;
 import GameEngine.GameEngine;
-//****************************************************************
-//DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE
-//this is a tag for all the characters/classes that are done
-//*****************************************************************
+
+// *****************************************************************
+// DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE
+// this is a tag for all the characters/classes that are done(｡◕‿◕｡)
+// *****************************************************************
+
 /**
  * The Sheriff targets a Player and determines if they are Suspicious or Not
  * Suspicious
@@ -66,8 +69,11 @@ public class Sheriff extends Character {
 
 	@Override
 	public String doAction() {
+		if(targets.isEmpty()) {
+			return GameMessage.noAction();
+		}
 		String message = "Cannot get your results";
-		if(this.isRoleBlocked()) {
+		if (this.isRoleBlocked()) {
 			return message;
 		}
 		GameEngine.getCharacter(targets.get(0)).addVisitor(getPlayer());
