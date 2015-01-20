@@ -96,7 +96,7 @@ public class Player {
 	 * 
 	 * @param name
 	 *            The human name of a player
-	 * @return true if the name was added successfully, false otherwise
+	 * @return true if the name was removed successfully, false otherwise
 	 */
 	protected static boolean remove(String name) {
 		if (valid_names.contains(name)) {

@@ -28,6 +28,16 @@ public class GameEngine {
 	public static boolean registerPlayer(String name) {
 		return Player.register(name);
 	}
+	
+	/**
+	 * GameEngine.registerPlayer De-registers a player from the game.
+	 * 
+	 * @param name
+	 * @return true if successful, false if not.
+	 */
+	public static boolean removePlayer(String name) {
+		return Player.remove(name);
+	}
 
 	/**
 	 * GameEngine.getCharacter
