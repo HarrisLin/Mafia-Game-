@@ -35,7 +35,7 @@ Sections labelled the following:
 
 3) GameEngine/GameMessage.java will be a class that contains all game messages. This helps keep
 game messages in code clean as they will be all grouped in one place. An example with noAction();
-is given. Can be implemented added later.
+is given. Can be implemented and added later.
 
 4) Player.get(); now throws an exception if player is already in game or is not registered rather
 than returning null. Playing game with a null Player.java will be fatal.
