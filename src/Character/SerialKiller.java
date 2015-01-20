@@ -15,8 +15,8 @@ import GameEngine.Player;
 
 public class SerialKiller extends Character {
 
-	SerialKiller() {
-		super(Roles.SerialKiller, true);
+	SerialKiller(Player player) {
+		super(Roles.SerialKiller, player, true);
 	}
 
 	@Override

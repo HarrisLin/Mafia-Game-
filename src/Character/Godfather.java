@@ -13,8 +13,8 @@ import GameEngine.Player;
  */
 public class Godfather extends Character {
 
-	Godfather() {
-		super(Roles.Godfather, true);
+	Godfather(Player player) {
+		super(Roles.Godfather, player, true);
 	}
 	/**
 	 * Sets target for night action, target size must equal 1

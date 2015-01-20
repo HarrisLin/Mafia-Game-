@@ -10,8 +10,8 @@ import GameEngine.Player;
 
 public class Mafioso extends Character {
 
-	Mafioso() {
-		super(Roles.Mafioso);
+	Mafioso(Player player) {
+		super(Roles.Mafioso, player);
 	}
 
 	@Override

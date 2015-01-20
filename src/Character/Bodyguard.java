@@ -14,8 +14,8 @@ import GameEngine.Player;
  */
 public class Bodyguard extends Character {
 
-	Bodyguard() {
-		super(Roles.Bodyguard);
+	Bodyguard(Player player) {
+		super(Roles.Bodyguard, player);
 	}
 
 	@Override

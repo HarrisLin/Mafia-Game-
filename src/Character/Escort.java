@@ -16,8 +16,8 @@ import GameEngine.Player;
  */
 public class Escort extends Character {
 
-	Escort() {
-		super(Roles.Escort);
+	Escort(Player player) {
+		super(Roles.Escort, player);
 	}
 
 	@Override

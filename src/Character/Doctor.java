@@ -10,8 +10,8 @@ import GameEngine.Player;
 
 public class Doctor extends Character {
 
-	Doctor() {
-		super(Roles.Doctor);
+	Doctor(Player player) {
+		super(Roles.Doctor, player);
 	}
 
 	@Override

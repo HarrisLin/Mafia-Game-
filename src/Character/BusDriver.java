@@ -15,8 +15,8 @@ import GameEngine.Player;
  *
  */
 public class BusDriver extends Character {
-	BusDriver() {
-		super(Roles.BusDriver);
+	BusDriver(Player player) {
+		super(Roles.BusDriver, player);
 	}
 
 	@Override
