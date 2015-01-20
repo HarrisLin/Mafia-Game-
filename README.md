@@ -5,10 +5,10 @@ UPDATE #1 -- will start using README.txt as a memo
 
 1) The below comment will be written at on the top of Character/*.java if the character role
 is fully written and ready for testing/already tested.
-//*****************************************************************
-//DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE
-//this is a tag for all the characters/classes that are done
-//*****************************************************************
+*****************************************************************
+DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE
+this is a tag for all the characters/classes that are done
+*****************************************************************
 
 Currently in this catagory contains : Bus Driver, Consigliere, Consort, Escort, Doctor, 
 Investigator, Sheriff, Mayor, Serial Killer, Mayor.
