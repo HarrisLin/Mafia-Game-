@@ -8,6 +8,11 @@ import GameEngine.Character;
 import GameEngine.GameEngine;
 import GameEngine.Player;
 
+//****************************************************************
+//DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE
+//this is a tag for all the characters/classes that are done
+//*****************************************************************
+
 /**
  * The Godfather targets a single player to kill and has night immunity.
  */
@@ -36,7 +41,9 @@ public class Godfather extends Character {
 	 */
 	@Override
 	public String doAction() {
+		String message = "You've attempted to kill your target" + targets.get(0).getName();
+		GameEngine.getCharacter(targets.get(0)).addVisitor(getPlayer());
 		GameEngine.getCharacter(targets.get(0)).kill();	
-		return "You've attempted to kill your target" + targets.get(0).getName();
+		return message;
 	}
 }

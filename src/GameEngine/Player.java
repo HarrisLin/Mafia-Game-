@@ -15,26 +15,50 @@ public class Player {
 	// Class-wide validation map of human player names
 	static private final ArrayList<String> valid_names = new ArrayList<String>();
 
+	// Players that are currently in game
+	static private final ArrayList<Player> players_in_game = new ArrayList<Player>();
+
 	private final String name;
 
 	/**
-	 * Player.get
+	 * Player.get creates a new player of class player if player name is in list
+	 * of valid names.
 	 * 
 	 * @param name
 	 *            The human name of a player
-	 * @return A Player if the name is registered, null if the name is not
-	 *         registered
+	 * @return A Player if the name is registered, throws exception if the name
+	 *         is not registered
+	 * @throws CannotGetPlayerException
 	 */
-	// Would love if this threw an exception instead of returning null. A null
-	// player undetected in code could be hard to find.
-	public static Player get(String name) {
+	public static Player get(String name) throws CannotGetPlayerException {
 		if (valid_names.contains(name)) {
-			return new Player(name);
+			Player player = new Player(name);
+			if (!players_in_game.contains(player)) {
+				players_in_game.add(player);
+				return player;
+			} else {
+				throw new CannotGetPlayerException("Player is already in game");
+			}
 		} else {
-			return null;
+			throw new CannotGetPlayerException("Player is not a valid name");
 		}
 	}
 
+	/**
+	 * Clears all the players in game when game ends
+	 */
+	public static void clearInGamePlayers() {
+		players_in_game.clear();
+	}
+	
+	/**
+	 * Players.GetAllInGamePlayers
+	 * @return A list of all players that are in game this round
+	 */
+	public static List<Player> getAllInGamePlayers() {
+		return new ArrayList<Player>(players_in_game);
+	}
+	
 	/**
 	 * Player.getAllPlayers
 	 * 

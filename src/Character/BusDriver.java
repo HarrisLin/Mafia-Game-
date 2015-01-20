@@ -8,6 +8,11 @@ import GameEngine.Character;
 import GameEngine.GameEngine;
 import GameEngine.Player;
 
+//****************************************************************
+//DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE
+//this is a tag for all the characters/classes that are done
+//*****************************************************************
+
 /**
  * Bus driver swap two characters' in everyone's target list
  * 
@@ -36,6 +41,12 @@ public class BusDriver extends Character {
 	 */
 	@Override
 	public String doAction() {
+		String message = "Your night action has been received.";
+		if(this.isRoleBlocked()) {
+			return message;
+		}
+		GameEngine.getCharacter(targets.get(0)).addVisitor(getPlayer());
+		GameEngine.getCharacter(targets.get(1)).addVisitor(getPlayer());
 		for (Player iterator : GameEngine.getAlivePlayer()) {
 			Character character = GameEngine.getCharacter(iterator);
 			List<Player> players = character.getTargets();
@@ -48,6 +59,6 @@ public class BusDriver extends Character {
 				}
 			}
 		}
-		return "Your night action has been received.";
+		return message;
 	}
 }

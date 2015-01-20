@@ -8,6 +8,11 @@ import GameEngine.Character;
 import GameEngine.GameEngine;
 import GameEngine.Player;
 
+//****************************************************************
+//DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE
+//this is a tag for all the characters/classes that are done
+//*****************************************************************
+
 public class Doctor extends Character {
 
 	Doctor(Player player) {
@@ -26,7 +31,12 @@ public class Doctor extends Character {
 
 	@Override
 	public String doAction() {
-		// TODO Auto-generated method stub
-		return null;
+		String message = "Thanks doc";
+		if (this.isRoleBlocked()) {
+			return message;
+		}
+		GameEngine.getCharacter(targets.get(0)).addVisitor(getPlayer());
+		GameEngine.getCharacter(targets.get(0)).healPlayer();
+		return message;
 	}
 }
