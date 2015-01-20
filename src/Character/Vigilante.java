@@ -8,8 +8,12 @@ import GameEngine.GameEngine;
 import GameEngine.Player;
 
 public class Vigilante extends Character {
+	
+	private int shots;
+	
 	Vigilante(Player player) {
 		super(Roles.Vigilante, player);
+		shots = 2;
 	}
 
 	@Override
@@ -24,7 +28,14 @@ public class Vigilante extends Character {
 
 	@Override
 	public String doAction() {
+		String message = "You have " + shots + " left.";
+		if(shots == 0) {
+			return "You have used all your shots";
+		}
+		if(this.isRoleBlocked()) {
+			return message;
+		}
 		// TODO Auto-generated method stub
-		return null;
+		return message;
 	}
 }

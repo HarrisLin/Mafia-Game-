@@ -8,6 +8,11 @@ import GameEngine.Character;
 import GameEngine.GameEngine;
 import GameEngine.Player;
 
+//****************************************************************
+//DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE
+//this is a tag for all the characters/classes that are done
+//*****************************************************************
+
 /**
  * Blocks one player from performing their night actions.
  * 
@@ -35,7 +40,12 @@ public class Consort extends Character {
 	 */
 	@Override
 	public String doAction() {
-		GameEngine.getCharacter(targets.get(0)).getTargets().clear();
-		return "Thank you for performing your action you filthy whore.";
+		String message = "Thank you for performing your action you filthy whore.";
+		if(this.isRoleBlocked()) {
+			return message;
+		}
+		GameEngine.getCharacter(targets.get(0)).addVisitor(getPlayer());
+		GameEngine.getCharacter(targets.get(0)).blockNightAction();
+		return message;
 	}
 }

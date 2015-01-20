@@ -8,12 +8,18 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import GameEngine.CannotGetPlayerException;
 import GameEngine.GameEngine;
 import GameEngine.Player;
 import Character.Investigator;
 
 public class Investigator_Test {
 
+	Player player1;
+	Player player2;
+	Player player3;
+	Player player4;
+	Player player5;
 	String string1;
 	String string2;
 	String string3;
@@ -23,60 +29,63 @@ public class Investigator_Test {
 	@Before
 	public void setup() {
 		// do admin things: register players and assign roles
+		Player.clearInGamePlayers();
 		GameEngine.registerPlayer("Derek");
 		GameEngine.registerPlayer("Harris");
 		GameEngine.registerPlayer("Andy");
 		GameEngine.registerPlayer("Connie");
 		GameEngine.registerPlayer("Kaibo");
-		GameEngine
-				.assignCharacter(
-						Player.get("Derek"),
-						new Investigator(
-								Player.get("Derek"),
-								GameOptions.InvestigatorOptions.DetectRole.DETECT_EXACT_ROLE));
-		GameEngine.assignCharacter(Player.get("Connie"), new Investigator(
-				Player.get("Connie"),
+		try {
+			player1 = Player.get("Derek");
+			player2 = Player.get("Connie");
+			player3 = Player.get("Harris");
+			player4 = Player.get("Andy");
+			player5 = Player.get("Kaibo");
+		} catch (CannotGetPlayerException e) {
+			fail("Cannot make players");
+		}
+
+		GameEngine.assignCharacter(player1, new Investigator(player1,
+				GameOptions.InvestigatorOptions.DetectRole.DETECT_EXACT_ROLE));
+		GameEngine.assignCharacter(player2, new Investigator(player2,
 				GameOptions.InvestigatorOptions.DetectRole.DETECT_VAGUE_ROLE));
-		GameEngine.assignCharacter(Player.get("Harris"), new Investigator(
-				Player.get("Harris")));
-		GameEngine.assignCharacter(Player.get("Andy"),
-				new Arsonist(Player.get("Andy")));
-		GameEngine.assignCharacter(Player.get("Kaibo"),
-				new Mayor(Player.get("Kaibo")));
+		GameEngine.assignCharacter(player3, new Investigator(player3));
+		GameEngine.assignCharacter(player4, new Arsonist(player4));
+		GameEngine.assignCharacter(player5, new Mayor(player5));
 
 		// make Derek target Harris
 		target = new ArrayList<Player>();
-		target.add(Player.get("Harris"));
-		assertTrue(GameEngine.setTarget(Player.get("Derek"), target));
-		string1 = GameEngine.getCharacter(Player.get("Derek")).doAction();
+		target.add(player3);
+		assertTrue(GameEngine.setTarget(player1, target));
+		string1 = GameEngine.getCharacter(player1).doAction();
 
 		// make Harris target Andy
 		target = new ArrayList<Player>();
-		target.add(Player.get("Andy"));
-		assertTrue(GameEngine.setTarget(Player.get("Harris"), target));
-		string2 = GameEngine.getCharacter(Player.get("Harris")).doAction();
+		target.add(player4);
+		assertTrue(GameEngine.setTarget(player3, target));
+		string2 = GameEngine.getCharacter(player3).doAction();
 
 		// make Connie target Kaibo
 		target = new ArrayList<Player>();
-		target.add(Player.get("Kaibo"));
-		assertTrue(GameEngine.setTarget(Player.get("Connie"), target));
-		string3 = GameEngine.getCharacter(Player.get("Connie")).doAction();
+		target.add(player5);
+		assertTrue(GameEngine.setTarget(player2, target));
+		string3 = GameEngine.getCharacter(player2).doAction();
 	}
 
 	@Test
 	public void test_visited() {
 		visitors = new ArrayList<Player>();
-		visitors.add(Player.get("Derek"));
-		assertTrue(GameEngine.getCharacter(Player.get("Harris")).getVistors()
-				.contains(Player.get("Derek")));
+		visitors.add(player1);
+		assertTrue(GameEngine.getCharacter(player3).getVistors()
+				.contains(player1));
 		visitors = new ArrayList<Player>();
-		visitors.add(Player.get("Harris"));
-		assertTrue(GameEngine.getCharacter(Player.get("Andy")).getVistors()
-				.contains(Player.get("Harris")));
+		visitors.add(player3);
+		assertTrue(GameEngine.getCharacter(player4).getVistors()
+				.contains(player3));
 		visitors = new ArrayList<Player>();
-		visitors.add(Player.get("Connie"));
-		assertTrue(GameEngine.getCharacter(Player.get("Kaibo")).getVistors()
-				.contains(Player.get("Connie")));
+		visitors.add(player2);
+		assertTrue(GameEngine.getCharacter(player5).getVistors()
+				.contains(player2));
 	}
 
 	@Test

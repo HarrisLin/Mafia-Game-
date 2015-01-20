@@ -18,20 +18,27 @@ public abstract class Character {
 	// SHARED INSTANCES THAT ARE ESSENTIAL TO CHARACTER AND GAME MECHANICS
 	// *******************************************************************
 	// Role of the character (ex. Detective)
-	private Roles role;
+	private final Roles role;
 	// Player of the character (ex. Harris Pheg)
-	private Player player;
+	private final Player player;
+	// Determines if character is night immune
+	private final boolean invulnerable;
+	// Determines if character is block immune (ex. Godfather)
+	private final boolean blockImmune;
+	// **********************************************
+	// ABOVE ARE NOT MODIFIED AND BELOW ARE MODIFIED
+	// **********************************************
 	// Determines if the player is still alive in game
 	private boolean alive;
-	// Determines if character is night immune
-	private boolean invulnerable;
 	// For the lookout and detective class, this is a count for all the visitors
 	// of the character that night (be sure to clear this every night)
 	private List<Player> visitors;
 	// Lists of target the player has chosen to perform night actions
 	protected List<Player> targets;
 	// Target the player has chosen to vote for lynch
-	protected Player lynchTarget;
+	private Player lynchTarget;
+	// Last Will must be written before night
+	private String lastWill;
 	// *********************************************************
 	// THE FOLLOW INSTANCES ARE REQUIRED FOR PARTICULAR CLASSES
 	// *********************************************************
@@ -41,6 +48,11 @@ public abstract class Character {
 	private List<Investigations> investigation;
 	// Random number generator for investigation or other purposes
 	private Random indexGenerator;
+	// If consort or escort blocks you roleBlocked is true. Requires doAction to
+	// check if character is role blocked before start action
+	private boolean roleBlocked;
+	// If doctor visits, you are healed
+	private boolean healed;
 
 	// ************************************
 	// find constructor
@@ -57,9 +69,13 @@ public abstract class Character {
 		this.player = player;
 		alive = true;
 		invulnerable = false;
+		blockImmune = false;
 		visitors = new ArrayList<Player>();
+		lastWill = "No last will.";
 		doused = false;
 		investigation = Investigations.doInvestigation(role);
+		roleBlocked = false;
+		healed = false;
 	}
 
 	/**
@@ -75,9 +91,38 @@ public abstract class Character {
 		this.player = player;
 		alive = true;
 		this.invulnerable = invulnerable;
+		blockImmune = false;
 		visitors = new ArrayList<Player>();
+		lastWill = "No last will.";
 		doused = false;
-		investigation = Investigations.doInvestigation(role);	
+		investigation = Investigations.doInvestigation(role);
+		roleBlocked = false;
+		healed = false;
+	}
+
+	/**
+	 * Constructor for the character with modified game options
+	 * 
+	 * @param role
+	 *            : Role of the player (ex. Detective)
+	 * @param invulnerable
+	 *            : Night invulnerability On/Off
+	 * @param blockImmune
+	 *            : Immune to escort/consort On/Off
+	 */
+	protected Character(Roles role, Player player, boolean invulnerable,
+			boolean blockImmune) {
+		this.role = role;
+		this.player = player;
+		alive = true;
+		this.invulnerable = invulnerable;
+		this.blockImmune = blockImmune;
+		visitors = new ArrayList<Player>();
+		lastWill = "No last will.";
+		doused = false;
+		investigation = Investigations.doInvestigation(role);
+		roleBlocked = false;
+		healed = false;
 	}
 
 	// *****************************************
@@ -98,6 +143,27 @@ public abstract class Character {
 		return targets;
 	}
 
+	// ***************************************************************
+	// find new day
+	// METHOD THAT RESETS THE VALUES OF THIS CHARACTER FOR A NEW DAY
+	// ***************************************************************
+	/**
+	 * Clears and resets values for a new day for this character. Also returns a
+	 * save data for achieve (not implemented yet).
+	 * 
+	 * @return a save data of this player as a string for archieve
+	 */
+	public String newDay() {
+		String data = "No data";
+		visitors.clear();
+		targets.clear();
+		lynchTarget = null;
+		roleBlocked = false;
+		healed = false;
+		return data;
+
+	}
+
 	// *********************************
 	// find role
 	// METHODS THAT HAVE TO DO WITH ROLE
@@ -111,6 +177,7 @@ public abstract class Character {
 	}
 
 	/**
+	 * **UNSAFE** **SHOULD NOT BE USED**
 	 * 
 	 * @return the roll of the character
 	 */
@@ -138,7 +205,7 @@ public abstract class Character {
 	 * and FALSE if not killed
 	 */
 	public boolean kill() {
-		if (!invulnerable) {
+		if (!invulnerable && !healed) {
 			alive = false;
 			return true;
 		}
@@ -152,15 +219,6 @@ public abstract class Character {
 	 */
 	public boolean checkAlive() {
 		return alive;
-	}
-
-	/**
-	 * Check if player is invulnerable (might not be a needed/used method)
-	 * 
-	 * @return true if invulnerable, false if not
-	 */
-	public boolean checkInvulnerable() {
-		return invulnerable;
 	}
 
 	// ********************************************************************
@@ -218,6 +276,30 @@ public abstract class Character {
 		return lynchTarget;
 	}
 
+	// *******************************
+	// find last will
+	// LAST WILL WILL BE CHANGED HERE
+	// *******************************
+	/**
+	 * Updates last will
+	 * 
+	 * @param lastWill
+	 * @return TRUE
+	 */
+	public boolean updateLastWill(String lastWill) {
+		this.lastWill = lastWill;
+		return true;
+	}
+
+	/**
+	 * gets last will
+	 * 
+	 * @return lastWill
+	 */
+	public String getLastWill() {
+		return lastWill;
+	}
+
 	// ************************************************************************
 	// find special
 	// THE FOLLOW SECTION IS FOR ROLE METHODS THAT ARE SPECIFICALLY USED TO THE
@@ -260,6 +342,44 @@ public abstract class Character {
 		return doused;
 	}
 
+	// *********************************
+	// find escort find consort
+	// BLOCKING OR BLOCK IMMUNE METHODS
+	// *********************************
+
+	/**
+	 * 
+	 * @return TRUE if character is successfully blocked and FALSE if not
+	 */
+	public boolean blockNightAction() {
+		if (blockImmune) {
+			return false;
+		}
+		return roleBlocked = true;
+	}
+
+	/**
+	 * 
+	 * @return TRUE if character is role blocked or FALSE if character is not
+	 */
+	public boolean isRoleBlocked() {
+		return roleBlocked;
+	}
+
+	// ***********************************************
+	// find doctor find heal
+	// THE METHODS THAT HAVE TO DO WITH DOCTOR HEALING
+	// ***********************************************
+
+	/**
+	 * heal the player
+	 * 
+	 * @return TRUE
+	 */
+	public boolean healPlayer() {
+		return healed = true;
+	}
+
 	// *******************************
 	// find abstract
 	// THE FOLLOW ARE ABSTRACT CLASSES
@@ -267,13 +387,14 @@ public abstract class Character {
 	/**
 	 * 
 	 * @param targets
-	 * @return
+	 * @return TRUE if targets are set and FALSE it not
 	 */
 	public abstract boolean setTarget(List<Player> targets);
 
 	/**
+	 * Consider role block and visiting
 	 * 
-	 * @return
+	 * @return String reported to player
 	 */
 	public abstract String doAction();
 }

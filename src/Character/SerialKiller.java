@@ -34,7 +34,11 @@ public class SerialKiller extends Character {
 	 */
 	@Override
 	public String doAction() {
+		String message = "You've attempted to kill " + targets.get(0).getName();
+		if(this.isRoleBlocked()) {
+			return message;
+		}
 		GameEngine.getCharacter(targets.get(0)).kill();
-		return "You've attempted to kill " + targets.get(0).getName();
+		return message;
 	}
 }

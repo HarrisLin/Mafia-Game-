@@ -9,6 +9,11 @@ import GameEngine.Player;
 import GameEngine.GameEngine;
 import GameOptions.InvestigatorOptions.DetectRole;
 
+// ****************************************************************
+// DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE
+// this is a tag for all the characters/classes that are done
+//*****************************************************************
+
 /**
  * The detective investigates a single Player target to discover his/her role
  */
@@ -38,7 +43,7 @@ public class Investigator extends Character {
 		super(Roles.Investigator, player);
 		this.detectsRole = detectsRole;
 	}
-	
+
 	@Override
 	public boolean setTarget(List<Player> targets) {
 		// The detective can only target a single Player
@@ -52,24 +57,27 @@ public class Investigator extends Character {
 
 	@Override
 	public String doAction() {
+		String message = "Cannot get your results";
+		if (this.isRoleBlocked()) {
+			return message;
+		}
 		GameEngine.getCharacter(targets.get(0)).addVisitor(getPlayer());
-		String result;
 		GameOptions.InvestigatorOptions.DetectRole detect = (DetectRole) detectsRole;
 		switch (detect) {
 		case DETECT_EXACT_ROLE:
-			result = "The result of your investigation yeilded a role of "
+			message = "The result of your investigation yeilded a role of "
 					+ GameEngine.getCharacter(targets.get(0)).getRoleString()
 					+ ".";
 			break;
 		case DETECT_VAGUE_ROLE:
-			result = "The result of your investigation suggests a role guilty of "
+			message = "The result of your investigation suggests a role guilty of "
 					+ GameEngine.getCharacter(targets.get(0))
 							.getInvestigation() + ".";
 			break;
 		default:
-			result = GameEngine.getCharacter(targets.get(0)).getInvestigation()
-					+ ".";
+			message = GameEngine.getCharacter(targets.get(0))
+					.getInvestigation() + ".";
 		}
-		return result;
+		return message;
 	}
 }
