@@ -398,4 +398,13 @@ public abstract class Character {
 	 * @return String reported to player
 	 */
 	public abstract String doAction();
+	
+	/**
+	 * Returns the affiliation of the character
+	 * 
+	 * @return Sides.Town, Sides.Triad, Sides.Neutral, or Sides.Mafia
+	 */
+	public Enumerators.Sides getSide() {
+		return role.getSide();
+	}
 }
