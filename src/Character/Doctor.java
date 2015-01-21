@@ -1,6 +1,5 @@
 package Character;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import Enumerators.Roles;
@@ -26,12 +25,12 @@ public class Doctor extends Character {
 				|| !GameEngine.alive_player.containsAll(targets)) {
 			return false;
 		}
-		this.targets = new ArrayList<Player>(targets);
-		return true;
+		return setTargets(targets);
 	}
 
 	@Override
 	public String doAction() {
+		List<Player> targets = getTargets();
 		if(targets.isEmpty()) {
 			return GameMessage.NO_ACTION;
 		}

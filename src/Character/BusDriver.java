@@ -1,6 +1,5 @@
 package Character;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import Enumerators.Roles;
@@ -32,7 +31,7 @@ public class BusDriver extends Character {
 				|| !GameEngine.alive_player.containsAll(targets)) {
 			return false;
 		}
-		this.targets = new ArrayList<Player>(targets);
+		setTargets(targets);
 		return true;
 	}
 
@@ -42,6 +41,7 @@ public class BusDriver extends Character {
 	 */
 	@Override
 	public String doAction() {
+		List<Player> targets = getTargets();
 		if(targets.isEmpty()) {
 			return GameMessage.NO_ACTION;
 		}

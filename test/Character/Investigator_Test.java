@@ -8,9 +8,11 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import Enumerators.Investigations;
 import GameEngine.CannotGetPlayerException;
 import GameEngine.GameEngine;
 import GameEngine.Player;
+import GameOptions.InvestigatorOptions.DetectRole;
 import Character.Investigator;
 
 public class Investigator_Test {
@@ -46,9 +48,9 @@ public class Investigator_Test {
 		}
 
 		GameEngine.assignCharacter(player1, new Investigator(player1,
-				GameOptions.InvestigatorOptions.DetectRole.DETECT_EXACT_ROLE));
+				DetectRole.DETECT_EXACT_ROLE));
 		GameEngine.assignCharacter(player2, new Investigator(player2,
-				GameOptions.InvestigatorOptions.DetectRole.DETECT_VAGUE_ROLE));
+				DetectRole.DETECT_VAGUE_ROLE));
 		GameEngine.assignCharacter(player3, new Investigator(player3));
 		GameEngine.assignCharacter(player4, new Arsonist(player4));
 		GameEngine.assignCharacter(player5, new Mayor(player5));
@@ -91,24 +93,20 @@ public class Investigator_Test {
 	@Test
 	public void test_exact_role() {
 		// make Derek investigate Harris
-		assertEquals(string1,
-				"The result of your investigation yeilded a role of Investigator.");
+		assertTrue(string1.contains("Investigator"));
 	}
 
 	@Test
 	public void test_vague_role1() {
 		// make Harris investigate Andy
 		boolean test;
-
-		String startSentense = "The result of your investigation suggests a role guilty of ";
-		if (string2.equals(startSentense + "murder" + ".")) {
+		if (string2.contains(Investigations.Murder.toString())) {
 			test = true;
-		} else if (string2.equals(startSentense + "arson" + ".")) {
+		} else if (string2.contains(Investigations.Arson.toString())) {
 			test = true;
-		} else if (string2.equals(startSentense + "destruction of property"
-				+ ".")) {
+		} else if (string2.contains(Investigations.DestructionOfProperty.toString())) {
 			test = true;
-		} else if (string2.equals(startSentense + "trespassing" + ".")) {
+		} else if (string2.contains(Investigations.Trespassing.toString())) {
 			test = true;
 		} else {
 			test = false;
@@ -120,8 +118,7 @@ public class Investigator_Test {
 	public void test_vague_role2() {
 		// make Connie investigate Kaibo
 		boolean test;
-		String startSentense = "The result of your investigation suggests a role guilty of ";
-		if (string3.equals(startSentense + "corruption" + ".")) {
+		if (string3.contains(Investigations.Corruption.toString())) {
 			test = true;
 		} else {
 			test = false;

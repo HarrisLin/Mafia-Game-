@@ -1,6 +1,5 @@
 package Character;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import Enumerators.Roles;
@@ -32,8 +31,7 @@ public class Consort extends Character {
 				|| !GameEngine.alive_player.containsAll(targets)) {
 			return false;
 		}
-		this.targets = new ArrayList<Player>(targets);
-		return true;
+		return setTargets(targets);
 	}
 
 	/**
@@ -41,6 +39,7 @@ public class Consort extends Character {
 	 */
 	@Override
 	public String doAction() {
+		List<Player> targets = getTargets();
 		if(targets.isEmpty()) {
 			return GameMessage.NO_ACTION;
 		}

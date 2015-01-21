@@ -24,7 +24,7 @@ public enum Investigations {
 	}
 
 	public String toString() {
-		return investigation;
+		return investigation.toLowerCase();
 	}
 	/**
 	 * Makes a list of possible investigations for a role

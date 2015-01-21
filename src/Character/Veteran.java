@@ -1,6 +1,5 @@
 package Character;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import Enumerators.Roles;
@@ -19,8 +18,7 @@ public class Veteran extends Character {
 				|| GameEngine.getCharacter(targets.get(0)) != this) {
 			return false;
 		}
-		this.targets = new ArrayList<Player>(targets);
-		return true;
+		return setTargets(targets);
 	}
 
 	@Override

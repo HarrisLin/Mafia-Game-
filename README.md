@@ -18,10 +18,10 @@ Of those two : Sheriff and Investigator has options included and are donoted by 
 2) Cleaned up GameEngine/Character.java
 Sections labelled the following:
 - find constructor : CONSTRUCTOR METHODS FOR THIS CLASS
-- find temp : METHODS THAT SHOULD BE CHANGED OR REVISED
 - find new day : METHOD THAT RESETS THE VALUES OF THIS CHARACTER FOR A NEW DAY
 - find role : METHODS THAT HAVE TO DO WITH ROLE
 - find player : METHODS THAT HAVE TO DO WITH PLAYER
+- find target : METHODS THAT HAVE TO DO WITH TARGET
 - find kill : METHODS THAT HAVE TO DO WILL KILLING AND NIGHT IMMUNITY
 - find visitor : VISITOR METHODS AND METHODS FOR ROLES THAT HAS TO DO WITH VISITORS
 - find vote find lynch : METHODS THAT HAVE TO DO WITH VOTING
@@ -49,7 +49,7 @@ NOTE: Lots of different game mechanics to be tested. We should have a list to ch
 Check all modifiable variables if they are modified correctly after a test is performed.
 
 - Make GameEngine and interaction of the characters with each other in the game
-NOTE: Assign characters, perform all night time actions, lynch, etc.
+NOTE* Assign characters, set new day, perform all night time actions, lynch, restart game, etc.
 
 - Make GUI
 NOTE: I DON'T KNOW HOW :D

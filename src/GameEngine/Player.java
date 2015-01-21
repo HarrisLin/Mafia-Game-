@@ -33,6 +33,7 @@ public class Player {
 	public static Player get(String name) throws CannotGetPlayerException {
 		if (valid_names.contains(name)) {
 			Player player = new Player(name);
+			players_in_game.add(player);
 			return player;
 		} else {
 			throw new CannotGetPlayerException("Player is not a valid name");
