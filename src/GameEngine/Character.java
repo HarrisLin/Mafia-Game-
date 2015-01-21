@@ -403,4 +403,11 @@ public abstract class Character {
 	public Enumerators.Sides getSide() {
 		return role.getSide();
 	}
+
+	/**
+	 * @return the role of the character
+	 */
+	protected Enumerators.Roles getRole() {
+		return role;
+	}
 }
