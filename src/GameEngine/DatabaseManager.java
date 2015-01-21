@@ -23,17 +23,13 @@ public class DatabaseManager {
 			System.out.println("Unable to delete old database. Continuing...");
 		}
 		try {
-			System.out.println("Class.forName");
 			Class.forName("org.sqlite.JDBC");
-			System.out.println("Get connection...");
 			c = DriverManager.getConnection("jdbc:sqlite:mafia_data.db");
-			System.out.println("Connected.");
 			stmt = c.createStatement();
 			String sql = 	"CREATE TABLE DATA " +
 							"(NAME	TEXT	PRIMARY KEY	NOT NULL," +
 							" ROLE	TEXT				NOT NULL," +
 							" SIDE	TEXT				NOT NULL);";
-			System.out.println("SQL statement: " + sql);
 			stmt.executeUpdate(sql);
 			stmt.close();
 			c.close();
@@ -53,14 +49,12 @@ public class DatabaseManager {
 			Class.forName("org.sqlite.JDBC");
 			c = DriverManager.getConnection("jdbc:sqlite:mafia_data.db");
 			c.setAutoCommit(false);
-			System.out.println("Opened database successfully!");
 			
 			stmt = c.createStatement();
 			String sql = "INSERT INTO DATA (NAME,ROLE,SIDE) " +
 						 "VALUES ('" + player.getName() + "', '" +
 						 		   character.getRole().name() + "', '" +
 						 		   character.getSide().toString() + "');";
-			System.out.println("SQL: " + sql);
 			stmt.executeUpdate(sql);
 			
 			stmt.close();
@@ -70,7 +64,6 @@ public class DatabaseManager {
 			System.out.println(e.getClass().getName() + ": " + e.getMessage());
 			return false;
 		}
-		System.out.println("Record created successfully!");
 		return true;
 	}
 	
@@ -85,12 +78,10 @@ public class DatabaseManager {
 			Class.forName("org.sqlite.JDBC");
 			c = DriverManager.getConnection("jdbc:sqlite:mafia_data.db");
 			c.setAutoCommit(false);
-			System.out.println("Opened database successfully!");
 			
 			stmt = c.createStatement();
 			String query = "SELECT * FROM data WHERE name = '" + player.getName() + "';";
 			ResultSet rs = stmt.executeQuery(query);
-			System.out.println("SQL Query: " + query);
 			if (rs.next()) {
 				String role_string = rs.getString("role");
 				String side_string = rs.getString("side");
@@ -109,7 +100,6 @@ public class DatabaseManager {
 			System.out.println(e.getClass().getName() + ": " + e.getMessage());
 			return null;
 		}
-		System.out.println("Record read successfully!");
 		return imported_character;
 	}
 
