@@ -1,15 +1,27 @@
 package GameEngine;
 
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.*;
 
 public class DatabaseManager {
 	
 	/**
-	 * Initializes the database
+	 * Initializes the database.
+	 * WARNING: This will delete any previous database created by the game!
 	 */
 	public static void init() {
 		Connection c = null;
 		Statement stmt = null;
+		Path db_path = FileSystems.getDefault().getPath("mafia_data.db");
+		try {
+			Files.deleteIfExists(db_path);
+			System.out.println("Erased old database.");
+		} catch (IOException e1) {
+			System.out.println("Unable to delete old database. Continuing...");
+		}
 		try {
 			System.out.println("Class.forName");
 			Class.forName("org.sqlite.JDBC");
