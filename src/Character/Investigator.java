@@ -57,11 +57,11 @@ public class Investigator extends Character {
 	@Override
 	public String doAction() {
 		List<Player> targets = getTargets();
-		if(targets.isEmpty()) {
+		if (targets.isEmpty()) {
 			return GameMessage.NO_ACTION;
 		}
 		if (this.isRoleBlocked()) {
-			return GameMessage.noResults();
+			return GameMessage.NO_RESULT;
 		}
 		GameEngine.getCharacter(targets.get(0)).addVisitor(getPlayer());
 		DetectRole detect = (DetectRole) detectsRole;
@@ -69,13 +69,16 @@ public class Investigator extends Character {
 		String message;
 		switch (detect) {
 		case DETECT_EXACT_ROLE:
-			message = GameMessage.detectExactRole(target);
+			message = target.getRoleString();
+			message = GameMessage.INVESTIGATION_EXACT(message);
 			break;
 		case DETECT_VAGUE_ROLE:
-			message = GameMessage.detectVagueRole(target);
+			message = target.getInvestigation();
+			message = GameMessage.INVESTIGATION_VAGUE(message);
 			break;
 		default:
-			message = GameMessage.detectVagueRole(target);
+			message = target.getInvestigation();
+			message = GameMessage.INVESTIGATION_VAGUE(message);
 		}
 		return message;
 	}
