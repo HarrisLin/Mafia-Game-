@@ -34,7 +34,7 @@ public abstract class Character {
 	// of the character that night (be sure to clear this every night)
 	private List<Player> visitors;
 	// Lists of target the player has chosen to perform night actions
-	protected List<Player> targets;
+	private List<Player> targets;
 	// Target the player has chosen to vote for lynch
 	private Player lynchTarget;
 	// Last Will must be written before night
@@ -124,25 +124,7 @@ public abstract class Character {
 		roleBlocked = false;
 		healed = false;
 	}
-
-	// *****************************************
-	// find temp
-	// METHODS THAT SHOULD BE CHANGED OR REVISED
-	// *****************************************
-	/**
-	 * **UNSAFE METHOD** Used to change targets of character via bus driver and
-	 * other character that require to modify target list
-	 * 
-	 * Rather than using this method, the character role should have a separate
-	 * personal method (like getInvestigation) in this class that will modify
-	 * the list but will not leak the list.
-	 * 
-	 * @return list of night action targets of the player
-	 */
-	public List<Player> getTargets() {
-		return targets;
-	}
-
+	
 	// ***************************************************************
 	// find new day
 	// METHOD THAT RESETS THE VALUES OF THIS CHARACTER FOR A NEW DAY
@@ -169,7 +151,6 @@ public abstract class Character {
 	// METHODS THAT HAVE TO DO WITH ROLE
 	// *********************************
 	/**
-	 * 
 	 * @return the name of the roll (ex. Detective)
 	 */
 	public String getRoleString() {
@@ -177,8 +158,6 @@ public abstract class Character {
 	}
 
 	/**
-	 * **UNSAFE** **SHOULD NOT BE USED**
-	 * 
 	 * @return the roll of the character
 	 */
 	public Roles getCharacterRole() {
@@ -196,6 +175,27 @@ public abstract class Character {
 		return player;
 	}
 
+	//************************************
+	// find target
+	// METHODS THAT HAVE TO DO WITH TARGET
+	// ***********************************
+	/**
+	 * Set targets
+	 * @param targets
+	 * @return TRUE
+	 */
+	protected boolean setTargets(List<Player> targets) {
+		this.targets = new ArrayList<Player>(targets);
+		return true;
+	}
+	
+	/**
+	 * @return list of night action targets of the player
+	 */
+	public List<Player> getTargets() {
+		return new ArrayList<Player>(targets);
+	}
+
 	// ********************************************************
 	// find kill
 	// METHODS THAT HAVE TO DO WILL KILLING AND NIGHT IMMUNITY
@@ -205,7 +205,7 @@ public abstract class Character {
 	 * and FALSE if not killed
 	 */
 	public boolean kill() {
-		if (!invulnerable && !healed) {
+		if (!invulnerable && !healed && alive) {
 			GameEngine.killPlayer(getPlayer());
 			alive = false;
 			return true;
@@ -243,13 +243,6 @@ public abstract class Character {
 	public boolean addVisitor(Player player) {
 		visitors.add(player);
 		return true;
-	}
-
-	/**
-	 * Clears visitor list
-	 */
-	public void clearVisitor() {
-		visitors.clear();
 	}
 
 	// *************************************
@@ -319,7 +312,7 @@ public abstract class Character {
 		indexGenerator = new Random();
 		int index = indexGenerator.nextInt(investigation.size());
 		investigate = investigation.get(index);
-		return investigate.toString().toLowerCase();
+		return investigate.toString();
 	}
 
 	// ***********************************************
@@ -339,7 +332,7 @@ public abstract class Character {
 	 * 
 	 * @return TRUE if character is doused and FALSE if not
 	 */
-	public boolean isDoused() {
+	protected boolean isDoused() {
 		return doused;
 	}
 
@@ -363,7 +356,7 @@ public abstract class Character {
 	 * 
 	 * @return TRUE if character is role blocked or FALSE if character is not
 	 */
-	public boolean isRoleBlocked() {
+	protected boolean isRoleBlocked() {
 		return roleBlocked;
 	}
 

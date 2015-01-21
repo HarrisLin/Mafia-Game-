@@ -1,6 +1,5 @@
 package Character;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import Enumerators.Roles;
@@ -52,35 +51,31 @@ public class Investigator extends Character {
 				|| !GameEngine.alive_player.containsAll(targets)) {
 			return false;
 		}
-		this.targets = new ArrayList<Player>(targets);
-		return true;
+		return setTargets(targets);
 	}
 
 	@Override
 	public String doAction() {
+		List<Player> targets = getTargets();
 		if(targets.isEmpty()) {
 			return GameMessage.NO_ACTION;
 		}
-		String message = "Cannot get your results";
 		if (this.isRoleBlocked()) {
-			return message;
+			return GameMessage.noResults();
 		}
 		GameEngine.getCharacter(targets.get(0)).addVisitor(getPlayer());
-		GameOptions.InvestigatorOptions.DetectRole detect = (DetectRole) detectsRole;
+		DetectRole detect = (DetectRole) detectsRole;
+		Character target = GameEngine.getCharacter(targets.get(0));
+		String message;
 		switch (detect) {
 		case DETECT_EXACT_ROLE:
-			message = "The result of your investigation yeilded a role of "
-					+ GameEngine.getCharacter(targets.get(0)).getRoleString()
-					+ ".";
+			message = GameMessage.detectExactRole(target);
 			break;
 		case DETECT_VAGUE_ROLE:
-			message = "The result of your investigation suggests a role guilty of "
-					+ GameEngine.getCharacter(targets.get(0))
-							.getInvestigation() + ".";
+			message = GameMessage.detectVagueRole(target);
 			break;
 		default:
-			message = GameEngine.getCharacter(targets.get(0))
-					.getInvestigation() + ".";
+			message = GameMessage.detectVagueRole(target);
 		}
 		return message;
 	}

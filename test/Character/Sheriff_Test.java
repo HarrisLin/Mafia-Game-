@@ -11,6 +11,10 @@ import org.junit.Test;
 import GameEngine.CannotGetPlayerException;
 import GameEngine.GameEngine;
 import GameEngine.Player;
+import GameOptions.SheriffOptions.DetectArsonist;
+import GameOptions.SheriffOptions.DetectCultist;
+import GameOptions.SheriffOptions.DetectMafia;
+import GameOptions.SheriffOptions.DetectMassMurderer;
 
 public class Sheriff_Test {
 
@@ -50,24 +54,16 @@ public class Sheriff_Test {
 		} catch (CannotGetPlayerException e) {
 			fail("Cannot make players");
 		}
-		GameEngine
-				.assignCharacter(
-						player1,
-						new Sheriff(
-								player1,
-								GameOptions.SheriffOptions.DetectMafia.DETECT_MAFIA_ON,
-								GameOptions.SheriffOptions.DetectArsonist.DETECT_ARSONIST_OFF,
-								GameOptions.SheriffOptions.DetectCultist.DETECT_CULTIST_OFF,
-								GameOptions.SheriffOptions.DetectMassMurderer.DETECT_MASSMURDERER_OFF));
-		GameEngine
-				.assignCharacter(
-						player2,
-						new Sheriff(
-								player2,
-								GameOptions.SheriffOptions.DetectMafia.DETECT_MAFIA_OFF,
-								GameOptions.SheriffOptions.DetectArsonist.DETECT_ARSONIST_ON,
-								GameOptions.SheriffOptions.DetectCultist.DETECT_CULTIST_ON,
-								GameOptions.SheriffOptions.DetectMassMurderer.DETECT_MASSMURDERER_ON));
+		GameEngine.assignCharacter(player1, new Sheriff(player1,
+				DetectMafia.DETECT_MAFIA_ON,
+				DetectArsonist.DETECT_ARSONIST_OFF,
+				DetectCultist.DETECT_CULTIST_OFF,
+				DetectMassMurderer.DETECT_MASSMURDERER_OFF));
+		GameEngine.assignCharacter(player2, new Sheriff(player2,
+				DetectMafia.DETECT_MAFIA_OFF,
+				DetectArsonist.DETECT_ARSONIST_ON,
+				DetectCultist.DETECT_CULTIST_ON,
+				DetectMassMurderer.DETECT_MASSMURDERER_ON));
 		GameEngine.assignCharacter(player3, new Godfather(player3));
 		GameEngine.assignCharacter(player4, new Arsonist(player4));
 		GameEngine.assignCharacter(player5, new MassMurderer(player5));

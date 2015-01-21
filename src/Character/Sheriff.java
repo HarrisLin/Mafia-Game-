@@ -1,6 +1,5 @@
 package Character;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import Enumerators.Roles;
@@ -9,6 +8,10 @@ import GameEngine.Character;
 import GameEngine.GameMessage;
 import GameEngine.Player;
 import GameEngine.GameEngine;
+import GameOptions.SheriffOptions.DetectArsonist;
+import GameOptions.SheriffOptions.DetectCultist;
+import GameOptions.SheriffOptions.DetectMafia;
+import GameOptions.SheriffOptions.DetectMassMurderer;
 
 // *****************************************************************
 // DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE
@@ -63,14 +66,14 @@ public class Sheriff extends Character {
 				|| !GameEngine.alive_player.containsAll(targets)) {
 			return false;
 		}
-		this.targets = new ArrayList<Player>(targets);
-		return true;
+		return setTargets(targets);
 	}
 
 	@Override
 	public String doAction() {
-		if(targets.isEmpty()) {
-			return GameMessage.NO_ACTION;
+		List<Player> targets = getTargets();
+		if (targets.isEmpty()) {
+			return GameMessage.noAction();
 		}
 		String message = "Cannot get your results";
 		if (this.isRoleBlocked()) {
@@ -80,23 +83,19 @@ public class Sheriff extends Character {
 		String result;
 		Roles targetRole = GameEngine.getCharacter(targets.get(0))
 				.getCharacterRole();
-		if (detectsArsonist
-				.equals(GameOptions.SheriffOptions.DetectArsonist.DETECT_ARSONIST_ON)
+		if (detectsArsonist.equals(DetectArsonist.DETECT_ARSONIST_ON)
 				&& targetRole.equals(Roles.Arsonist)) {
 			result = "a arsonist";
-		} else if (detectsCultist
-				.equals(GameOptions.SheriffOptions.DetectCultist.DETECT_CULTIST_ON)
+		} else if (detectsCultist.equals(DetectCultist.DETECT_CULTIST_ON)
 				&& targetRole.equals(Roles.Cultist)) {
 			result = "a cultist";
 		} else if (detectsMassMurderer
-				.equals(GameOptions.SheriffOptions.DetectMassMurderer.DETECT_MASSMURDERER_ON)
+				.equals(DetectMassMurderer.DETECT_MASSMURDERER_ON)
 				&& targetRole.equals(Roles.MassMurderer)) {
 			result = "a mass murderer";
-		} else if (detectsMafia
-				.equals(GameOptions.SheriffOptions.DetectMafia.DETECT_MAFIA_ON)
+		} else if (detectsMafia.equals(DetectMafia.DETECT_MAFIA_ON)
 				&& targetRole.getSide().equals(Sides.Mafia)
-				|| detectsMafia
-						.equals(GameOptions.SheriffOptions.DetectMafia.DETECT_MAFIA_ON)
+				|| detectsMafia.equals(DetectMafia.DETECT_MAFIA_ON)
 				&& targetRole.getSide().equals(Sides.Triad)) {
 			result = "suspicious";
 		} else {
