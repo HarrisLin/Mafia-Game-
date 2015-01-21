@@ -73,7 +73,7 @@ public class Sheriff extends Character {
 	public String doAction() {
 		List<Player> targets = getTargets();
 		if (targets.isEmpty()) {
-			return GameMessage.noAction();
+			return GameMessage.NO_ACTION;
 		}
 		String message = "Cannot get your results";
 		if (this.isRoleBlocked()) {
