@@ -70,6 +70,7 @@ public abstract class Character {
 		alive = true;
 		invulnerable = false;
 		blockImmune = false;
+		targets = new ArrayList<Player>();
 		visitors = new ArrayList<Player>();
 		lastWill = "No last will.";
 		doused = false;
@@ -92,6 +93,7 @@ public abstract class Character {
 		alive = true;
 		this.invulnerable = invulnerable;
 		blockImmune = false;
+		targets = new ArrayList<Player>();
 		visitors = new ArrayList<Player>();
 		lastWill = "No last will.";
 		doused = false;
@@ -117,6 +119,7 @@ public abstract class Character {
 		alive = true;
 		this.invulnerable = invulnerable;
 		this.blockImmune = blockImmune;
+		targets = new ArrayList<Player>();
 		visitors = new ArrayList<Player>();
 		lastWill = "No last will.";
 		doused = false;
