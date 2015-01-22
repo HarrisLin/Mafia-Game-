@@ -5,6 +5,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.*;
+import java.util.List;
 
 public class DatabaseManager {
 	
@@ -27,9 +28,14 @@ public class DatabaseManager {
 			c = DriverManager.getConnection("jdbc:sqlite:mafia_data.db");
 			stmt = c.createStatement();
 			String sql = 	"CREATE TABLE DATA " +
-							"(NAME	TEXT	PRIMARY KEY	NOT NULL," +
-							" ROLE	TEXT				NOT NULL," +
-							" SIDE	TEXT				NOT NULL);";
+							"(NAME			TEXT	PRIMARY KEY	NOT NULL," +
+							" ROLE			TEXT				NOT NULL," +
+							" SIDE			TEXT				NOT NULL," +
+							" ALIVE			INTEGER				NOT NULL," +
+							" TARGETS		TEXT						," +
+							" LYNCH_TARGET	TEXT						," +
+							" LAST_WILL		TEXT						," +
+							" DOUSED		INTEGER				NOT NULL);";
 			stmt.executeUpdate(sql);
 			stmt.close();
 			c.close();
@@ -51,10 +57,7 @@ public class DatabaseManager {
 			c.setAutoCommit(false);
 			
 			stmt = c.createStatement();
-			String sql = "INSERT INTO DATA (NAME,ROLE,SIDE) " +
-						 "VALUES ('" + player.getName() + "', '" +
-						 		   character.getRole().name() + "', '" +
-						 		   character.getSide().toString() + "');";
+			String sql = SqlInsertString(character, player);
 			stmt.executeUpdate(sql);
 			
 			stmt.close();
@@ -101,6 +104,56 @@ public class DatabaseManager {
 			return null;
 		}
 		return imported_character;
+	}
+	
+	/**
+	 * Generates a SQL string used for SQL INSERT
+	 * @param character Character object to be inserted into SQL database
+	 * @param player Player object to be inserted into SQL database
+	 * @return
+	 */
+	protected static String SqlInsertString(Character character, Player player) {
+		return "INSERT INTO DATA " +
+				"(NAME,ROLE,SIDE,ALIVE,TARGETS,LYNCH_TARGET,LAST_WILL,DOUSED) VALUES ('" + 
+				player.getName() + "', '" +								// NAME
+				character.getRole().name() + "', '" +					// ROLE
+				character.getSide().toString() + "', '" +				// SIDE
+				(character.checkAlive()?1:0) + "', '" +					// ALIVE
+				concatenateTargets(character.getTargets()) + "', '"	+	// TARGETS
+				getCharacterName(character.getLynchTarget()) + "', '" +	// LYNCH_TARGET
+				character.getLastWill() + "', '" +						// LAST_WILL
+				(character.isDoused()?1:0) +							// DOUSED
+				"');";
+	}
+	
+	/**
+	 * Concatenates a list of Player targets into a string with ## separating each entry
+	 * @param targets the list of targets
+	 * @return concatenated string of targets
+	 */
+	protected static String concatenateTargets(List<Player> targets) {
+		if (targets == null || targets.isEmpty()) {
+			return "NULL";
+		}
+		String concatenated_targets = targets.get(0).getName();
+		for (int k = 1; k < targets.size(); k++) {
+			concatenated_targets += "##"+targets.get(k).getName();
+		}
+		return concatenated_targets;
+	}
+	
+	/**
+	 * SQL statements need to process null values as "NULL". A null character
+	 * will blow up the DatabaseManager
+	 * @param player the Player to nullcheck
+	 * @return "NULL" if null, Player name otherwise
+	 */
+	private static String getCharacterName(Player player) {
+		if (player == null) {
+			return "NULL";
+		} else {
+			return player.getName();
+		}
 	}
 
 }
