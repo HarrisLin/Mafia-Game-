@@ -5,10 +5,18 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.jmx.snmp.Enumerated;
+
+import Character.CharacterFactory;
+import Enumerators.Roles;
+
 public class DatabaseManager {
-	
+
+	public static final String DATABASE_PATH = "mafia_data.db";
+
 	/**
 	 * Initializes the database.
 	 * WARNING: This will delete any previous database created by the game!
@@ -16,7 +24,7 @@ public class DatabaseManager {
 	public static void init() {
 		Connection c = null;
 		Statement stmt = null;
-		Path db_path = FileSystems.getDefault().getPath("mafia_data.db");
+		Path db_path = FileSystems.getDefault().getPath(DATABASE_PATH);
 		try {
 			Files.deleteIfExists(db_path);
 			System.out.println("Erased old database.");
@@ -27,7 +35,7 @@ public class DatabaseManager {
 			Class.forName("org.sqlite.JDBC");
 			c = DriverManager.getConnection("jdbc:sqlite:mafia_data.db");
 			stmt = c.createStatement();
-			String sql = 	"CREATE TABLE DATA " +
+			String sql =	"CREATE TABLE DATA " +
 							"(NAME			TEXT	PRIMARY KEY	NOT NULL," +
 							" ROLE			TEXT				NOT NULL," +
 							" SIDE			TEXT				NOT NULL," +
@@ -44,7 +52,7 @@ public class DatabaseManager {
 			return;
 		}
 	}
-	
+
 	/**
 	 * Add player data to the database
 	 */
@@ -55,11 +63,11 @@ public class DatabaseManager {
 			Class.forName("org.sqlite.JDBC");
 			c = DriverManager.getConnection("jdbc:sqlite:mafia_data.db");
 			c.setAutoCommit(false);
-			
+
 			stmt = c.createStatement();
 			String sql = SqlInsertString(character, player);
 			stmt.executeUpdate(sql);
-			
+
 			stmt.close();
 			c.commit();
 			c.close();
@@ -69,7 +77,7 @@ public class DatabaseManager {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Get character data from the database
 	 */
@@ -81,21 +89,40 @@ public class DatabaseManager {
 			Class.forName("org.sqlite.JDBC");
 			c = DriverManager.getConnection("jdbc:sqlite:mafia_data.db");
 			c.setAutoCommit(false);
-			
+
 			stmt = c.createStatement();
 			String query = "SELECT * FROM data WHERE name = '" + player.getName() + "';";
 			ResultSet rs = stmt.executeQuery(query);
+
 			if (rs.next()) {
+				// Get our data from the SQL database
 				String role_string = rs.getString("role");
 				String side_string = rs.getString("side");
-				System.out.println("Role string: " + role_string);
-				System.out.println("Side string: " + side_string);
-				
-				//imported_character = new Character(Enumerators.Roles.valueOf(role_string), player);
+				boolean alive_bool = (rs.getInt("alive") == 1);
+				String targets_string = rs.getString("targets");
+				String lynch_string = rs.getString("lynch_target");
+				String last_will_string = rs.getString("last_will");
+				boolean doused_bool = (rs.getInt("doused") == 1);
+
+				// translate our SQL data into actual data
+				Roles role = Roles.valueOf(Roles.class, role_string);
+				imported_character = CharacterFactory.makeCharacter(role, player);
+				if (alive_bool == false) {
+					imported_character.kill();
+				}
+				if (targets_string.equals("NULL") == false) {
+					imported_character.setTarget(getTargetsFromString(targets_string));
+				}
+				if (last_will_string.equals("NULL") == false ){
+					imported_character.updateLastWill(last_will_string);
+				}
+				if (doused_bool == true) {
+					imported_character.douse();
+				}
 			} else {
 				System.out.println("Failed to retrieve query.");
 			}
-			
+
 			stmt.close();
 			c.commit();
 			c.close();
@@ -103,9 +130,10 @@ public class DatabaseManager {
 			System.out.println(e.getClass().getName() + ": " + e.getMessage());
 			return null;
 		}
+
 		return imported_character;
 	}
-	
+
 	/**
 	 * Generates a SQL string used for SQL INSERT
 	 * @param character Character object to be inserted into SQL database
@@ -125,7 +153,7 @@ public class DatabaseManager {
 				(character.isDoused()?1:0) +							// DOUSED
 				"');";
 	}
-	
+
 	/**
 	 * Concatenates a list of Player targets into a string with ## separating each entry
 	 * @param targets the list of targets
@@ -141,7 +169,36 @@ public class DatabaseManager {
 		}
 		return concatenated_targets;
 	}
-	
+
+	/**
+	 * Converts a SQL string of targets into a list of Players.
+	 * The SQL string is composed of all target names separated
+	 * by "##".
+	 *
+	 * For example, "Derek##Harris##Connie##Andy##Nathan"
+	 *
+	 * If a player in the string is not registered in the game,
+	 * that player is ignored and the list of targets will not
+	 * include that player.
+	 * @param string the SQL string of targets made
+	 * @return a list of targets
+	 */
+	protected static List<Player> getTargetsFromString(String string) {
+		ArrayList<Player> targets = new ArrayList<Player>();
+		if (string.equals("NULL")) {
+			return targets;
+		}
+		String targets_string[] = string.split("##");
+		for (int k = 0; k < targets_string.length; k++) {
+			try {
+				targets.add(Player.get(targets_string[k]));
+			} catch (CannotGetPlayerException e) {
+				// skip this player, the player is not registered
+			}
+		}
+		return targets;
+	}
+
 	/**
 	 * SQL statements need to process null values as "NULL". A null character
 	 * will blow up the DatabaseManager
