@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Test;
 
 import Enumerators.Roles;
@@ -13,24 +14,29 @@ import GameEngine.DatabaseManager;
 import TestUtils.TestCharacter;
 
 public class DatabaseManager_PrivateMethods_Test {
-	
+
+	@After
+	public void teardown() {
+		Player.clearRegisteredPlayers();
+	}
+
 	@Test
 	public void test_concatenateTargets_emptyList() {
 		ArrayList<Player> targets = new ArrayList<Player>();
 		assertEquals("NULL", TestDatabaseManager.testConcatenateTargets(targets));
 	}
-	
+
 	@Test
 	public void test_concatenateTargets_nullList() {
 		assertEquals("NULL", TestDatabaseManager.testConcatenateTargets(null));
 	}
-	
+
 	@Test
 	public void test_concatenateTargets_singleTarget() {
 		GameEngine.registerPlayer("Derek");
 		assertEquals("Derek", TestDatabaseManager.testConcatenateTargets(Player.getAllPlayers()));
 	}
-	
+
 	@Test
 	public void test_concatenateTargets_multipleTargets() {
 		GameEngine.registerPlayer("Derek");
@@ -38,7 +44,7 @@ public class DatabaseManager_PrivateMethods_Test {
 		GameEngine.registerPlayer("Andy");
 		assertEquals("Derek##Harris##Andy", TestDatabaseManager.testConcatenateTargets(Player.getAllPlayers()));
 	}
-	
+
 	@Test
 	public void test_SqlInsertString_freshInitializedCharacter() throws CannotGetPlayerException {
 		GameEngine.registerPlayer("Derek");
@@ -60,7 +66,7 @@ public class DatabaseManager_PrivateMethods_Test {
 				"VALUES ('Derek', 'Detective', 'Town', '1', 'Harris', 'NULL', 'No last will.', '0');",
 				TestDatabaseManager.testSqlInsertString(character, Player.get("Derek")));
 	}
-	
+
 	@Test
 	public void test_SqlInsertString_characterWithMultipleTargets() throws CannotGetPlayerException {
 		GameEngine.registerPlayer("Derek");
@@ -77,7 +83,7 @@ public class DatabaseManager_PrivateMethods_Test {
 				"VALUES ('Derek', 'Detective', 'Town', '1', 'Harris##Connie##Eleanor', 'NULL', 'No last will.', '0');",
 				TestDatabaseManager.testSqlInsertString(character, Player.get("Derek")));
 	}
-	
+
 	@Test
 	public void test_SqlInsertString_characterWithLynchTarget() throws CannotGetPlayerException {
 		GameEngine.registerPlayer("Derek");
@@ -86,12 +92,12 @@ public class DatabaseManager_PrivateMethods_Test {
 		TestCharacter character2 = new TestCharacter(Roles.Detective, Player.get("NotTheGodfather"));
 		GameEngine.assignCharacter(Player.get("Derek"), character);
 		GameEngine.assignCharacter(Player.get("NotTheGodfather"), character2);
-		character.vote(Player.get("NotTheGodfather"));		
+		character.vote(Player.get("NotTheGodfather"));
 		assertEquals("INSERT INTO DATA (NAME,ROLE,SIDE,ALIVE,TARGETS,LYNCH_TARGET,LAST_WILL,DOUSED) " +
 				"VALUES ('Derek', 'Detective', 'Town', '1', 'NULL', 'NotTheGodfather', 'No last will.', '0');",
 				TestDatabaseManager.testSqlInsertString(character, Player.get("Derek")));
 	}
-	
+
 	@Test
 	public void test_SqlInsertString_characterWithLastWill() throws CannotGetPlayerException {
 		GameEngine.registerPlayer("Derek");
@@ -102,7 +108,7 @@ public class DatabaseManager_PrivateMethods_Test {
 				"VALUES ('Derek', 'Detective', 'Town', '1', 'NULL', 'NULL', 'Harris is a dork', '0');",
 				TestDatabaseManager.testSqlInsertString(character, Player.get("Derek")));
 	}
-	
+
 	@Test
 	public void test_SqlInsertString_characterDoused() throws CannotGetPlayerException {
 		GameEngine.registerPlayer("Derek");
@@ -113,18 +119,115 @@ public class DatabaseManager_PrivateMethods_Test {
 				"VALUES ('Derek', 'Detective', 'Town', '1', 'NULL', 'NULL', 'No last will.', '1');",
 				TestDatabaseManager.testSqlInsertString(character, Player.get("Derek")));
 	}
-	
+
+	@Test
+	public void test_getTargetsFromString_null() {
+		String sql_string = "NULL";
+		List<Player> result_list = TestDatabaseManager.testGetTargetsFromString(sql_string);
+		assert(result_list.isEmpty());
+	}
+
+	@Test
+	public void test_getTargetsFromString_singleRegistered() throws CannotGetPlayerException {
+		GameEngine.registerPlayer("Derek");
+		String sql_string = "Derek";
+		List<Player> result_list = TestDatabaseManager.testGetTargetsFromString(sql_string);
+		assertEquals(1, result_list.size());
+		assert(result_list.contains(Player.get("Derek")));
+	}
+
+	@Test
+	public void test_getTargetsFromString_multipleRegistered() throws CannotGetPlayerException {
+		GameEngine.registerPlayer("Derek");
+		GameEngine.registerPlayer("Eleanor");
+		String sql_string = "Eleanor##Derek";
+		List<Player> result_list = TestDatabaseManager.testGetTargetsFromString(sql_string);
+		assertEquals(2, result_list.size());
+		assert(result_list.contains(Player.get("Derek")));
+		assert(result_list.contains(Player.get("Eleanor")));
+	}
+
+	@Test
+	public void test_getTargetsFromString_multipleRegistered2() throws CannotGetPlayerException {
+		GameEngine.registerPlayer("Derek");
+		GameEngine.registerPlayer("Eleanor");
+		GameEngine.registerPlayer("Andy");
+		String sql_string = "Eleanor##Derek##Andy";
+		List<Player> result_list = TestDatabaseManager.testGetTargetsFromString(sql_string);
+		assertEquals(3, result_list.size());
+		assert(result_list.contains(Player.get("Andy")));
+		assert(result_list.contains(Player.get("Derek")));
+		assert(result_list.contains(Player.get("Eleanor")));
+	}
+
+	@Test
+	public void test_getTargetsFromString_singleNotRegistered() throws CannotGetPlayerException {
+		String sql_string = "Derek";
+		List<Player> result_list = TestDatabaseManager.testGetTargetsFromString(sql_string);
+		assert(result_list.isEmpty());
+	}
+
+	@Test
+	public void test_getTargetsFromString_multipleNotRegistered() throws CannotGetPlayerException {
+		String sql_string = "Eleanor##Derek";
+		List<Player> result_list = TestDatabaseManager.testGetTargetsFromString(sql_string);
+		assert(result_list.isEmpty());
+	}
+
+	@Test
+	public void test_getTargetsFromString_multipleNotRegistered2() throws CannotGetPlayerException {
+		String sql_string = "Eleanor##Derek##Andy";
+		List<Player> result_list = TestDatabaseManager.testGetTargetsFromString(sql_string);
+		assert(result_list.isEmpty());
+	}
+
+	@Test
+	public void test_getTargetsFromString_mixedRegistered() throws CannotGetPlayerException {
+		GameEngine.registerPlayer("Derek");
+		String sql_string = "Eleanor##Derek";
+		List<Player> result_list = TestDatabaseManager.testGetTargetsFromString(sql_string);
+		assertEquals(1, result_list.size());
+		assert(result_list.contains(Player.get("Derek")));
+	}
+
+	@Test
+	public void test_getTargetsFromString_mixedRegistered2() throws CannotGetPlayerException {
+		GameEngine.registerPlayer("Eleanor");
+		GameEngine.registerPlayer("Andy");
+		String sql_string = "Eleanor##Derek##Andy";
+		List<Player> result_list = TestDatabaseManager.testGetTargetsFromString(sql_string);
+		assertEquals(2, result_list.size());
+		assert(result_list.contains(Player.get("Andy")));
+		assert(!result_list.contains(Player.get("Derek")));
+		assert(result_list.contains(Player.get("Eleanor")));
+	}
+
+	@Test
+	public void test_getTargetsFromString_mixedRegistered3() throws CannotGetPlayerException {
+		GameEngine.registerPlayer("Eleanor");
+		String sql_string = "Eleanor##Derek##Andy";
+		List<Player> result_list = TestDatabaseManager.testGetTargetsFromString(sql_string);
+		assertEquals(1, result_list.size());
+		assert(!result_list.contains(Player.get("Andy")));
+		assert(!result_list.contains(Player.get("Derek")));
+		assert(result_list.contains(Player.get("Eleanor")));
+	}
+
 	/**
 	 * Private class used to expose protected methods for testing
 	 */
 	private static class TestDatabaseManager extends DatabaseManager {
-		
+
 		protected static String testSqlInsertString(Character character, Player player) {
 			return SqlInsertString(character, player);
 		}
-		
+
 		protected static String testConcatenateTargets(List<Player> targets) {
 			return concatenateTargets(targets);
+		}
+
+		protected static List<Player> testGetTargetsFromString(String sql_string) {
+			return getTargetsFromString(sql_string);
 		}
 	}
 }
