@@ -12,7 +12,6 @@ public class ConsigliereOptions implements RoleOptions {
 		detectsRole = DetectRole.DETECT_VAGUE_ROLE;
 	}
 
-	@Override
 	public boolean changeOptions(int option) {
 		switch (option) {
 		case 0:
@@ -27,7 +26,6 @@ public class ConsigliereOptions implements RoleOptions {
 		return true;
 	}
 
-	@Override
 	public Options getOptions(int option) throws NoSuchOptionException {
 		switch (option) {
 		case 1:

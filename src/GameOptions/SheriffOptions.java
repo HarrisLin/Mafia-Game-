@@ -70,7 +70,6 @@ public class SheriffOptions implements RoleOptions {
 	 * @throws NoSuchOptionException
 	 *             if there is no such option
 	 */
-	@Override
 	public Options getOptions(int option) throws NoSuchOptionException {
 		switch (option) {
 		case 1:

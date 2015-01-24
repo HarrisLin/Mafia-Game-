@@ -15,7 +15,7 @@ import GameOptions.SheriffOptions.DetectMassMurderer;
 
 // *****************************************************************
 // DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE
-// this is a tag for all the characters/classes that are done(｡◕‿◕｡)
+// this is a tag for all the characters/classes that are done
 // *****************************************************************
 
 /**
@@ -85,7 +85,7 @@ public class Sheriff extends Character {
 				.getCharacterRole();
 		if (detectsArsonist.equals(DetectArsonist.DETECT_ARSONIST_ON)
 				&& targetRole.equals(Roles.Arsonist)) {
-			result = "a arsonist";
+			result = "an arsonist";
 		} else if (detectsCultist.equals(DetectCultist.DETECT_CULTIST_ON)
 				&& targetRole.equals(Roles.Cultist)) {
 			result = "a cultist";
