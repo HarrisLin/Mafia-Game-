@@ -1,5 +1,6 @@
 package Character;
 
+
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import GameEngine.CannotGetPlayerException;
 import GameEngine.GameEngine;
 import GameEngine.Player;
 
-public class DetectiveTest {
+public class Detective_Test {
 
 	Player player1;
 	Player player2;
