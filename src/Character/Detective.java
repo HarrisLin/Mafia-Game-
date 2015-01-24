@@ -7,7 +7,11 @@ import GameEngine.Character;
 import GameEngine.GameEngine;
 import GameEngine.GameMessage;
 import GameEngine.Player;
-
+/**
+ * Detective check who one character visited that night
+ * @author Eleanor Wong
+ *
+ */
 public class Detective extends Character {
 	Detective(Player player) {
 		super(Roles.Detective, player);
