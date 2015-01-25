@@ -42,11 +42,12 @@ public class Lookout extends Character {
 		//TODO: Include option for ignoring detection immunity
 		//      Add exception that lookout does not die to veteran ***
 		//      ALSO any bus driver exceptions
-		//TODO: Make it so that it doesn't say you visited your target because realy
 		String result = "Your target was visited by ";
+		
 		for ( int i = 0; i < tracker.size(); i++ ) {
-			
-				result = result + tracker.get(i).toString() + ",";
+			if ( !tracker.get(i).equals(this.getPlayer()) ) {
+				result = result + tracker.get(i).getName().toString() + ",";
+			}
 			
 		}
 		
