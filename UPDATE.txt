@@ -1,19 +1,12 @@
 UPDATES FOR THE MAFIA CODE
 *Note No longer using README.md as a memo because README.md should be reserved for a manual of the game.
 
-UPDATE #1 -- will start using README.txt as a memo
+UPDATE #2 -- will no longer use README.md for update, instead a separate UPDATE.txt.
+1) New SCRUM.txt to be a log of the scrum meetings. It's good to keep track of everything we discussed in the meeting and know what we have done.
 
-1) The below comment will be written at on the top of Character/*.java if the character role
-is fully written and ready for testing/already tested.
-******************************************************************
-DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE
-this is a tag for all the characters/classes that are done
-*******************************************************************
+2) The characters have been mostly implemented and moving to make the CLI and GameEngine.java
 
-Currently in this catagory contains : Bus Driver, Consigliere, Consort, Escort, Doctor, 
-Investigator, Sheriff, Mayor, Serial Killer, Mayor.
-
-Of those two : Sheriff and Investigator has options included and are donoted by (｡◕‿◕｡)
+3) The README.md will be reserved for manual of the game. Updates will be here. Everyone please log the updates making stuff to do / stuff done / etc easier to navigate and keep everyone on the same page.
 
 2) Cleaned up GameEngine/Character.java
 Sections labelled the following:
