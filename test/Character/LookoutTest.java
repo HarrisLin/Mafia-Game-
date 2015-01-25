@@ -82,7 +82,7 @@ public class LookoutTest {
 		lookoutTarget.add(player2);
 		assertTrue(GameEngine.setTarget(player1,lookoutTarget));
 		gameMessageResult = GameEngine.getCharacter(player1).doAction();
-		String expectedMessageResult = "Your target was visited by " + player3 + "," + player4 + ",";
+		String expectedMessageResult = "Your target was visited by " + player3.getName() + "," + player4.getName() + ",";
 		assertEquals(gameMessageResult, expectedMessageResult);
 	}
 }
