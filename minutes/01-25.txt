@@ -1,0 +1,19 @@
+January 25, 2015 Meeting Minutes
+
+Sprint Length: 2 Weeks
+
+Roles
+Product Owner: Derek
+Scrum Master: Connie
+Secretary: ELEANOR!
+Middleware API: Andy and Kaibo
+-	Create model, mockups, for CLI, Facebook API, bot to read Harris Pheg
+Database: Harris and Derek
+-	Migrate hard-coded coded to database
+Game Engine: Eleanor and Connie
+-	Unit tests
+
+Due Date: 1 month (February 25, 2015)
+
+Next Week: Scrum meeting, 
+
