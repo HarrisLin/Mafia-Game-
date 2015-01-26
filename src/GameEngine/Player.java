@@ -25,7 +25,7 @@ public class Player {
 	/**
 	 * @return the lynchVotes
 	 */
-	private int getLynchVotes() {
+	public int getLynchVotes() {
 		return lynchVotes;
 	}
 
