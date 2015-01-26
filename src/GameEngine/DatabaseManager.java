@@ -43,7 +43,8 @@ public class DatabaseManager {
 							" TARGETS		TEXT						," +
 							" LYNCH_TARGET	TEXT						," +
 							" LAST_WILL		TEXT						," +
-							" DOUSED		INTEGER				NOT NULL);";
+							" DOUSED		INTEGER				NOT NULL," +
+							" ROLE_INFO		TEXT					   );";
 			stmt.executeUpdate(sql);
 			stmt.close();
 			c.close();
@@ -103,6 +104,7 @@ public class DatabaseManager {
 				String lynch_string = rs.getString("lynch_target");
 				String last_will_string = rs.getString("last_will");
 				boolean doused_bool = (rs.getInt("doused") == 1);
+				String role_info = rs.getString("role_info");
 
 				// translate our SQL data into actual data
 				Roles role = Roles.valueOf(Roles.class, role_string);
@@ -119,6 +121,7 @@ public class DatabaseManager {
 				if (doused_bool == true) {
 					imported_character.douse();
 				}
+				imported_character.importDatabaseRoleInfo(role_info);
 			} else {
 				System.out.println("Failed to retrieve query.");
 			}
@@ -142,7 +145,7 @@ public class DatabaseManager {
 	 */
 	protected static String SqlInsertString(Character character, Player player) {
 		return "INSERT INTO DATA " +
-				"(NAME,ROLE,SIDE,ALIVE,TARGETS,LYNCH_TARGET,LAST_WILL,DOUSED) VALUES ('" + 
+				"(NAME,ROLE,SIDE,ALIVE,TARGETS,LYNCH_TARGET,LAST_WILL,DOUSED,ROLE_INFO) VALUES ('" + 
 				player.getName() + "', '" +								// NAME
 				character.getRole().name() + "', '" +					// ROLE
 				character.getSide().toString() + "', '" +				// SIDE
@@ -150,7 +153,8 @@ public class DatabaseManager {
 				concatenateTargets(character.getTargets()) + "', '"	+	// TARGETS
 				getCharacterName(character.getLynchTarget()) + "', '" +	// LYNCH_TARGET
 				character.getLastWill() + "', '" +						// LAST_WILL
-				(character.isDoused()?1:0) +							// DOUSED
+				(character.isDoused()?1:0) + "', '"  +					// DOUSED
+				character.getDatabaseRoleInfoString() +					// ROLE_INFO
 				"');";
 	}
 
