@@ -1,5 +1,6 @@
 package GameEngine;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,21 @@ public class Player {
 	static private final ArrayList<Player> players_in_game = new ArrayList<Player>();
 
 	private final String name;
+	private int lynchVotes = 0;
+
+	/**
+	 * @return the lynchVotes
+	 */
+	private int getLynchVotes() {
+		return lynchVotes;
+	}
+
+	/**
+	 * @param lynchVotes the lynchVotes to set
+	 */
+	private void setLynchVotes(int lynchVotes) {
+		this.lynchVotes = lynchVotes;
+	}
 
 	/**
 	 * Player.get creates a new player of class player if player name is in list
@@ -101,6 +117,16 @@ public class Player {
 		} else {
 			return false;
 		}
+	}
+	
+	/**
+	 * Player.vote
+	 * 
+	 * @param targets
+	 *            The target(s) of the action
+	 */
+	public static void vote(Player target) {
+		target.setLynchVotes( target.getLynchVotes() + 1 );
 	}
 
 	/**

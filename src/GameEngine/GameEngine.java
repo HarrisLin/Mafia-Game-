@@ -18,6 +18,22 @@ public class GameEngine {
 	// List of players still alive, used for setTarget() method in Character
 	// Class
 	public static List<Player> alive_player = new ArrayList<Player>();
+	public static List<Player> dead_player = new ArrayList<Player>();
+
+	/**
+	 * This method returns the list of dead players
+	 * @return dead_player - List of Dead Players
+	 */
+	private static List<Player> getDead_player() {
+		return dead_player;
+	}
+
+	/**
+	 * @param dead_player the dead_player to set
+	 */
+	private static void setDead_player(List<Player> dead_player) {
+		GameEngine.dead_player = dead_player;
+	}
 
 	/**
 	 * GameEngine.registerPlayer Registers a player into the game.
@@ -61,6 +77,7 @@ public class GameEngine {
 	 * @return TRUE if successfully killed and FALSE if not
 	 */
 	public static boolean killPlayer(Player player) {
+		dead_player.add(player);
 		return alive_player.remove(player);
 	}
 	
@@ -102,18 +119,7 @@ public class GameEngine {
 		return player_character_map.get(player).setTarget(targets);
 	}
 
-	/**
-	 * GameEngine.vote
-	 * 
-	 * @param player
-	 *            The player performing the action
-	 * @param targets
-	 *            The target(s) of the action
-	 * @return true if target was successfully set, false otherwise
-	 */
-	public static boolean vote(Player player, Player target) {
-		return player_character_map.get(player).vote(target);
-	}
+
 
 	/**
 	 * GameEngine.performNightActions Makes each character perform his/her night
