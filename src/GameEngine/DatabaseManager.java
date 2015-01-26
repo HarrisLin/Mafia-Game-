@@ -66,7 +66,7 @@ public class DatabaseManager {
 			c.setAutoCommit(false);
 
 			stmt = c.createStatement();
-			String sql = SqlInsertString(character, player);
+			String sql = SqlInsertString(character);
 			stmt.executeUpdate(sql);
 
 			stmt.close();
@@ -140,13 +140,12 @@ public class DatabaseManager {
 	/**
 	 * Generates a SQL string used for SQL INSERT
 	 * @param character Character object to be inserted into SQL database
-	 * @param player Player object to be inserted into SQL database
 	 * @return
 	 */
-	protected static String SqlInsertString(Character character, Player player) {
+	protected static String SqlInsertString(Character character) {
 		return "INSERT INTO DATA " +
 				"(NAME,ROLE,SIDE,ALIVE,TARGETS,LYNCH_TARGET,LAST_WILL,DOUSED,ROLE_INFO) VALUES ('" + 
-				player.getName() + "', '" +								// NAME
+				character.getPlayer().getName() + "', '" +				// NAME
 				character.getRole().name() + "', '" +					// ROLE
 				character.getSide().toString() + "', '" +				// SIDE
 				(character.checkAlive()?1:0) + "', '" +					// ALIVE

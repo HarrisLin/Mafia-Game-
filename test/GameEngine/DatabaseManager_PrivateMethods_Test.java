@@ -50,9 +50,9 @@ public class DatabaseManager_PrivateMethods_Test {
 		GameEngine.registerPlayer("Derek");
 		TestCharacter character = new TestCharacter(Roles.Detective, Player.get("Derek"));
 		GameEngine.assignCharacter(Player.get("Derek"), character);
-		assertEquals("INSERT INTO DATA (NAME,ROLE,SIDE,ALIVE,TARGETS,LYNCH_TARGET,LAST_WILL,DOUSED) " +
+		assertEquals("INSERT INTO DATA (NAME,ROLE,SIDE,ALIVE,TARGETS,LYNCH_TARGET,LAST_WILL,DOUSED,ROLE_INFO) " +
 				"VALUES ('Derek', 'Detective', 'Town', '1', 'NULL', 'NULL', 'No last will.', '0', '');",
-				TestDatabaseManager.testSqlInsertString(character, Player.get("Derek")));
+				TestDatabaseManager.testSqlInsertString(character));
 	}
 
 	@Test
@@ -62,9 +62,9 @@ public class DatabaseManager_PrivateMethods_Test {
 		TestCharacter character = new TestCharacter(Roles.Detective, Player.get("Derek"));
 		character.setTarget(Player.get("Harris"));
 		GameEngine.assignCharacter(Player.get("Derek"), character);
-		assertEquals("INSERT INTO DATA (NAME,ROLE,SIDE,ALIVE,TARGETS,LYNCH_TARGET,LAST_WILL,DOUSED) " +
+		assertEquals("INSERT INTO DATA (NAME,ROLE,SIDE,ALIVE,TARGETS,LYNCH_TARGET,LAST_WILL,DOUSED,ROLE_INFO) " +
 				"VALUES ('Derek', 'Detective', 'Town', '1', 'Harris', 'NULL', 'No last will.', '0', '');",
-				TestDatabaseManager.testSqlInsertString(character, Player.get("Derek")));
+				TestDatabaseManager.testSqlInsertString(character));
 	}
 
 	@Test
@@ -79,9 +79,9 @@ public class DatabaseManager_PrivateMethods_Test {
 		character.addTarget(Player.get("Eleanor"));
 		assertEquals(3, character.getTargets().size());
 		GameEngine.assignCharacter(Player.get("Derek"), character);
-		assertEquals("INSERT INTO DATA (NAME,ROLE,SIDE,ALIVE,TARGETS,LYNCH_TARGET,LAST_WILL,DOUSED) " +
+		assertEquals("INSERT INTO DATA (NAME,ROLE,SIDE,ALIVE,TARGETS,LYNCH_TARGET,LAST_WILL,DOUSED,ROLE_INFO) " +
 				"VALUES ('Derek', 'Detective', 'Town', '1', 'Harris##Connie##Eleanor', 'NULL', 'No last will.', '0', '');",
-				TestDatabaseManager.testSqlInsertString(character, Player.get("Derek")));
+				TestDatabaseManager.testSqlInsertString(character));
 	}
 
 	@Test
@@ -93,9 +93,9 @@ public class DatabaseManager_PrivateMethods_Test {
 		GameEngine.assignCharacter(Player.get("Derek"), character);
 		GameEngine.assignCharacter(Player.get("NotTheGodfather"), character2);
 		character.vote(Player.get("NotTheGodfather"));
-		assertEquals("INSERT INTO DATA (NAME,ROLE,SIDE,ALIVE,TARGETS,LYNCH_TARGET,LAST_WILL,DOUSED) " +
+		assertEquals("INSERT INTO DATA (NAME,ROLE,SIDE,ALIVE,TARGETS,LYNCH_TARGET,LAST_WILL,DOUSED,ROLE_INFO) " +
 				"VALUES ('Derek', 'Detective', 'Town', '1', 'NULL', 'NotTheGodfather', 'No last will.', '0', '');",
-				TestDatabaseManager.testSqlInsertString(character, Player.get("Derek")));
+				TestDatabaseManager.testSqlInsertString(character));
 	}
 
 	@Test
@@ -104,9 +104,9 @@ public class DatabaseManager_PrivateMethods_Test {
 		TestCharacter character = new TestCharacter(Roles.Detective, Player.get("Derek"));
 		GameEngine.assignCharacter(Player.get("Derek"), character);
 		character.updateLastWill("Harris is a dork");
-		assertEquals("INSERT INTO DATA (NAME,ROLE,SIDE,ALIVE,TARGETS,LYNCH_TARGET,LAST_WILL,DOUSED) " +
+		assertEquals("INSERT INTO DATA (NAME,ROLE,SIDE,ALIVE,TARGETS,LYNCH_TARGET,LAST_WILL,DOUSED,ROLE_INFO) " +
 				"VALUES ('Derek', 'Detective', 'Town', '1', 'NULL', 'NULL', 'Harris is a dork', '0', '');",
-				TestDatabaseManager.testSqlInsertString(character, Player.get("Derek")));
+				TestDatabaseManager.testSqlInsertString(character));
 	}
 
 	@Test
@@ -115,9 +115,9 @@ public class DatabaseManager_PrivateMethods_Test {
 		TestCharacter character = new TestCharacter(Roles.Detective, Player.get("Derek"));
 		GameEngine.assignCharacter(Player.get("Derek"), character);
 		character.douse();
-		assertEquals("INSERT INTO DATA (NAME,ROLE,SIDE,ALIVE,TARGETS,LYNCH_TARGET,LAST_WILL,DOUSED) " +
+		assertEquals("INSERT INTO DATA (NAME,ROLE,SIDE,ALIVE,TARGETS,LYNCH_TARGET,LAST_WILL,DOUSED,ROLE_INFO) " +
 				"VALUES ('Derek', 'Detective', 'Town', '1', 'NULL', 'NULL', 'No last will.', '1', '');",
-				TestDatabaseManager.testSqlInsertString(character, Player.get("Derek")));
+				TestDatabaseManager.testSqlInsertString(character));
 	}
 
 	@Test
@@ -218,8 +218,8 @@ public class DatabaseManager_PrivateMethods_Test {
 	 */
 	private static class TestDatabaseManager extends DatabaseManager {
 
-		protected static String testSqlInsertString(Character character, Player player) {
-			return SqlInsertString(character, player);
+		protected static String testSqlInsertString(Character character) {
+			return SqlInsertString(character);
 		}
 
 		protected static String testConcatenateTargets(List<Player> targets) {
