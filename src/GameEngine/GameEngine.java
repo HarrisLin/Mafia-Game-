@@ -127,13 +127,23 @@ public class GameEngine {
 	}
 
 	/**
-	 * Accumulates all the votes of the remaining players and if the mayor is
-	 * revealed then count his vote weighted
+	 * Finds player with most lynch votes and kills them off
 	 * 
 	 * @return the player lynched
 	 */
-	public static Player lynch() {
-		// TODO: implement me!
-		return null;
+	public static void lynch() {
+		
+		Player popular = alive_player.get(0);
+		int maxVote = alive_player.get(0).getLynchVotes();
+		
+		for(int players = 0; players < alive_player.size(); players++) {
+			if (alive_player.get(players).getLynchVotes() > maxVote) {
+				maxVote = alive_player.get(players).getLynchVotes();
+				popular = alive_player.get(players);
+			} else if (alive_player.get(players).getLynchVotes() == maxVote) {
+				// TODO
+			}
+		}
+		alive_player.remove(popular);
 	}
 }
