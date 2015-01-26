@@ -403,4 +403,48 @@ public abstract class Character {
 	public Enumerators.Sides getSide() {
 		return role.getSide();
 	}
+
+	/**
+	 * @return the role of the character
+	 */
+	protected Enumerators.Roles getRole() {
+		return role;
+	}
+
+	/**
+	 * Returns a string separated by "##" that contains all
+	 * character role-specific information that needs to be
+	 * saved in a database.
+	 *
+	 * THIS MUST BE OVERRIDDEN FOR CHARACTERS THAT NEED TO SAVE ROLE-SPECIFIC VALUES.
+	 *
+	 * For example, if we needed to store these values for Veteran
+	 * - Game Option (String): TWO_SHOTS_PER_GAME
+	 * - Number of shots remaining (int): 2
+	 * It would be stored as
+	 * "TWO_SHOTS_PER_GAME##2"
+	 * @return A string with data fields separated by "##" to be
+	 * inserted into the database
+	 */
+	protected String getDatabaseRoleInfoString() {
+		return "";
+	}
+
+	/**
+	 * Imports character role-specific information that needs to be saved
+	 * in a database.
+	 *
+	 * THIS MUST BE OVERRIDDEN FOR CHARACTERS THAT NEED TO SAVE ROLE-SPECIFIC VALUES.
+	 *
+	 * For example, if we had this string from Veteran
+	 * "TWO_SHOTS_PER_GAME##2"
+	 * We would parse the string and set the following values:
+	 * - Game Option (enum): TWO_SHOTS_PER_GAME
+	 * - Number of shots remaining (int): 2
+	 * @param role_info The data retrieved from the database, with each field separated by "##".
+	 * @return true if successful, false otherwise
+	 */
+	protected boolean importDatabaseRoleInfo(String role_info) {
+		return true;
+	}
 }
