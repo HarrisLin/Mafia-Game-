@@ -50,8 +50,10 @@ public class DatabaseManager_Test {
 		try {
 			Player p = Player.get("Derek");
 			c1 = GameEngine.getCharacter(Player.get("Derek"));
+			System.out.println("Adding data...");
 			DatabaseManager.addData(p, c1);
 
+			System.out.println("Retrieving data...");
 			c2 = DatabaseManager.getData(Player.get("Derek"));
 
 			assertEquals(c1.getPlayer(), c2.getPlayer());
