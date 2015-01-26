@@ -49,7 +49,7 @@ public class Detective extends Character {
 		//          and for Bus Driver, should we only say first person visited?
 		String result = "Your target visited ";
 		for ( int i = 0; i < tracker.size(); i++ ) {
-			result = result + tracker.get(i).toString() + ",";
+			result = result + tracker.get(i).getName().toString() + ",";
 		}
 		
 		return result;
