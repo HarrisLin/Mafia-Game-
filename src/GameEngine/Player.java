@@ -64,6 +64,14 @@ public class Player {
 	}
 	
 	/**
+	 * Clears all registered players
+	 */
+	public static void clearRegisteredPlayers() {
+		players_in_game.clear();
+		valid_names.clear();
+	}
+
+	/**
 	 * Players.GetAllInGamePlayers
 	 * @return A list of all players that are in game this round
 	 */
