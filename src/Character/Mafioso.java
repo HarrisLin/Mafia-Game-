@@ -9,7 +9,7 @@ import GameEngine.Player;
 
 public class Mafioso extends Character {
 
-	Mafioso(Player player) {
+	public Mafioso(Player player) {
 		super(Roles.Mafioso, player);
 	}
 

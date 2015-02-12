@@ -15,7 +15,7 @@ import GameEngine.Player;
 
 public class Doctor extends Character {
 
-	Doctor(Player player) {
+	public Doctor(Player player) {
 		super(Roles.Doctor, player);
 	}
 

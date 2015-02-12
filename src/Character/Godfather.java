@@ -18,7 +18,7 @@ import GameEngine.Player;
  */
 public class Godfather extends Character {
 
-	Godfather(Player player) {
+	public Godfather(Player player) {
 		super(Roles.Godfather, player, true, true);
 	}
 	/**

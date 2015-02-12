@@ -8,7 +8,7 @@ import GameEngine.GameEngine;
 import GameEngine.Player;
 
 public class Veteran extends Character {
-	Veteran(Player player) {
+	public Veteran(Player player) {
 		super(Roles.Veteran, player);
 	}
 

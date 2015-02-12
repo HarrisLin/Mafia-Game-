@@ -20,7 +20,7 @@ import GameEngine.Player;
 
 public class SerialKiller extends Character {
 
-	SerialKiller(Player player) {
+	public SerialKiller(Player player) {
 		super(Roles.SerialKiller, player, true);
 	}
 
