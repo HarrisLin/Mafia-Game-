@@ -10,7 +10,7 @@ public class Vigilante extends Character {
 	
 	private int shots;
 	
-	Vigilante(Player player) {
+	public Vigilante(Player player) {
 		super(Roles.Vigilante, player);
 		shots = 2;
 	}

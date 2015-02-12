@@ -8,7 +8,7 @@ import Enumerators.Roles;
 
 public class Cultist extends Character {
 
-	Cultist(Player player) {
+	public Cultist(Player player) {
 		super(Roles.Cultist, player);
 	}
 

@@ -21,7 +21,7 @@ import GameEngine.Player;
  */
 public class Escort extends Character {
 
-	Escort(Player player) {
+	public Escort(Player player) {
 		super(Roles.Escort, player);
 	}
 

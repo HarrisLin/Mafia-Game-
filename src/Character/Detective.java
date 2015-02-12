@@ -13,7 +13,7 @@ import GameEngine.Player;
  *
  */
 public class Detective extends Character {
-	Detective(Player player) {
+	public Detective(Player player) {
 		super(Roles.Detective, player);
 	}
 

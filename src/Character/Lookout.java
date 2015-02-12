@@ -9,7 +9,7 @@ import GameEngine.GameMessage;
 import GameEngine.Player;
 
 public class Lookout extends Character {
-	Lookout(Player player) {
+	public Lookout(Player player) {
 		super(Roles.Lookout, player);
 	}
 

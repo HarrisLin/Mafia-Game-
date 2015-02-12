@@ -7,7 +7,7 @@ import GameEngine.GameEngine;
 import GameEngine.Player;
 
 public class Witch extends Character {
-	Witch(Player player) {
+	public Witch(Player player) {
 		super(Roles.Witch, player);
 	}
 

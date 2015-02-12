@@ -8,7 +8,7 @@ import GameEngine.Player;
 
 public class MassMurderer extends Character {
 
-	MassMurderer(Player player) {
+	public MassMurderer(Player player) {
 		super(Roles.MassMurderer, player);
 	}
 

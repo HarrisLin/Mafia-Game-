@@ -32,7 +32,7 @@ public class Sheriff extends Character {
 	/**
 	 * Default constructor that set options to default
 	 */
-	Sheriff(Player player) {
+	public Sheriff(Player player) {
 		super(Roles.Sheriff, player);
 		detectsMafia = GameOptions.SheriffOptions.DetectMafia.DETECT_MAFIA_ON;
 		detectsArsonist = GameOptions.SheriffOptions.DetectArsonist.DETECT_ARSONIST_ON;

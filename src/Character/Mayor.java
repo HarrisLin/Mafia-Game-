@@ -23,7 +23,7 @@ public class Mayor extends Character {
 	private boolean revealed;
 	private final int vote_count;
 
-	Mayor(Player player) {
+	public Mayor(Player player) {
 		super(Roles.Mayor, player);
 		revealed = false;
 		vote_count = 3;

@@ -13,7 +13,7 @@ import GameEngine.Player;
  */
 public class Bodyguard extends Character {
 
-	Bodyguard(Player player) {
+	public Bodyguard(Player player) {
 		super(Roles.Bodyguard, player);
 	}
 
