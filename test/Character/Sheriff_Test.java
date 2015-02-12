@@ -143,7 +143,7 @@ public class Sheriff_Test {
 		assertTrue(GameEngine.setTarget(player2, target));
 		gameMessage = GameEngine.getCharacter(player2).doAction();
 		assertEquals(gameMessage,
-				"The outcome of your results suggests your target is a arsonist.");
+				"The outcome of your results suggests your target is an arsonist.");
 	}
 
 	@Test

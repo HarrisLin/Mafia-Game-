@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.sun.jmx.snmp.Enumerated;
 
@@ -78,7 +79,17 @@ public class DatabaseManager {
 		}
 		return true;
 	}
-
+	
+	/**
+	 * Add player data to the database. The character data object must
+	 * contain a valid Player field.
+	 * @param character the character
+	 * @return true if successful
+	 */
+	public static boolean addData(Character character) {
+		return addData(character.getPlayer(), character);
+	}
+	
 	/**
 	 * Get character data from the database
 	 */
@@ -143,7 +154,7 @@ public class DatabaseManager {
 	 * @return
 	 */
 	protected static String SqlInsertString(Character character) {
-		return "INSERT INTO DATA " +
+		return "INSERT OR REPLACE INTO DATA " +
 				"(NAME,ROLE,SIDE,ALIVE,TARGETS,LYNCH_TARGET,LAST_WILL,DOUSED,ROLE_INFO) VALUES ('" + 
 				character.getPlayer().getName() + "', '" +				// NAME
 				character.getRole().name() + "', '" +					// ROLE
