@@ -147,6 +147,39 @@ public class DatabaseManager {
 
 		return imported_character;
 	}
+	
+	/**
+	 * Registers all players into the GameEngine from the database
+	 * @return true on success.
+	 */
+	protected static boolean importPlayers() {
+		Connection c = null;
+		Statement stmt = null;
+		Character imported_character = null;
+		
+		try {
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:mafia_data.db");
+			c.setAutoCommit(false);
+
+			stmt = c.createStatement();
+			String query = "SELECT name FROM data;";
+			ResultSet rs = stmt.executeQuery(query);
+
+			while(rs.next()) {
+				GameEngine.registerPlayer(rs.getString("name"));
+			}
+
+			stmt.close();
+			c.commit();
+			c.close();
+		} catch (Exception e) {
+			System.out.println(e.getClass().getName() + ": " + e.getMessage());
+			return false;
+		}
+
+		return true;
+	}
 
 	/**
 	 * Generates a SQL string used for SQL INSERT

@@ -152,4 +152,45 @@ public class GameEngine {
 		}
 		alive_player.remove(popular);
 	}
+	
+	/**
+	 * Utility for GameEngine to export all character data to the database
+	 * @return true on success, false if one or more Characters could not be added
+	 */
+	protected static boolean exportPlayerCharacterMap() {
+		boolean return_flag = true;
+		for (Character c : player_character_map.values()) {
+			if (!DatabaseManager.addData(c)) {
+				return_flag = false;
+			}
+		}
+		return return_flag;
+	}
+	
+	/**
+	 * Utility for GameEngine to import all character data to the database.
+	 * This clears all records of players and characters in the GameEngine before
+	 * importing all of the database data.
+	 * @return true on success.
+	 */
+	protected static boolean importPlayerCharacterMap() {
+		reset();
+		DatabaseManager.importPlayers();
+		for (Player p : Player.getAllPlayers()) {
+			player_character_map.put(p, DatabaseManager.getData(p));
+		}
+		return true;
+	}
+	
+	/**
+	 * Resets the GameEngine. Clears all records of players and characters.
+	 * This does not clear the database.
+	 */
+	protected static void reset() {
+		Player.clearRegisteredPlayers();
+		Player.clearInGamePlayers();
+		player_character_map.clear();
+		alive_player.clear();
+		dead_player.clear();
+	}
 }

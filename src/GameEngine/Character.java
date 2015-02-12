@@ -447,4 +447,28 @@ public abstract class Character {
 	protected boolean importDatabaseRoleInfo(String role_info) {
 		return true;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Character == false) {
+			return false;
+		}
+		Character other = (Character)o;
+		if ((this.role == other.role) &&
+			(this.player == other.player) &&
+			(this.alive == other.alive) &&
+			(this.doused == other.doused) &&
+			(this.blockImmune == other.blockImmune) &&
+			(this.healed == other.healed) &&
+			(this.invulnerable == other.invulnerable) &&
+			(this.roleBlocked == other.roleBlocked) &&
+			(this.lastWill == other.lastWill) &&
+			(this.lynchTarget == other.lynchTarget) &&
+			(this.targets == other.targets) &&
+			(this.visitors == other.visitors)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
