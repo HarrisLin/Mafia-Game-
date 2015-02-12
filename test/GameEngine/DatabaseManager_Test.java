@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import Character.Godfather;
 import Character.Investigator;
@@ -490,5 +491,126 @@ public class DatabaseManager_Test {
 			fail("Something went wrong.");
 		}		
 	}
+	
+	@Test
+	public void test_importPlayers() {
+		Character harris1, harris2, chelsea1, chelsea2, daniel1, daniel2, kaibo1, kaibo2;
+
+		GameEngine.registerPlayer("Harris");
+		GameEngine.registerPlayer("Chelsea");
+		GameEngine.registerPlayer("Daniel");
+		GameEngine.registerPlayer("Kaibo");
+
+		try {
+			GameEngine.assignCharacter(Player.get("Harris"), new Investigator(Player.get("Harris")));
+			GameEngine.assignCharacter(Player.get("Chelsea"), new Godfather(Player.get("Chelsea")));
+			GameEngine.assignCharacter(Player.get("Daniel"), new Mafioso(Player.get("Daniel")));
+			GameEngine.assignCharacter(Player.get("Kaibo"), new Investigator(Player.get("Kaibo")));
+		} catch (CannotGetPlayerException e1) {
+			e1.printStackTrace();
+			fail();
+		}
+
+		DatabaseManager.init();
+
+		try {
+
+			//////////////////////////
+			// Write to the database
+			//////////////////////////
+
+			// Add Harris to the database
+			Player p1 = Player.get("Harris");
+			harris1 = GameEngine.getCharacter(Player.get("Harris"));
+			boolean result = DatabaseManager.addData(harris1);
+			if (!result) {fail("Could not addData to an empty database.");}
+
+			harris1.douse();
+			result = DatabaseManager.addData(harris1);
+			if (!result) {fail("Could not addData to a non-empty database.");}
+
+			// Add Chelsea to the database
+			Player p2 = Player.get("Chelsea");
+			chelsea1 = GameEngine.getCharacter(Player.get("Chelsea"));
+			result = DatabaseManager.addData(chelsea1);
+			if (!result) {fail("Could not addData to an empty database.");}
+
+			chelsea1.douse();
+			result = DatabaseManager.addData(chelsea1);
+			if (!result) {fail("Could not addData to a non-empty database.");}
+
+			// Add Daniel to the database
+			Player p3 = Player.get("Daniel");
+			daniel1 = GameEngine.getCharacter(Player.get("Daniel"));
+			result = DatabaseManager.addData(daniel1);
+			if (!result) {fail("Could not addData to an empty database.");}
+
+			daniel1.douse();
+			result = DatabaseManager.addData(daniel1);
+			if (!result) {fail("Could not addData to a non-empty database.");}
+
+			// Add Kaibo to the database
+			Player p4 = Player.get("Kaibo");
+			kaibo1 = GameEngine.getCharacter(Player.get("Kaibo"));
+			result = DatabaseManager.addData(kaibo1);
+			if (!result) {fail("Could not addData to an empty database.");}
+
+			kaibo1.douse();
+			result = DatabaseManager.addData(kaibo1);
+			if (!result) {fail("Could not addData to a non-empty database.");}
+		} catch (Exception e) {
+			fail("Something went wrong.");
+		}
+		
+		//////////////////////////
+		// Unregister all Players
+		//////////////////////////
+		Player.clearInGamePlayers();
+		Player.clearRegisteredPlayers();
+		
+		try {
+			Player.get("Harris");
+			fail("Player was not unregistered");
+		} catch (CannotGetPlayerException e) {}
+		try {
+			Player.get("Chelsea");
+			fail("Player was not unregistered");
+		} catch (CannotGetPlayerException e) {}
+		try {
+			Player.get("Daniel");
+			fail("Player was not unregistered");
+		} catch (CannotGetPlayerException e) {}
+		try {
+			Player.get("Kaibo");
+			fail("Player was not unregistered");
+		} catch (CannotGetPlayerException e) {}
+
+		//////////////////////////
+		// Reimport all Players
+		//////////////////////////
+		DatabaseManager.importPlayers();
+		
+		try {
+			Player.get("Harris");
+		} catch (CannotGetPlayerException e) {
+			fail("Player was not reimported");
+		}
+		try {
+			Player.get("Chelsea");
+		} catch (CannotGetPlayerException e) {
+			fail("Player was not reimported");
+		}
+		try {
+			Player.get("Daniel");
+		} catch (CannotGetPlayerException e) {
+			fail("Player was not reimported");
+		}
+		try {
+			Player.get("Kaibo");
+		} catch (CannotGetPlayerException e) {
+			fail("Player was not reimported");
+		}
+	}
+		
 
 }
