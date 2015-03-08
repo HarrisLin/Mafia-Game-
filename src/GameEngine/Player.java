@@ -16,9 +16,6 @@ public class Player {
 	// Class-wide validation map of human player names
 	static private final ArrayList<String> valid_names = new ArrayList<String>();
 
-	// Players that are currently in game
-	static private final ArrayList<Player> players_in_game = new ArrayList<Player>();
-
 	private final String name;
 	private int lynchVotes = 0;
 
@@ -49,7 +46,6 @@ public class Player {
 	public static Player get(String name) throws CannotGetPlayerException {
 		if (valid_names.contains(name)) {
 			Player player = new Player(name);
-			players_in_game.add(player);
 			return player;
 		} else {
 			throw new CannotGetPlayerException("Player is not a valid name");
@@ -57,26 +53,10 @@ public class Player {
 	}
 
 	/**
-	 * Clears all the players in game when game ends
-	 */
-	public static void clearInGamePlayers() {
-		players_in_game.clear();
-	}
-	
-	/**
 	 * Clears all registered players
 	 */
-	public static void clearRegisteredPlayers() {
-		players_in_game.clear();
+	protected static void clearAllPlayers() {
 		valid_names.clear();
-	}
-
-	/**
-	 * Players.GetAllInGamePlayers
-	 * @return A list of all players that are in game this round
-	 */
-	public static List<Player> getAllInGamePlayers() {
-		return new ArrayList<Player>(players_in_game);
 	}
 	
 	/**

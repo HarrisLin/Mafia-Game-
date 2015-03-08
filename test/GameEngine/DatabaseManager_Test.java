@@ -565,8 +565,7 @@ public class DatabaseManager_Test {
 		//////////////////////////
 		// Unregister all Players
 		//////////////////////////
-		Player.clearInGamePlayers();
-		Player.clearRegisteredPlayers();
+		GameEngine.reset();
 		
 		try {
 			Player.get("Harris");

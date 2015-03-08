@@ -186,9 +186,8 @@ public class GameEngine {
 	 * Resets the GameEngine. Clears all records of players and characters.
 	 * This does not clear the database.
 	 */
-	protected static void reset() {
-		Player.clearRegisteredPlayers();
-		Player.clearInGamePlayers();
+	public static void reset() {
+		Player.clearAllPlayers();
 		player_character_map.clear();
 		alive_player.clear();
 		dead_player.clear();
