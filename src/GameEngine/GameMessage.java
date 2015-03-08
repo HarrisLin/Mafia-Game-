@@ -23,6 +23,11 @@ public class GameMessage {
 	public static final String NO_ACTION = "No action has been registered.";
 	public static final String NO_RESULT = "Cannot get your results.";
 	public static final String NO_KILL = "Nobody was killed.";
+	public static final String ROLE_BLOCKED = "You were unable to perform your action.";
+	
+	public static final String KILL_ATTEMPT(Player player) {
+		return "You have attempted to kill " + player.getName() +".";
+	}
 
 	public static final String INVESTIGATION_EXACT(String name) {
 		return "The result of your investigation yeilded a role of " + name
