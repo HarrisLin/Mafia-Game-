@@ -17,7 +17,7 @@ public class DatabaseManager_PrivateMethods_Test {
 
 	@After
 	public void teardown() {
-		Player.clearRegisteredPlayers();
+		GameEngine.reset();
 	}
 
 	@Test

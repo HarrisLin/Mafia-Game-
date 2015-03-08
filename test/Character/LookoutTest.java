@@ -32,7 +32,7 @@ public class LookoutTest {
 	
 	@Before
 	public void setup() {
-		Player.clearInGamePlayers();
+		GameEngine.reset();
 		GameEngine.registerPlayer("Eleanor");
 		GameEngine.registerPlayer("Derek");
 		GameEngine.registerPlayer("Connie");

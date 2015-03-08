@@ -31,7 +31,7 @@ public class Investigator_Test {
 	@Before
 	public void setup() {
 		// do admin things: register players and assign roles
-		Player.clearInGamePlayers();
+		GameEngine.reset();
 		GameEngine.registerPlayer("Derek");
 		GameEngine.registerPlayer("Harris");
 		GameEngine.registerPlayer("Andy");
