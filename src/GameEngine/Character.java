@@ -335,7 +335,7 @@ public abstract class Character {
 	 * 
 	 * @return TRUE if character is doused and FALSE if not
 	 */
-	protected boolean isDoused() {
+	public boolean isDoused() {
 		return doused;
 	}
 
