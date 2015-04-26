@@ -34,7 +34,7 @@ public class DatabaseManager_PrivateMethods_Test {
 	@Test
 	public void test_concatenateTargets_singleTarget() {
 		GameEngine.registerPlayer("Derek");
-		assertEquals("Derek", TestDatabaseManager.testConcatenateTargets(Player.getAllPlayers()));
+		assertEquals("Derek", TestDatabaseManager.testConcatenateTargets(Player.listAllPlayers()));
 	}
 
 	@Test
@@ -42,7 +42,7 @@ public class DatabaseManager_PrivateMethods_Test {
 		GameEngine.registerPlayer("Derek");
 		GameEngine.registerPlayer("Harris");
 		GameEngine.registerPlayer("Andy");
-		assertEquals("Derek##Harris##Andy", TestDatabaseManager.testConcatenateTargets(Player.getAllPlayers()));
+		assertEquals("Derek##Harris##Andy", TestDatabaseManager.testConcatenateTargets(Player.listAllPlayers()));
 	}
 
 	@Test

@@ -25,7 +25,7 @@ public class Arsonist_Test {
 	{
 		ArrayList<Player> victims = new ArrayList<Player>();
 		String result = GameMessage.ARSONIST_KILL(victims);
-		assertEquals(GameMessage.NO_KILL, result);
+		assertEquals(GameMessage.NO_KILL(), result);
 	}
 	
 	@Test
@@ -82,7 +82,7 @@ public class Arsonist_Test {
 		if (!GameEngine.getCharacter(arsonist).setTarget(target)) {
 			fail("Could not set target.");
 		}
-		assertEquals(GameMessage.NO_ACTION, GameEngine.getCharacter(arsonist).doAction());
+		assertEquals(GameMessage.NO_ACTION(), GameEngine.getCharacter(arsonist).doAction());
 	}
 	
 	@Test

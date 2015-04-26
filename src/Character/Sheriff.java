@@ -1,9 +1,8 @@
 package Character;
 
-import java.util.List;
-
 import Enumerators.Roles;
 import Enumerators.Sides;
+import GameEngine.CannotGetPlayerException;
 import GameEngine.Character;
 import GameEngine.GameMessage;
 import GameEngine.Player;
@@ -60,29 +59,25 @@ public class Sheriff extends Character {
 	}
 
 	@Override
-	public boolean setTarget(List<Player> targets) {
-		// The sheriff can only target a single Player
-		if (targets.size() != 1
-				|| !GameEngine.alive_player.containsAll(targets)) {
-			return false;
+	public String doAction() throws CannotGetPlayerException {
+		if (getTarget().size() != 1) {
+			return GameMessage.NO_ACTION();
 		}
-		return setTargets(targets);
-	}
 
-	@Override
-	public String doAction() {
-		List<Player> targets = getTargets();
-		if (targets.isEmpty()) {
-			return GameMessage.NO_ACTION;
+		Player target = getTarget().get(0);
+
+		if (!GameEngine.getCharacter(target).isAlive()) {
+			return GameMessage.TARGET_DEAD();
 		}
-		String message = "Cannot get your results";
 		if (this.isRoleBlocked()) {
-			return message;
+			return GameMessage.NO_FEEDBACK();
 		}
-		GameEngine.getCharacter(targets.get(0)).addVisitor(getPlayer());
+
+		GameEngine.getCharacter(target).addVisitor(getPlayer());
+
 		String result;
-		Roles targetRole = GameEngine.getCharacter(targets.get(0))
-				.getCharacterRole();
+
+		Roles targetRole = GameEngine.getCharacter(target).getRole();
 		if (detectsArsonist.equals(DetectArsonist.DETECT_ARSONIST_ON)
 				&& targetRole.equals(Roles.Arsonist)) {
 			result = "an arsonist";
@@ -101,7 +96,6 @@ public class Sheriff extends Character {
 		} else {
 			result = "not suspicious";
 		}
-		return "The outcome of your results suggests your target is " + result
-				+ ".";
+		return GameMessage.SHERIFF_FEEDBACK(result);
 	}
 }

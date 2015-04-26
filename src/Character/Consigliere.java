@@ -1,8 +1,7 @@
 package Character;
 
-import java.util.List;
-
 import Enumerators.Roles;
+import GameEngine.CannotGetPlayerException;
 import GameEngine.Character;
 import GameEngine.GameMessage;
 import GameEngine.Player;
@@ -26,34 +25,32 @@ public class Consigliere extends Character {
 	}
 
 	@Override
-	public boolean setTarget(List<Player> targets) {
-		// The detective can only target a single Player
-		if (targets.size() != 1
-				|| !GameEngine.alive_player.containsAll(targets)) {
-			return false;
-		}
-		return setTargets(targets);
-	}
+	public String doAction() throws CannotGetPlayerException {
 
-	@Override
-	public String doAction() {
-		List<Player> targets = getTargets();
-		if(targets.isEmpty()) {
-			return GameMessage.NO_ACTION;
+		if (getTarget().size() != 1) {
+			return GameMessage.NO_ACTION();
 		}
-		String result;
+
+		Player target = getTarget().get(0);
+
+		if (!GameEngine.getCharacter(target).isAlive()) {
+			return GameMessage.TARGET_DEAD();
+		}
+		if (this.isRoleBlocked()) {
+			return GameMessage.NO_FEEDBACK();
+		}
+
+		GameEngine.getCharacter(target).addVisitor(getPlayer());
+
 		GameOptions.ConsigliereOptions.DetectRole detect = (DetectRole) detectsRole;
+
 		switch (detect) {
 		case DETECT_EXACT_ROLE:
-			result = GameEngine.getCharacter(targets.get(0)).getRoleString();
-			break;
+			return GameMessage.INVESTIGATION_EXACT(target);
 		case DETECT_VAGUE_ROLE:
-			result = GameEngine.getCharacter(targets.get(0)).getInvestigation();
-			break;
+			return GameMessage.INVESTIGATION_VAGUE(target);
 		default:
-			result = GameEngine.getCharacter(targets.get(0)).getInvestigation();
+			return GameMessage.INVESTIGATION_VAGUE(target);
 		}
-		return "The result of your investigation yeilded a role of " + result
-				+ ".";
 	}
 }

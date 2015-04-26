@@ -13,28 +13,37 @@ import java.util.Map;
  * the actions of all Characters when it is night-time
  */
 public class GameEngine {
-
+	// -------------------------------------------------------------
+	// GAME ENGINE INFORMATION
+	// -------------------------------------------------------------
 	private static Map<Player, Character> player_character_map = new HashMap<Player, Character>();
 	// List of players still alive, used for setTarget() method in Character
 	// Class
-	public static List<Player> alive_player = new ArrayList<Player>();
-	public static List<Player> dead_player = new ArrayList<Player>();
+	private static List<Character> alive_player = new ArrayList<Character>();
+	private static List<Character> dead_player = new ArrayList<Character>();
 
+	// ---------------------------------------------------------
+	// GET INFORMATION METHODS
+	// ---------------------------------------------------------
 	/**
 	 * This method returns the list of dead players
+	 * 
 	 * @return dead_player - List of Dead Players
 	 */
-	private static List<Player> getDead_player() {
-		return dead_player;
+	public static List<Character> getDeadPlayer() {
+		return new ArrayList<Character>(dead_player);
 	}
 
 	/**
-	 * @param dead_player the dead_player to set
+	 * @return list of all the character
 	 */
-	private static void setDead_player(List<Player> dead_player) {
-		GameEngine.dead_player = dead_player;
+	public static List<Character> getAlivePlayer() {
+		return new ArrayList<Character>(alive_player);
 	}
 
+	//--------------------------------------------------------------------
+	// PLAYER REGISTRATION METHODS
+	//--------------------------------------------------------------------
 	/**
 	 * GameEngine.registerPlayer Registers a player into the game.
 	 * 
@@ -44,7 +53,7 @@ public class GameEngine {
 	public static boolean registerPlayer(String name) {
 		return Player.register(name);
 	}
-	
+
 	/**
 	 * GameEngine.registerPlayer De-registers a player from the game.
 	 * 
@@ -61,32 +70,27 @@ public class GameEngine {
 	 * @param player
 	 *            The human name of the player
 	 * @return Gets the character role of the player
+	 * @throws CannotGetPlayerException
 	 */
-	public static Character getCharacter(Player player) {
-		return player_character_map.get(player);
-	}
-
-	/**
-	 * @return list of all the character
-	 */
-	public static List<Player> getAlivePlayer() {
-		return new ArrayList<Player>(alive_player);
-	}
-	
-	/**
-	 * @return TRUE if successfully killed and FALSE if not
-	 */
-	public static boolean killPlayer(Player player) {
-		dead_player.add(player);
-		return alive_player.remove(player);
+	public static Character getCharacter(Player player)
+			throws CannotGetPlayerException {
+		if (player_character_map.containsKey(player)) {
+			return player_character_map.get(player);
+		} else {
+			throw new CannotGetPlayerException("Player not in map");
+		}
 	}
 	
+	//-------------------------------------------------------------
+	// GAME SETUP METHODS
+	//-------------------------------------------------------------
 	/**
 	 * GameEngine.assignCharacters Randomly assigns a character role to all
 	 * players
+	 * 
 	 * @return TRUE if characters successfully assigned and FALSE it not
 	 */
-	public static boolean assignCharacters() {
+	public static boolean assignAllCharacters() {
 		// TODO: implement me!
 		return true;
 	}
@@ -98,12 +102,30 @@ public class GameEngine {
 	 * @return TRUE if characters successfully assigned and FALSE it not
 	 */
 	public static boolean assignCharacter(Player player, Character character) {
-		if(!Player.getAllPlayers().contains(player) || player == null || character == null) {
+		if (!Player.listAllPlayers().contains(player) || player == null
+				|| character == null) {
 			return false;
 		}
 		player_character_map.put(player, character);
-		alive_player.add(player);
+		alive_player.add(character);
 		return true;
+	}
+	
+	//-------------------------------------------------------------
+	// GAME MECHANICS AND ACTION METHODS
+	//-------------------------------------------------------------
+	/**
+	 * @return TRUE if successfully killed and FALSE if not
+	 */
+	public static boolean killCharacter(Character character) {
+		if(!dead_player.contains(character) || alive_player.contains(character)) {
+			dead_player.add(character);
+			alive_player.remove(character);
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	/**
@@ -115,11 +137,9 @@ public class GameEngine {
 	 *            The target(s) of the action
 	 * @return true if target was successfully set, false otherwise
 	 */
-	public static boolean setTarget(Player player, List<Player> targets) {
-		return player_character_map.get(player).setTarget(targets);
+	public static boolean setTarget(Player player, List <Player> target) {
+		return player_character_map.get(player).setTarget(target);
 	}
-
-
 
 	/**
 	 * GameEngine.performNightActions Makes each character perform his/her night
@@ -137,25 +157,16 @@ public class GameEngine {
 	 * 
 	 * @return the player lynched
 	 */
-	public static void lynch() {
+	public static boolean lynch() {
 		
-		Player popular = alive_player.get(0);
-		int maxVote = alive_player.get(0).getLynchVotes();
-		
-		for(int players = 0; players < alive_player.size(); players++) {
-			if (alive_player.get(players).getLynchVotes() > maxVote) {
-				maxVote = alive_player.get(players).getLynchVotes();
-				popular = alive_player.get(players);
-			} else if (alive_player.get(players).getLynchVotes() == maxVote) {
-				// TODO
-			}
-		}
-		alive_player.remove(popular);
+		return true;
 	}
-	
+
 	/**
 	 * Utility for GameEngine to export all character data to the database
-	 * @return true on success, false if one or more Characters could not be added
+	 * 
+	 * @return true on success, false if one or more Characters could not be
+	 *         added
 	 */
 	protected static boolean exportPlayerCharacterMap() {
 		boolean return_flag = true;
@@ -166,28 +177,29 @@ public class GameEngine {
 		}
 		return return_flag;
 	}
-	
+
 	/**
-	 * Utility for GameEngine to import all character data to the database.
-	 * This clears all records of players and characters in the GameEngine before
+	 * Utility for GameEngine to import all character data to the database. This
+	 * clears all records of players and characters in the GameEngine before
 	 * importing all of the database data.
+	 * 
 	 * @return true on success.
 	 */
 	protected static boolean importPlayerCharacterMap() {
 		reset();
 		DatabaseManager.importPlayers();
-		for (Player p : Player.getAllPlayers()) {
+		for (Player p : Player.listAllPlayers()) {
 			player_character_map.put(p, DatabaseManager.getData(p));
 		}
 		return true;
 	}
-	
+
 	/**
-	 * Resets the GameEngine. Clears all records of players and characters.
-	 * This does not clear the database.
+	 * Resets the GameEngine. Clears all records of players and characters. This
+	 * does not clear the database.
 	 */
 	public static void reset() {
-		Player.clearAllPlayers();
+		Player.removeAllPlayers();
 		player_character_map.clear();
 		alive_player.clear();
 		dead_player.clear();

@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.sun.jmx.snmp.Enumerated;
 
 import Character.CharacterFactory;
 import Enumerators.Roles;
@@ -192,8 +191,8 @@ public class DatabaseManager {
 				character.getPlayer().getName() + "', '" +				// NAME
 				character.getRole().name() + "', '" +					// ROLE
 				character.getSide().toString() + "', '" +				// SIDE
-				(character.checkAlive()?1:0) + "', '" +					// ALIVE
-				concatenateTargets(character.getTargets()) + "', '"	+	// TARGETS
+				(character.isAlive()?1:0) + "', '" +					// ALIVE
+				concatenateTargets(character.getTarget()) + "', '"	+	// TARGETS
 				getCharacterName(character.getLynchTarget()) + "', '" +	// LYNCH_TARGET
 				character.getLastWill() + "', '" +						// LAST_WILL
 				(character.isDoused()?1:0) + "', '"  +					// DOUSED
@@ -257,6 +256,14 @@ public class DatabaseManager {
 			return "NULL";
 		} else {
 			return player.getName();
+		}
+	}
+	
+	private static String getCharacterName(List<Player> player) {
+		if (player.get(0) == null) {
+			return "NULL";
+		} else {
+			return player.get(0).getName();
 		}
 	}
 

@@ -1,8 +1,7 @@
 package Character;
 
-import java.util.List;
-
 import Enumerators.Roles;
+import GameEngine.CannotGetPlayerException;
 import GameEngine.Character;
 import GameEngine.GameMessage;
 import GameEngine.Player;
@@ -45,41 +44,32 @@ public class Investigator extends Character {
 	}
 
 	@Override
-	public boolean setTarget(List<Player> targets) {
-		// The detective can only target a single Player
-		if (targets.size() != 1
-				|| !GameEngine.alive_player.containsAll(targets)) {
-			return false;
+	public String doAction() throws CannotGetPlayerException {
+		
+		if (getTarget().size() != 1) {
+			return GameMessage.NO_ACTION();
 		}
-		return setTargets(targets);
-	}
-
-	@Override
-	public String doAction() {
-		List<Player> targets = getTargets();
-		if (targets.isEmpty()) {
-			return GameMessage.NO_ACTION;
+		
+		Player target = getTarget().get(0);
+		
+		if(!GameEngine.getCharacter(target).isAlive()) {
+			return GameMessage.TARGET_DEAD();
 		}
 		if (this.isRoleBlocked()) {
-			return GameMessage.NO_RESULT;
+			return GameMessage.NO_FEEDBACK();
 		}
-		GameEngine.getCharacter(targets.get(0)).addVisitor(getPlayer());
+		
+		GameEngine.getCharacter(target).addVisitor(getPlayer());
+		
 		DetectRole detect = (DetectRole) detectsRole;
-		Character target = GameEngine.getCharacter(targets.get(0));
-		String message;
+		
 		switch (detect) {
 		case DETECT_EXACT_ROLE:
-			message = target.getRoleString();
-			message = GameMessage.INVESTIGATION_EXACT(message);
-			break;
+			return GameMessage.INVESTIGATION_EXACT(target);
 		case DETECT_VAGUE_ROLE:
-			message = target.getInvestigation();
-			message = GameMessage.INVESTIGATION_VAGUE(message);
-			break;
+			return GameMessage.INVESTIGATION_VAGUE(target);
 		default:
-			message = target.getInvestigation();
-			message = GameMessage.INVESTIGATION_VAGUE(message);
+			return GameMessage.INVESTIGATION_VAGUE(target);
 		}
-		return message;
 	}
 }

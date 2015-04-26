@@ -1,8 +1,7 @@
 package Character;
 
-import java.util.List;
-
 import Enumerators.Roles;
+import GameEngine.CannotGetPlayerException;
 import GameEngine.Character;
 import GameEngine.GameEngine;
 import GameEngine.GameMessage;
@@ -24,30 +23,29 @@ public class SerialKiller extends Character {
 		super(Roles.SerialKiller, player, true);
 	}
 
-	@Override
-	public boolean setTarget(List<Player> targets) {
-		if (targets.size() != 1
-				|| !GameEngine.alive_player.containsAll(targets)) {
-			return false;
-		}
-		return setTargets(targets);
-	}
-
 	/**
 	 * questionable-- alive status of victim is important or not?
+	 * @throws CannotGetPlayerException 
 	 */
 	@Override
-	public String doAction() {
-		List<Player> targets = getTargets();
-		if(targets.isEmpty()) {
-			return GameMessage.NO_ACTION;
+	public String doAction() throws CannotGetPlayerException {
+		if (getTarget().size() != 1) {
+			return GameMessage.NO_ACTION();
 		}
-		String message = "You've attempted to kill " + targets.get(0).getName();
-		GameEngine.getCharacter(targets.get(0)).addVisitor(getPlayer());
-		if(this.isRoleBlocked()) {
-			return message;
+		
+		Player target = getTarget().get(0);
+		
+		if(!GameEngine.getCharacter(target).isAlive()) {
+			return GameMessage.TARGET_DEAD();
 		}
-		GameEngine.getCharacter(targets.get(0)).kill();
-		return message;
+		if (this.isRoleBlocked()) {
+			return GameMessage.NO_FEEDBACK();
+		}
+		
+		GameEngine.getCharacter(target).addVisitor(getPlayer());
+
+		GameEngine.getCharacter(target).kill();	
+		
+		return GameMessage.NO_FEEDBACK();
 	}
 }

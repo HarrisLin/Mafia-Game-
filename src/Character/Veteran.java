@@ -13,15 +13,6 @@ public class Veteran extends Character {
 	}
 
 	@Override
-	public boolean setTarget(List<Player> targets) {
-		if (targets.size() != 1
-				|| GameEngine.getCharacter(targets.get(0)) != this) {
-			return false;
-		}
-		return setTargets(targets);
-	}
-
-	@Override
 	public String doAction() {
 		// TODO Auto-generated method stub
 		return null;
