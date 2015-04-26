@@ -3,7 +3,6 @@ package Character;
 import Enumerators.Roles;
 import GameEngine.Character;
 import GameEngine.Player;
-import Character.*;
 
 /**
  * CharacterFactory allows us to create a character
@@ -68,6 +67,8 @@ public class CharacterFactory {
 		//case Survivor: return new Survivor(player);
 		case Witch: return new Witch(player);
 		//case WitchDoctor: return new WitchDoctor(player);
+		default:
+			break;
 		}
 		return null;
 	}

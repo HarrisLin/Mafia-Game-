@@ -62,8 +62,8 @@ public class DatabaseManager_Test {
 			assertEquals(c1.getPlayer(), c2.getPlayer());
 			assertEquals(c1.getRole(), c2.getRole());
 			assertEquals(c1.getSide(), c2.getSide());
-			assertEquals(c1.checkAlive(), c2.checkAlive());
-			assertEquals(c1.getTargets(), c2.getTargets());
+			assertEquals(c1.isAlive(), c2.isAlive());
+			assertEquals(c1.getTarget(), c2.getTarget());
 			assertEquals(c1.getLynchTarget(), c2.getLynchTarget());
 			assertEquals(c1.isDoused(), c2.isDoused());
 		} catch (Exception e) {
@@ -96,8 +96,8 @@ public class DatabaseManager_Test {
 			assertEquals(c1.getPlayer(), c2.getPlayer());
 			assertEquals(c1.getRole(), c2.getRole());
 			assertEquals(c1.getSide(), c2.getSide());
-			assertEquals(c1.checkAlive(), c2.checkAlive());
-			assertEquals(c1.getTargets(), c2.getTargets());
+			assertEquals(c1.isAlive(), c2.isAlive());
+			assertEquals(c1.getTarget(), c2.getTarget());
 			assertEquals(c1.getLynchTarget(), c2.getLynchTarget());
 			assertEquals(c1.isDoused(), c2.isDoused());
 		} catch (Exception e) {
@@ -130,8 +130,8 @@ public class DatabaseManager_Test {
 			assertEquals(c1.getPlayer(), c2.getPlayer());
 			assertEquals(c1.getRole(), c2.getRole());
 			assertEquals(c1.getSide(), c2.getSide());
-			assertEquals(c1.checkAlive(), c2.checkAlive());
-			assertEquals(c1.getTargets(), c2.getTargets());
+			assertEquals(c1.isAlive(), c2.isAlive());
+			assertEquals(c1.getTarget(), c2.getTarget());
 			assertEquals(c1.getLynchTarget(), c2.getLynchTarget());
 			assertEquals(c1.isDoused(), c2.isDoused());
 			
@@ -144,8 +144,8 @@ public class DatabaseManager_Test {
 			assertEquals(c1.getPlayer(), c2.getPlayer());
 			assertEquals(c1.getRole(), c2.getRole());
 			assertEquals(c1.getSide(), c2.getSide());
-			assertEquals(c1.checkAlive(), c2.checkAlive());
-			assertEquals(c1.getTargets(), c2.getTargets());
+			assertEquals(c1.isAlive(), c2.isAlive());
+			assertEquals(c1.getTarget(), c2.getTarget());
 			assertEquals(c1.getLynchTarget(), c2.getLynchTarget());
 			assertEquals(c1.isDoused(), c2.isDoused());
 			
@@ -154,8 +154,8 @@ public class DatabaseManager_Test {
 			assertEquals(c1.getPlayer(), c2.getPlayer());
 			assertEquals(c1.getRole(), c2.getRole());
 			assertEquals(c1.getSide(), c2.getSide());
-			assertEquals(c1.checkAlive(), c2.checkAlive());
-			assertEquals(c1.getTargets(), c2.getTargets());
+			assertEquals(c1.isAlive(), c2.isAlive());
+			assertEquals(c1.getTarget(), c2.getTarget());
 			assertEquals(c1.getLynchTarget(), c2.getLynchTarget());
 			assertEquals(c1.isDoused(), c2.isDoused());
 		} catch (Exception e) {
@@ -192,8 +192,8 @@ public class DatabaseManager_Test {
 			assertEquals(c1.getPlayer(), c2.getPlayer());
 			assertEquals(c1.getRole(), c2.getRole());
 			assertEquals(c1.getSide(), c2.getSide());
-			assertEquals(c1.checkAlive(), c2.checkAlive());
-			assertEquals(c1.getTargets(), c2.getTargets());
+			assertEquals(c1.isAlive(), c2.isAlive());
+			assertEquals(c1.getTarget(), c2.getTarget());
 			assertEquals(c1.getLynchTarget(), c2.getLynchTarget());
 			assertEquals(c1.isDoused(), c2.isDoused());
 		} catch (Exception e) {
@@ -262,8 +262,8 @@ public class DatabaseManager_Test {
 			assertEquals(chelsea1.getPlayer(), chelsea2.getPlayer());
 			assertEquals(chelsea1.getRole(), chelsea2.getRole());
 			assertEquals(chelsea1.getSide(), chelsea2.getSide());
-			assertEquals(chelsea1.checkAlive(), chelsea2.checkAlive());
-			assertEquals(chelsea1.getTargets(), chelsea2.getTargets());
+			assertEquals(chelsea1.isAlive(), chelsea2.isAlive());
+			assertEquals(chelsea1.getTarget(), chelsea2.getTarget());
 			assertEquals(chelsea1.getLynchTarget(), chelsea2.getLynchTarget());
 			assertEquals(chelsea1.isDoused(), chelsea2.isDoused());
 			
@@ -273,8 +273,8 @@ public class DatabaseManager_Test {
 			assertEquals(harris1.getPlayer(), harris2.getPlayer());
 			assertEquals(harris1.getRole(), harris2.getRole());
 			assertEquals(harris1.getSide(), harris2.getSide());
-			assertEquals(harris1.checkAlive(), harris2.checkAlive());
-			assertEquals(harris1.getTargets(), harris2.getTargets());
+			assertEquals(harris1.isAlive(), harris2.isAlive());
+			assertEquals(harris1.getTarget(), harris2.getTarget());
 			assertEquals(harris1.getLynchTarget(), harris2.getLynchTarget());
 			assertEquals(harris1.isDoused(), harris2.isDoused());
 			
@@ -284,8 +284,8 @@ public class DatabaseManager_Test {
 			assertEquals(kaibo1.getPlayer(), kaibo2.getPlayer());
 			assertEquals(kaibo1.getRole(), kaibo2.getRole());
 			assertEquals(kaibo1.getSide(), kaibo2.getSide());
-			assertEquals(kaibo1.checkAlive(), kaibo2.checkAlive());
-			assertEquals(kaibo1.getTargets(), kaibo2.getTargets());
+			assertEquals(kaibo1.isAlive(), kaibo2.isAlive());
+			assertEquals(kaibo1.getTarget(), kaibo2.getTarget());
 			assertEquals(kaibo1.getLynchTarget(), kaibo2.getLynchTarget());
 			assertEquals(kaibo1.isDoused(), kaibo2.isDoused());
 			
@@ -295,8 +295,8 @@ public class DatabaseManager_Test {
 			assertEquals(daniel1.getPlayer(), daniel2.getPlayer());
 			assertEquals(daniel1.getRole(), daniel2.getRole());
 			assertEquals(daniel1.getSide(), daniel2.getSide());
-			assertEquals(daniel1.checkAlive(), daniel2.checkAlive());
-			assertEquals(daniel1.getTargets(), daniel2.getTargets());
+			assertEquals(daniel1.isAlive(), daniel2.isAlive());
+			assertEquals(daniel1.getTarget(), daniel2.getTarget());
 			assertEquals(daniel1.getLynchTarget(), daniel2.getLynchTarget());
 			assertEquals(daniel1.isDoused(), daniel2.isDoused());
 		} catch (Exception e) {
@@ -381,8 +381,8 @@ public class DatabaseManager_Test {
 			assertEquals(chelsea1.getPlayer(), chelsea2.getPlayer());
 			assertEquals(chelsea1.getRole(), chelsea2.getRole());
 			assertEquals(chelsea1.getSide(), chelsea2.getSide());
-			assertEquals(chelsea1.checkAlive(), chelsea2.checkAlive());
-			assertEquals(chelsea1.getTargets(), chelsea2.getTargets());
+			assertEquals(chelsea1.isAlive(), chelsea2.isAlive());
+			assertEquals(chelsea1.getTarget(), chelsea2.getTarget());
 			assertEquals(chelsea1.getLynchTarget(), chelsea2.getLynchTarget());
 			assertEquals(chelsea1.isDoused(), chelsea2.isDoused());
 			
@@ -392,8 +392,8 @@ public class DatabaseManager_Test {
 			assertEquals(harris1.getPlayer(), harris2.getPlayer());
 			assertEquals(harris1.getRole(), harris2.getRole());
 			assertEquals(harris1.getSide(), harris2.getSide());
-			assertEquals(harris1.checkAlive(), harris2.checkAlive());
-			assertEquals(harris1.getTargets(), harris2.getTargets());
+			assertEquals(harris1.isAlive(), harris2.isAlive());
+			assertEquals(harris1.getTarget(), harris2.getTarget());
 			assertEquals(harris1.getLynchTarget(), harris2.getLynchTarget());
 			assertEquals(harris1.isDoused(), harris2.isDoused());
 			
@@ -403,8 +403,8 @@ public class DatabaseManager_Test {
 			assertEquals(kaibo1.getPlayer(), kaibo2.getPlayer());
 			assertEquals(kaibo1.getRole(), kaibo2.getRole());
 			assertEquals(kaibo1.getSide(), kaibo2.getSide());
-			assertEquals(kaibo1.checkAlive(), kaibo2.checkAlive());
-			assertEquals(kaibo1.getTargets(), kaibo2.getTargets());
+			assertEquals(kaibo1.isAlive(), kaibo2.isAlive());
+			assertEquals(kaibo1.getTarget(), kaibo2.getTarget());
 			assertEquals(kaibo1.getLynchTarget(), kaibo2.getLynchTarget());
 			assertEquals(kaibo1.isDoused(), kaibo2.isDoused());
 			
@@ -414,8 +414,8 @@ public class DatabaseManager_Test {
 			assertEquals(daniel1.getPlayer(), daniel2.getPlayer());
 			assertEquals(daniel1.getRole(), daniel2.getRole());
 			assertEquals(daniel1.getSide(), daniel2.getSide());
-			assertEquals(daniel1.checkAlive(), daniel2.checkAlive());
-			assertEquals(daniel1.getTargets(), daniel2.getTargets());
+			assertEquals(daniel1.isAlive(), daniel2.isAlive());
+			assertEquals(daniel1.getTarget(), daniel2.getTarget());
 			assertEquals(daniel1.getLynchTarget(), daniel2.getLynchTarget());
 			assertEquals(daniel1.isDoused(), daniel2.isDoused());
 			
@@ -448,8 +448,8 @@ public class DatabaseManager_Test {
 			assertEquals(chelsea1.getPlayer(), chelsea2.getPlayer());
 			assertEquals(chelsea1.getRole(), chelsea2.getRole());
 			assertEquals(chelsea1.getSide(), chelsea2.getSide());
-			assertEquals(chelsea1.checkAlive(), chelsea2.checkAlive());
-			assertEquals(chelsea1.getTargets(), chelsea2.getTargets());
+			assertEquals(chelsea1.isAlive(), chelsea2.isAlive());
+			assertEquals(chelsea1.getTarget(), chelsea2.getTarget());
 			assertEquals(chelsea1.getLynchTarget(), chelsea2.getLynchTarget());
 			assertEquals(chelsea1.isDoused(), chelsea2.isDoused());
 			
@@ -459,8 +459,8 @@ public class DatabaseManager_Test {
 			assertEquals(harris1.getPlayer(), harris2.getPlayer());
 			assertEquals(harris1.getRole(), harris2.getRole());
 			assertEquals(harris1.getSide(), harris2.getSide());
-			assertEquals(harris1.checkAlive(), harris2.checkAlive());
-			assertEquals(harris1.getTargets(), harris2.getTargets());
+			assertEquals(harris1.isAlive(), harris2.isAlive());
+			assertEquals(harris1.getTarget(), harris2.getTarget());
 			assertEquals(harris1.getLynchTarget(), harris2.getLynchTarget());
 			assertEquals(harris1.isDoused(), harris2.isDoused());
 			
@@ -470,8 +470,8 @@ public class DatabaseManager_Test {
 			assertEquals(kaibo1.getPlayer(), kaibo2.getPlayer());
 			assertEquals(kaibo1.getRole(), kaibo2.getRole());
 			assertEquals(kaibo1.getSide(), kaibo2.getSide());
-			assertEquals(kaibo1.checkAlive(), kaibo2.checkAlive());
-			assertEquals(kaibo1.getTargets(), kaibo2.getTargets());
+			assertEquals(kaibo1.isAlive(), kaibo2.isAlive());
+			assertEquals(kaibo1.getTarget(), kaibo2.getTarget());
 			assertEquals(kaibo1.getLynchTarget(), kaibo2.getLynchTarget());
 			assertEquals(kaibo1.isDoused(), kaibo2.isDoused());
 			
@@ -481,8 +481,8 @@ public class DatabaseManager_Test {
 			assertEquals(daniel1.getPlayer(), daniel2.getPlayer());
 			assertEquals(daniel1.getRole(), daniel2.getRole());
 			assertEquals(daniel1.getSide(), daniel2.getSide());
-			assertEquals(daniel1.checkAlive(), daniel2.checkAlive());
-			assertEquals(daniel1.getTargets(), daniel2.getTargets());
+			assertEquals(daniel1.isAlive(), daniel2.isAlive());
+			assertEquals(daniel1.getTarget(), daniel2.getTarget());
 			assertEquals(daniel1.getLynchTarget(), daniel2.getLynchTarget());
 			assertEquals(daniel1.isDoused(), daniel2.isDoused());
 

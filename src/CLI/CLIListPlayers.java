@@ -21,7 +21,7 @@ public class CLIListPlayers {
 	 * Prints a list of all registered players.
 	 */
 	protected static void listPlayers() {
-		ArrayList<Player> players = (ArrayList<Player>) Player.getAllPlayers();
+		ArrayList<Player> players = (ArrayList<Player>) Player.listAllPlayers();
 		for (Player p : players) {
 			System.out.println(p.getName());
 		}

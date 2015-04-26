@@ -1,23 +1,39 @@
 package Character;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import Enumerators.Roles;
+import GameEngine.CannotGetPlayerException;
 import GameEngine.Character;
 import GameEngine.GameEngine;
+import GameEngine.GameMessage;
 import GameEngine.Player;
 
 public class Witch extends Character {
+
 	public Witch(Player player) {
 		super(Roles.Witch, player);
 	}
 
 	@Override
 	public boolean setTarget(List<Player> targets) {
-		if (targets.size() != 2
-				|| !GameEngine.alive_player.containsAll(targets)) {
+		// bus driver must only target 2 people
+		if (targets.size() != 2) {
 			return false;
 		}
-		return setTargets(targets);
+		try {
+			if (!GameEngine.getCharacter(targets.get(0)).isAlive()
+					|| GameEngine.getCharacter(targets.get(1)).isAlive()) {
+				return false;
+			}
+		} catch (CannotGetPlayerException e) {
+			System.out.println(GameMessage.NO_CHARACTER(targets.get(0),
+					targets.get(1)));
+			return false;
+		}
+		actionTarget = new ArrayList<Player>(targets);
+		return true;
 	}
 
 	@Override
@@ -25,4 +41,5 @@ public class Witch extends Character {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 }

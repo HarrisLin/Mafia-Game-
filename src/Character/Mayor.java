@@ -1,9 +1,13 @@
 package Character;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Enumerators.Roles;
+import GameEngine.CannotGetPlayerException;
 import GameEngine.Character;
+import GameEngine.GameEngine;
+import GameEngine.GameMessage;
 import GameEngine.Player;
 
 //****************************************************************
@@ -29,11 +33,6 @@ public class Mayor extends Character {
 		vote_count = 3;
 	}
 
-	public boolean Revealed() {
-		revealed = true;
-		return revealed;
-	}
-
 	/**
 	 * 
 	 * @return vote count
@@ -46,12 +45,61 @@ public class Mayor extends Character {
 		}
 	}
 
+	/**
+	 * 
+	 * @param lynches
+	 * @return TRUE if lynch target selected successfully or FALSE if not
+	 */
 	@Override
-	public boolean setTarget(List<Player> targets) {
-		// TODO Auto-generated method stub
+	public boolean vote(List<Player> lynchVote) {
+		if (lynchVote.size() != 1) {
+			return false;
+		}
+		
+		try {
+			if (GameEngine.getCharacter(lynchVote.get(0)).isAlive()) {
+				if(revealed) {
+					lynchTarget = new ArrayList<Player>();
+					lynchTarget.add(lynchVote.get(0));
+					lynchTarget.add(lynchVote.get(0));
+					lynchTarget.add(lynchVote.get(0));
+					return true;
+				}
+				else {
+					lynchTarget = lynchVote;
+				}
+				return true;
+			}
+		} catch (CannotGetPlayerException e) {
+			return false;
+		}
 		return false;
 	}
-
+	
+	/**
+	 * The Mayor targets oneself to reveal itself
+	 */
+	@Override
+	public boolean setTarget(List<Player> targets) {
+		// bus driver must only target 2 people
+		if (targets.size() != 1) {
+			return false;
+		}
+		try {
+			if (!GameEngine.getCharacter(targets.get(0)).isAlive()) {
+				return false;
+			}
+			if (!GameEngine.getCharacter(targets.get(0)).equals(this)) {
+				return false;
+			}
+		} catch (CannotGetPlayerException e) {
+			System.out.println(GameMessage.NO_CHARACTER(targets.get(0),
+					targets.get(1)));
+			return false;
+		}
+		return revealed = true;
+	}
+	
 	@Override
 	public String doAction() {
 		// TODO Auto-generated method stub

@@ -1,8 +1,10 @@
 package Character;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Enumerators.Roles;
+import GameEngine.CannotGetPlayerException;
 import GameEngine.Character;
 import GameEngine.GameEngine;
 import GameEngine.Player;
@@ -20,49 +22,74 @@ import GameEngine.GameMessage;
  *
  */
 public class BusDriver extends Character {
-	BusDriver(Player player) {
+	
+	public BusDriver(Player player) {
 		super(Roles.BusDriver, player);
 	}
 
 	@Override
 	public boolean setTarget(List<Player> targets) {
 		// bus driver must only target 2 people
-		if (targets.size() != 2
-				|| !GameEngine.alive_player.containsAll(targets)) {
+		if (targets.size() != 2) {
 			return false;
 		}
-		setTargets(targets);
+		try {
+			if (!GameEngine.getCharacter(targets.get(0)).isAlive()
+					|| GameEngine.getCharacter(targets.get(1)).isAlive()) {
+				return false;
+			}
+		} catch (CannotGetPlayerException e) {
+			System.out.println(GameMessage.NO_CHARACTER(targets.get(0),
+					targets.get(1)));
+			return false;
+		}
+		actionTarget = new ArrayList<Player>(targets);
 		return true;
 	}
 
 	/**
 	 * Swap two characters' in everyone's target list
 	 * 
+	 * @throws CannotGetPlayerException
+	 * 
 	 */
 	@Override
-	public String doAction() {
-		List<Player> targets = getTargets();
-		if(targets.isEmpty()) {
-			return GameMessage.NO_ACTION;
+	public String doAction() throws CannotGetPlayerException {
+
+		List<Player> targets = getTarget();
+
+		if (getTarget().size() != 2) {
+			return GameMessage.NO_ACTION();
 		}
-		String message = "Your night action has been received.";
-		if(this.isRoleBlocked()) {
-			return message;
+
+		if (!GameEngine.getCharacter(targets.get(0)).isAlive()
+				|| !GameEngine.getCharacter(targets.get(1)).isAlive()) {
+			return GameMessage.TARGET_DEAD();
 		}
+
+		if (this.isRoleBlocked()) {
+			return GameMessage.NO_FEEDBACK();
+		}
+
 		GameEngine.getCharacter(targets.get(0)).addVisitor(getPlayer());
 		GameEngine.getCharacter(targets.get(1)).addVisitor(getPlayer());
-		for (Player iterator : GameEngine.getAlivePlayer()) {
-			Character character = GameEngine.getCharacter(iterator);
-			List<Player> players = character.getTargets();
-			for(int i = 0; i < players.size(); i++) {
-				if(players.get(i).equals(targets.get(0))) {
+
+		for (Character character : GameEngine.getAlivePlayer()) {
+			List<Player> players = character.getTarget();
+			boolean changed = false;
+			for (int i = 0; i < players.size(); i++) {
+				if (players.get(i).equals(targets.get(0))) {
 					players.set(i, targets.get(1));
-				}
-				else if(players.get(i).equals(targets.get(1))) {
+					changed = true;
+				} else if (players.get(i).equals(targets.get(1))) {
 					players.set(i, targets.get(0));
+					changed = true;
 				}
 			}
+			if(changed) {
+				character.setTarget(players);	
+			}
 		}
-		return message;
+		return GameMessage.NO_FEEDBACK();
 	}
 }

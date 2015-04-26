@@ -1,9 +1,9 @@
 package Character;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import Enumerators.Roles;
+import GameEngine.CannotGetPlayerException;
 import GameEngine.Character;
 import GameEngine.GameEngine;
 import GameEngine.GameMessage;
@@ -15,45 +15,47 @@ import GameEngine.Player;
  * @author pacified
  *
  */
+
+//****************************************************************
+//DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE
+//this is a tag for all the characters/classes that are done
+//*****************************************************************
+
 public class Arsonist extends Character {
-	
-	private static final int ARSONIST_MAX_NUM_TARGETS = 1;
-	
+
 	public Arsonist(Player player) {
 		super(Roles.Arsonist, player, true);
 	}
 
 	/**
-	 * If a target is selected then Arsonist douses that target. If target
-	 * selected is oneself then Arsonist ignites. If Arsonist does no action, if
-	 * arsonist is doused, he is then undoused.
-	 */
-	@Override
-	public boolean setTarget(List<Player> targets) {
-		if (targets.size() > ARSONIST_MAX_NUM_TARGETS || !GameEngine.alive_player.containsAll(targets)) {
-			return false;
-		}
-		return setTargets(targets);
-	}
-
-	/**
+	 * @throws CannotGetPlayerException
 	 * 
 	 */
 	@Override
-	public String doAction() {
-		if (getTargets().isEmpty()) {
-			return GameMessage.NO_ACTION;
+	public String doAction() throws CannotGetPlayerException {	
+
+		if (getTarget().size() != 1) {
+			return GameMessage.NO_ACTION();
 		}
 		
-		Player target = getTargets().get(0);
+		Player target = getTarget().get(0);
+		
+		if(!GameEngine.getCharacter(target).isAlive()) {
+			return GameMessage.TARGET_DEAD();
+		}
+		if (this.isRoleBlocked()) {
+			return GameMessage.NO_FEEDBACK();
+		}
+		
+		GameEngine.getCharacter(target).addVisitor(getPlayer());
+		
 		if (target.getName().equals(this.getPlayer().getName())) {
 			// If arsonist targets himself, he ignites
 			ArrayList<Player> victims = new ArrayList<Player>();
-			for (Player player : GameEngine.getAlivePlayer()) {
-				Character target_character = GameEngine.getCharacter(player);
-				if (target_character.isDoused()) {
-					if (target_character.kill()) {
-						victims.add(player);
+			for (Character character : GameEngine.getAlivePlayer()) {
+				if (character.isDoused()) {
+					if (character.kill()) {
+						victims.add(character.getPlayer());
 					}
 				}
 			}

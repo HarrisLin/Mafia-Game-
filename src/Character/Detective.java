@@ -3,6 +3,7 @@ package Character;
 import java.util.List;
 
 import Enumerators.Roles;
+import GameEngine.CannotGetPlayerException;
 import GameEngine.Character;
 import GameEngine.GameEngine;
 import GameEngine.GameMessage;
@@ -18,40 +19,26 @@ public class Detective extends Character {
 	}
 
 	@Override
-	public boolean setTarget(List<Player> targets) {
-		// The detective can only target a single Player
-		if (targets.size() != 1
-				|| !GameEngine.alive_player.containsAll(targets)) {
-			return false;
+	public String doAction() throws CannotGetPlayerException {
+		
+		if (getTarget().size() != 1) {
+			return GameMessage.NO_ACTION();
 		}
-		return setTargets(targets);
-	}
-
-	@Override
-	public String doAction() {
-		List<Player> targets = getTargets();
-		if (targets.isEmpty()) {
-			return GameMessage.NO_ACTION;
+		
+		Player target = getTarget().get(0);
+		
+		if(!GameEngine.getCharacter(target).isAlive()) {
+			return GameMessage.TARGET_DEAD();
 		}
-		String message = "Cannot get your results";
 		if (this.isRoleBlocked()) {
-			return message;
+			return GameMessage.NO_FEEDBACK();
 		}
-		GameEngine.getCharacter(targets.get(0)).addVisitor(getPlayer());
+		
+		GameEngine.getCharacter(target).addVisitor(getPlayer());
 		
 		// Retrieve the list of who Detective Target visited
-		List<Player> tracker = GameEngine.getCharacter(targets.get(0)).getTargets();
+		List<Player> tracker = GameEngine.getCharacter(target).getTarget();
 		
-		
-		//TODO: Include option for ignoring night immunity if detective
-		//      For balance considerations: when tailing ARSONIST and he/she
-		//          ignites, should we return everyone ignited, or "inactive"
-		//          and for Bus Driver, should we only say first person visited?
-		String result = "Your target visited ";
-		for ( int i = 0; i < tracker.size(); i++ ) {
-			result = result + tracker.get(i).getName().toString() + ",";
-		}
-		
-		return result;
+		return GameMessage.DETECTIVE_RESULTS(tracker);
 	}
 }

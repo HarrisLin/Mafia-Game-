@@ -1,8 +1,7 @@
 package Character;
 
-import java.util.List;
-
 import Enumerators.Roles;
+import GameEngine.CannotGetPlayerException;
 import GameEngine.Character;
 import GameEngine.GameEngine;
 import GameEngine.GameMessage;
@@ -20,26 +19,25 @@ public class Doctor extends Character {
 	}
 
 	@Override
-	public boolean setTarget(List<Player> targets) {
-		if (targets.size() != 1
-				|| !GameEngine.alive_player.containsAll(targets)) {
-			return false;
+	public String doAction() throws CannotGetPlayerException {
+		
+		if (getTarget().size() != 1) {
+			return GameMessage.NO_ACTION();
 		}
-		return setTargets(targets);
-	}
-
-	@Override
-	public String doAction() {
-		List<Player> targets = getTargets();
-		if(targets.isEmpty()) {
-			return GameMessage.NO_ACTION;
+		
+		Player target = getTarget().get(0);
+		
+		if(!GameEngine.getCharacter(target).isAlive()) {
+			return GameMessage.TARGET_DEAD();
 		}
-		String message = "Thanks doc";
 		if (this.isRoleBlocked()) {
-			return message;
+			return GameMessage.DOCTOR_FEEDBACK();
 		}
-		GameEngine.getCharacter(targets.get(0)).addVisitor(getPlayer());
-		GameEngine.getCharacter(targets.get(0)).healPlayer();
-		return message;
+		
+		GameEngine.getCharacter(target).addVisitor(getPlayer());
+
+		GameEngine.getCharacter(target).healPlayer();
+		
+		return GameMessage.DOCTOR_FEEDBACK();
 	}
 }
