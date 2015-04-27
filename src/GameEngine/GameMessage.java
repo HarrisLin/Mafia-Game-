@@ -39,7 +39,50 @@ public class GameMessage {
 				+ name + ".";
 	}
 
-	public static String ARSONIST_KILL(List<Player> victims) {
+	// ------------------------------------------
+	// DOCTOR MESSAGE
+	// --------------------------------------------
+	public static final String DOCTOR_FEEDBACK() {
+		return "thanks doc";
+	}
+
+	// ----------------------------------------------------
+	// VIGILANTE MESSAGES
+	// ----------------------------------------------------
+	public static final String VIGILANTE_FEEDBACK(int shots) {
+		return "You have " + shots + " left.";
+	}
+
+	// ------------------------------------------------
+	// SHERIFF MESSAGES
+	// ------------------------------------------------
+	public static final String SHERIFF_FEEDBACK(String result) {
+		return "The outcome of your results suggests your target is " + result
+				+ ".";
+	}
+
+	// -------------------------------------
+	// LOOKOUT MESSSAGES
+	// --------------------------------------
+	public static final String LOOKOUT_FEEDBACK(List<Player> tracker) {
+		StringBuilder result = new StringBuilder();
+		result.append("Your target was visited by ");
+		for (int i = 0; i < tracker.size(); i++) {
+			result.append(tracker.get(i).getName());
+			if (i + 1 != tracker.size()) {
+				result.append(", ");
+			}
+			else {
+				result.append(".");	
+			}
+		}
+		return result.toString();
+	}
+
+	// ------------------------------------------
+	// ARSONIST MESSAGES
+	// -----------------------------------------------
+	public static final String ARSONIST_KILL(List<Player> victims) {
 		if (victims.size() == 0) {
 			return NO_KILL;
 		}
@@ -66,5 +109,79 @@ public class GameMessage {
 
 	public static String ARSONIST_DOUSE(Player player) {
 		return player.getName() + " has been doused.";
+	}
+
+	// -----------------------------------------------------
+	// ERROR MESSAGES
+	// ----------------------------------------------------
+	public static final String NO_CHARACTER(Player player) {
+		return "Cannot find player " + player.getName() + " in game engine.";
+	}
+
+	public static final String NO_CHARACTER(Player player1, Player player2) {
+		return "Cannot find player " + player1.getName() + " or player "
+				+ player2.getName() + " in game engine.";
+	}
+
+	public static final String TARGET_SIZE2_ERROR() {
+		return "Please select two characters for target.";
+	}
+
+	// ----------------------------------------------------------
+	// GAME ENGINE MESSAGES
+	// --------------------------------------------------------
+	public static final String REGISTERED_PLAYER(String name) {
+		return "Successfully registered " + name + "in the game engine.";
+	}
+
+	public static final String REGISTER_ERROR(String name) {
+		return "Player " + name + " is already in game engine.";
+	}
+
+	public static final String REMOVE_PLAYER(String name) {
+		return "Successfully removed " + name + "in the game engine.";
+	}
+
+	public static final String REMOVE_ERROR(String name) {
+		return "Player " + name + " is not in game engine.";
+	}
+
+	public static final String BAD_INPUT() {
+		return "Bad input. Learn to type.";
+	}
+
+	public static final String RESET_GAME() {
+		return "The game has been reset.";
+	}
+
+	public static final String HELP_MESSAGE() {
+		return "To request help: help\n"
+				+ "To add player: addplayer [name]\n"
+				+ "To remove player: removeplayer [name]\n"
+				+ "To start game: startgame [admin password]\n"
+				+ "To clear game: cleargame [admin password]\n"
+				+ "To get player list: listplayer\n"
+				+ "To get alive player list: listalive\n"
+				+ "To vote player for lynch: vote [name]\n"
+				+ "To show current vote: showvote\n"
+				+ "To show target someone: target [name]\n"
+				+ "To update last will: lastwill [message]\n"
+				+ "To show mafia daily: daily";
+	}
+	
+	public static final String LIST_ALL_PLAYERS() {
+		List<Player> allPlayers = Player.listAllPlayers();
+		StringBuilder result = new StringBuilder();
+		result.append("People in this round are: ");
+		for (int i = 0; i < allPlayers.size(); i++) {
+			result.append(allPlayers.get(i).getName());
+			if (i + 1 != allPlayers.size()) {
+				result.append(", ");
+			}
+			else {
+				result.append(".");	
+			}
+		}
+		return result.toString();
 	}
 }

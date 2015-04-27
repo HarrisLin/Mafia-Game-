@@ -55,9 +55,9 @@ public class GameEngine {
 		return new ArrayList<Character>(alive_player);
 	}
 
-	//--------------------------------------------------------------------
+	// --------------------------------------------------------------------
 	// PLAYER REGISTRATION METHODS
-	//--------------------------------------------------------------------
+	// --------------------------------------------------------------------
 	/**
 	 * @return all characters
 	 */
@@ -74,8 +74,12 @@ public class GameEngine {
 	 * @param name
 	 * @return true if successful, false if not.
 	 */
-	public static boolean registerPlayer(String name) {
-		return Player.register(name);
+	public static String registerPlayer(String name) {
+		if (Player.register(name)) {
+			return GameMessage.REGISTERED_PLAYER(name);
+		} else {
+			return GameMessage.REGISTER_ERROR(name);
+		}
 	}
 
 	/**
@@ -84,8 +88,12 @@ public class GameEngine {
 	 * @param name
 	 * @return true if successful, false if not.
 	 */
-	public static boolean removePlayer(String name) {
-		return Player.remove(name);
+	public static String removePlayer(String name) {
+		if(Player.remove(name)) {
+			return GameMessage.REGISTERED_PLAYER(name);
+		} else {
+			return GameMessage.REMOVE_ERROR(name);
+		}
 	}
 
 	/**
@@ -110,8 +118,9 @@ public class GameEngine {
 	// -------------------------------------------------------------
 	/**
 	 * GameEngine.assignCharacters Randomly assigns a character role to all
-	 * players
+	 * players.
 	 * 
+	 * @param type
 	 * @return TRUE if characters successfully assigned and FALSE it not
 	 */
 	public static boolean assignAllCharacters(int type) {
@@ -337,23 +346,24 @@ public class GameEngine {
 		alive_player.add(character);
 		return true;
 	}
-	
-	//-------------------------------------------------------------
+
+	// -------------------------------------------------------------
 	// GAME MECHANICS AND ACTION METHODS
-	//-------------------------------------------------------------
+	// -------------------------------------------------------------
 	/**
 	 * @return TRUE if successfully killed and FALSE if not
 	 */
 	public static boolean killCharacter(Character character) {
-		if(!dead_player.contains(character) || alive_player.contains(character)) {
+		if (!dead_player.contains(character)
+				|| alive_player.contains(character)) {
 			dead_player.add(character);
 			alive_player.remove(character);
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
+
 	/**
 	 * GameEngine.setTarget
 	 * 
@@ -446,10 +456,19 @@ public class GameEngine {
 	 * Resets the GameEngine. Clears all records of players and characters. This
 	 * does not clear the database.
 	 */
-	public static void reset() {
+	public static String reset() {
 		Player.removeAllPlayers();
 		player_character_map.clear();
 		alive_player.clear();
 		dead_player.clear();
+		return GameMessage.RESET_GAME();
+	}
+
+	/**
+	 * If the game crashes, then it will reboot from the database using this
+	 * method.
+	 */
+	public static void reboot() {
+
 	}
 }
