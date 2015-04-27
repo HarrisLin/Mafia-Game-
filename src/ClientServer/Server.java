@@ -122,7 +122,7 @@ public class Server extends Thread {
 		case BadInput:
 			outputLine = GameMessage.BAD_INPUT();
 			break;
-		case ClearGame:
+		case ResetGame:
 			if (inputArray.length == 3) {
 				CLInput adminKey = CLInput.fromString(inputArray[2]);
 				if (adminKey.equals(CLInput.Admin)) {
@@ -204,7 +204,7 @@ public class Server extends Thread {
 			}
 			break;
 		case StartGame:
-			if (inputArray.length == 3) {
+			if (inputArray.length >= 3) {
 				CLInput adminKey = CLInput.fromString(inputArray[2]);
 				if (adminKey.equals(CLInput.Admin)) {
 					outputLine = "Not yet implemented yet but yes he is.";

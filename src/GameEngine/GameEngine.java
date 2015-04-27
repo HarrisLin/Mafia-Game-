@@ -55,9 +55,6 @@ public class GameEngine {
 		return new ArrayList<Character>(alive_player);
 	}
 
-	// --------------------------------------------------------------------
-	// PLAYER REGISTRATION METHODS
-	// --------------------------------------------------------------------
 	/**
 	 * @return all characters
 	 */
@@ -68,6 +65,7 @@ public class GameEngine {
 	// --------------------------------------------------------------------
 	// PLAYER REGISTRATION METHODS
 	// --------------------------------------------------------------------
+
 	/**
 	 * GameEngine.registerPlayer Registers a player into the game.
 	 * 
@@ -89,7 +87,7 @@ public class GameEngine {
 	 * @return true if successful, false if not.
 	 */
 	public static String removePlayer(String name) {
-		if(Player.remove(name)) {
+		if (Player.remove(name)) {
 			return GameMessage.REGISTERED_PLAYER(name);
 		} else {
 			return GameMessage.REMOVE_ERROR(name);
@@ -348,22 +346,8 @@ public class GameEngine {
 	}
 
 	// -------------------------------------------------------------
-	// GAME MECHANICS AND ACTION METHODS
+	// GAME MECHANICS AND ACTION METHODS (PUBLIC)
 	// -------------------------------------------------------------
-	/**
-	 * @return TRUE if successfully killed and FALSE if not
-	 */
-	public static boolean killCharacter(Character character) {
-		if (!dead_player.contains(character)
-				|| alive_player.contains(character)) {
-			dead_player.add(character);
-			alive_player.remove(character);
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	/**
 	 * GameEngine.setTarget
 	 * 
@@ -375,6 +359,23 @@ public class GameEngine {
 	 */
 	public static boolean setTarget(Player player, List<Player> target) {
 		return player_character_map.get(player).setTarget(target);
+	}
+
+	// --------------------------------------------------------------------
+	// GAME MECHANICS AND ACTION METHODS (PRIVATE/PROTECTED) OR SHOULD BE
+	// ---------------------------------------------------------------------
+	/**
+	 * @return TRUE if successfully killed and FALSE if not
+	 */
+	protected static boolean killCharacter(Character character) {
+		if (!dead_player.contains(character)
+				|| alive_player.contains(character)) {
+			dead_player.add(character);
+			alive_player.remove(character);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -393,7 +394,7 @@ public class GameEngine {
 	 * 
 	 * @return the player lynched
 	 */
-	public static boolean lynch() {
+	protected static boolean lynch() {
 		Character topLynch = null;
 		int topVote = 0;
 		boolean good = false;
@@ -450,7 +451,7 @@ public class GameEngine {
 	}
 
 	// ------------------------------------------------------------
-	// HARD RESET ON THE GAME
+	// PUBLIC METHODS WHEN GAME STARTS
 	// -----------------------------------------------------------
 	/**
 	 * Resets the GameEngine. Clears all records of players and characters. This
@@ -462,6 +463,22 @@ public class GameEngine {
 		alive_player.clear();
 		dead_player.clear();
 		return GameMessage.RESET_GAME();
+	}
+
+	/**
+	 * Start the game
+	 */
+	public static String start() {
+		return "not yet implemented";
+	}
+
+	/**
+	 * starts a new day
+	 * 
+	 * @return message
+	 */
+	public static String newDay() {
+		return "not yet implemnted";
 	}
 
 	/**
