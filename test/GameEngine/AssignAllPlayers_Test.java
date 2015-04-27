@@ -9,21 +9,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class AssignAllPlayers_Test {
+	
 	List<Player> playerList;
 	List<String> nameList;
-
-	String string1;
-	String string2;
-	String string3;
-
-	String gameMessageResult;
-	List<Player> busDriverTarget;
-	List<Player> detectiveTarget;
-	List<Player> targets;
-	List<Player> visitors;
-
+	List<Player> actionTarget;
+	List<Player> lynchTarget;
+	List<Character> allCharacters;
+	Character character;
+	
 	@Before
 	public void setup() {
+		
 		GameEngine.reset();
 
 		nameList = new ArrayList<String>();
@@ -80,15 +76,19 @@ public class AssignAllPlayers_Test {
 		}
 		
 		GameEngine.assignAllCharacters(0);
+		
+		allCharacters = GameEngine.getAllCharacters();
 	}
 
 	@Test
 	public void test() {
-		
+
 		GameEngine.getAlivePlayer();
 		for(Character character : GameEngine.getAlivePlayer()) {
 			System.out.println(character.getPlayer().getName() + ": " + character.getRoleString());
 		}
+		
+		assertEquals(allCharacters.size(), 20);
 	}
 
 }

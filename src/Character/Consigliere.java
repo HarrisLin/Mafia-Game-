@@ -20,7 +20,7 @@ public class Consigliere extends Character {
 	 * vague role of his target is revealed.
 	 */
 	public Consigliere(Player player) {
-		super(Roles.Investigator, player);
+		super(Roles.Consigliere, player);
 		detectsRole = GameOptions.ConsigliereOptions.DetectRole.DETECT_VAGUE_ROLE;
 	}
 

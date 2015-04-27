@@ -11,29 +11,25 @@ import org.junit.Test;
 import GameEngine.CannotGetPlayerException;
 import GameEngine.GameEngine;
 import GameEngine.Player;
+import GameEngine.Character;
 
 public class Detective_Test {
 
 	List<Player> playerList;
 	List<String> nameList;
-
-	String string1;
-	String string2;
-	String string3;
-
-	String gameMessageResult;
-	List<Player> busDriverTarget;
-	List<Player> detectiveTarget;
-	List<Player> targets;
-	List<Player> visitors;
+	List<Player> actionTarget;
+	List<Player> lynchTarget;
+	List<Character> allCharacters;
+	Character character;
 
 	@Before
 	public void setup() {
+
 		GameEngine.reset();
-		
+
 		nameList = new ArrayList<String>();
 		playerList = new ArrayList<Player>();
-		
+
 		nameList.add("Eleanor");
 		nameList.add("Derek");
 		nameList.add("Connie");
@@ -54,28 +50,9 @@ public class Detective_Test {
 		nameList.add("Kevin");
 		nameList.add("Marc");
 		nameList.add("Jordan");
-		nameList.add("Samuel");
-		nameList.add("Jasmin");
-		nameList.add("Will");
-		nameList.add("Barry");
-		nameList.add("Jacqueline");
-		nameList.add("Johnny");
-		nameList.add("Reanne");
-		nameList.add("Ray");
-		nameList.add("Lucy");
-		nameList.add("Eddie");
-		nameList.add("Amber");
-		nameList.add("Mario");
-		nameList.add("Adam");
-		nameList.add("Jessica");
-		nameList.add("Emmitt");
-		nameList.add("Shelby");
-		nameList.add("Kayla");
-		nameList.add("Catherine");
-		nameList.add("Jay");
-	
+
 		try {
-			for(String name : nameList) {
+			for (String name : nameList) {
 				GameEngine.registerPlayer(name);
 				playerList.add(Player.get(name));
 			}
@@ -83,42 +60,48 @@ public class Detective_Test {
 			fail("Cannot make players");
 		}
 
-		busDriverTarget = new ArrayList<Player>();
-		busDriverTarget.add(player3); busDriverTarget.add(player4);
-		assertTrue(GameEngine.setTarget(player2, busDriverTarget));
-		string1 = GameEngine.getCharacter(player2).doAction();
+		GameEngine.assignAllCharacters(0);
+
+		allCharacters = GameEngine.getAllCharacters();
 	}
 
 	@Test
-	public void test_visited() {
-		detectiveTarget = new ArrayList<Player>();
-		detectiveTarget.add(player2);
-		GameEngine.setTarget(player1, detectiveTarget);
-		GameEngine.getCharacter(player1).doAction();
-		// Check Detective visited Bus Driver
-		assertTrue(GameEngine.getCharacter(player2).getVistors()
-				.contains(player1));
-		assertTrue(GameEngine.getCharacter(player1).getTarget()
-				.contains(player2));
-
-		// Check Bus Driver targets Consigliere/Godfather
-		targets = new ArrayList<Player>();
-		targets.add(player3);
-		targets.add(player4);
-		assertTrue(GameEngine.getCharacter(player2).getTarget()
-				.contains(player3));
-		assertTrue(GameEngine.getCharacter(player2).getTarget()
-				.contains(player4));
+	public void test_detective_action_1() {
+		
+		for (Character search : allCharacters) {
+			if (search.getRoleString().equals("Detective")) {
+				character = search;
+				break;
+			}
+		}
+		actionTarget = new ArrayList<Player>();
+		actionTarget.add(playerList.get(5));
+		assertTrue(GameEngine.setTarget(character.getPlayer(), actionTarget));
+		try {
+			System.out.println(character.doAction());
+		} catch (CannotGetPlayerException e) {
+			fail("cannot find target");
+		}
 	}
-
+	
 	@Test
-	public void test_detective_action() {
-		detectiveTarget = new ArrayList<Player>();
-		detectiveTarget.add(player2);
-		assertTrue(GameEngine.setTarget(player1, detectiveTarget));
-		gameMessageResult = GameEngine.getCharacter(player1).doAction();
-		String expectedMessageResult = "Your target visited "
-				+ player3.getName() + "," + player4.getName() + ",";
-		assertEquals(gameMessageResult, expectedMessageResult);
+	public void test_detective_action_2() {
+		
+		for (Character search : allCharacters) {
+			if (search.getRoleString().equals("Detective")) {
+				character = search;
+				break;
+			}
+		}
+		actionTarget = new ArrayList<Player>();
+		actionTarget.add(playerList.get(5));
+		assertTrue(GameEngine.setTarget(character.getPlayer(), actionTarget));
+		assertTrue(GameEngine.setTarget(playerList.get(5), actionTarget));		
+		try {
+			System.out.println(character.doAction());
+		} catch (CannotGetPlayerException e) {
+			fail("cannot find target");
+		}
 	}
+
 }

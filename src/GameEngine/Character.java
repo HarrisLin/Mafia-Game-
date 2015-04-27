@@ -73,8 +73,8 @@ public abstract class Character {
 		blockImmune = false;
 		alive = true;
 		visitors = new ArrayList<Player>();
-		actionTarget = null;
-		lynchTarget = null;
+		actionTarget = new ArrayList<Player>();
+		lynchTarget = new ArrayList<Player>();
 		lynchCount = 0;
 		lastWill = "No last will.";
 		doused = false;
@@ -98,8 +98,8 @@ public abstract class Character {
 		blockImmune = false;
 		alive = true;
 		visitors = new ArrayList<Player>();
-		actionTarget = null;
-		lynchTarget = null;
+		actionTarget = new ArrayList<Player>();
+		lynchTarget = new ArrayList<Player>();
 		lynchCount = 0;
 		lastWill = "No last will.";
 		doused = false;
@@ -126,8 +126,8 @@ public abstract class Character {
 		this.blockImmune = blockImmune;
 		alive = true;
 		visitors = new ArrayList<Player>();
-		actionTarget = null;
-		lynchTarget = null;
+		actionTarget = new ArrayList<Player>();
+		lynchTarget = new ArrayList<Player>();
 		lynchCount = 0;
 		lastWill = "No last will.";
 		doused = false;
@@ -149,8 +149,8 @@ public abstract class Character {
 	public String newDay() {
 		String data = "No data";
 		visitors.clear();
-		actionTarget = null;
-		lynchTarget = null;
+		actionTarget.clear();
+		lynchTarget.clear();
 		lynchCount = 0;
 		roleBlocked = false;
 		healed = false;

@@ -29,7 +29,7 @@ public class Investigator_Test {
 	List<Player> visitors;
 
 	@Before
-	public void setup() {
+	public void setup() throws CannotGetPlayerException {
 		// do admin things: register players and assign roles
 		GameEngine.reset();
 		GameEngine.registerPlayer("Derek");
@@ -75,7 +75,7 @@ public class Investigator_Test {
 	}
 
 	@Test
-	public void test_visited() {
+	public void test_visited() throws CannotGetPlayerException {
 		visitors = new ArrayList<Player>();
 		visitors.add(player1);
 		assertTrue(GameEngine.getCharacter(player3).getVistors()

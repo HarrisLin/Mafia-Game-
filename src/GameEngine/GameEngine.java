@@ -55,6 +55,13 @@ public class GameEngine {
 		return new ArrayList<Character>(alive_player);
 	}
 
+	/**
+	 * @return all characters
+	 */
+	public static List<Character> getAllCharacters() {
+		return new ArrayList<Character>(player_character_map.values());
+	}
+
 	// --------------------------------------------------------------------
 	// PLAYER REGISTRATION METHODS
 	// --------------------------------------------------------------------
@@ -91,7 +98,7 @@ public class GameEngine {
 		if (player_character_map.containsKey(player)) {
 			return player_character_map.get(player);
 		} else {
-			throw new CannotGetPlayerException("Player not in map");
+			throw new CannotGetPlayerException("Player not in map.");
 		}
 	}
 
@@ -106,10 +113,13 @@ public class GameEngine {
 	 */
 	public static boolean assignAllCharacters(int type) {
 		List<Player> allPlayers = Player.listAllPlayers();
+
 		Collections.shuffle(allPlayers);
+
 		FileInputStream jsonStream;
 		try {
-			jsonStream = new FileInputStream("gamegenerator/" + allPlayers.size() + ".json");
+			jsonStream = new FileInputStream("gamegenerator/"
+					+ allPlayers.size() + ".json");
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);
 		}
@@ -124,7 +134,8 @@ public class GameEngine {
 
 			JSONParser jsonParser = new JSONParser();
 			JSONObject jsonObject = (JSONObject) jsonParser.parse(jsonLine);
-			jsonObject = (JSONObject) jsonObject.get(allPlayers.size() + "." + type);
+			jsonObject = (JSONObject) jsonObject.get(allPlayers.size() + "."
+					+ type);
 
 			long id = (long) jsonObject.get("id");
 			System.out.println("Id of game type: " + id);
@@ -136,18 +147,21 @@ public class GameEngine {
 
 			for (int i = 0; i < characters.size(); i++) {
 				String character = (String) characters.get(i);
+
 				Roles role = Roles.fromString(character);
 
 				switch (role) {
 				case Administrator:
-//					assignCharacter(allPlayers.get(i), new Administrator(allPlayers.get(i)));
+					// assignCharacter(allPlayers.get(i), new
+					// Administrator(allPlayers.get(i)));
 					break;
 				case Agent:
 					break;
 				case Amnesiac:
 					break;
 				case Arsonist:
-					assignCharacter(allPlayers.get(i), new Arsonist(allPlayers.get(i)));
+					assignCharacter(allPlayers.get(i),
+							new Arsonist(allPlayers.get(i)));
 					break;
 				case Auditor:
 					break;
@@ -156,18 +170,22 @@ public class GameEngine {
 				case Blackmailer:
 					break;
 				case Bodyguard:
-					assignCharacter(allPlayers.get(i), new Bodyguard(allPlayers.get(i)));
+					assignCharacter(allPlayers.get(i),
+							new Bodyguard(allPlayers.get(i)));
 					break;
 				case BusDriver:
-					assignCharacter(allPlayers.get(i), new BusDriver(allPlayers.get(i)));
+					assignCharacter(allPlayers.get(i),
+							new BusDriver(allPlayers.get(i)));
 					break;
 				case Citizen:
 					break;
 				case Consigliere:
-					assignCharacter(allPlayers.get(i), new Consigliere(allPlayers.get(i)));
+					assignCharacter(allPlayers.get(i), new Consigliere(
+							allPlayers.get(i)));
 					break;
 				case Consort:
-					assignCharacter(allPlayers.get(i), new Consort(allPlayers.get(i)));
+					assignCharacter(allPlayers.get(i),
+							new Consort(allPlayers.get(i)));
 					break;
 				case Coroner:
 					break;
@@ -178,19 +196,22 @@ public class GameEngine {
 				case Deceiver:
 					break;
 				case Detective:
-					assignCharacter(allPlayers.get(i), new Detective(allPlayers.get(i)));
+					assignCharacter(allPlayers.get(i),
+							new Detective(allPlayers.get(i)));
 					break;
 				case Disguiser:
 					break;
 				case Doctor:
-					assignCharacter(allPlayers.get(i), new Doctor(allPlayers.get(i)));
+					assignCharacter(allPlayers.get(i),
+							new Doctor(allPlayers.get(i)));
 					break;
 				case DragonHead:
 					break;
 				case Enforcer:
 					break;
 				case Escort:
-					assignCharacter(allPlayers.get(i), new Escort(allPlayers.get(i)));
+					assignCharacter(allPlayers.get(i),
+							new Escort(allPlayers.get(i)));
 					break;
 				case Executioner:
 					break;
@@ -199,7 +220,8 @@ public class GameEngine {
 				case Framer:
 					break;
 				case Godfather:
-					assignCharacter(allPlayers.get(i), new Godfather(allPlayers.get(i)));
+					assignCharacter(allPlayers.get(i),
+							new Godfather(allPlayers.get(i)));
 					break;
 				case IncenseMaster:
 					break;
@@ -208,7 +230,8 @@ public class GameEngine {
 				case Interrogator:
 					break;
 				case Investigator:
-					assignCharacter(allPlayers.get(i), new Investigator(allPlayers.get(i)));
+					assignCharacter(allPlayers.get(i), new Investigator(
+							allPlayers.get(i)));
 					break;
 				case Jailor:
 					break;
@@ -223,9 +246,12 @@ public class GameEngine {
 				case Liaison:
 					break;
 				case Lookout:
+					assignCharacter(allPlayers.get(i),
+							new Lookout(allPlayers.get(i)));
 					break;
 				case Mafioso:
-					assignCharacter(allPlayers.get(i), new Mafioso(allPlayers.get(i)));
+					assignCharacter(allPlayers.get(i),
+							new Mafioso(allPlayers.get(i)));
 					break;
 				case Marshall:
 					break;
@@ -234,14 +260,20 @@ public class GameEngine {
 				case MasonLeader:
 					break;
 				case MassMurderer:
+					assignCharacter(allPlayers.get(i), new MassMurderer(
+							allPlayers.get(i)));
 					break;
 				case Mayor:
-					assignCharacter(allPlayers.get(i), new Mayor(allPlayers.get(i)));
+					assignCharacter(allPlayers.get(i),
+							new Mayor(allPlayers.get(i)));
 					break;
 				case SerialKiller:
+					assignCharacter(allPlayers.get(i), new SerialKiller(
+							allPlayers.get(i)));
 					break;
 				case Sheriff:
-					assignCharacter(allPlayers.get(i), new Sheriff(allPlayers.get(i)));
+					assignCharacter(allPlayers.get(i),
+							new Sheriff(allPlayers.get(i)));
 					break;
 				case Silencer:
 					break;
@@ -254,13 +286,16 @@ public class GameEngine {
 				case Vanguard:
 					break;
 				case Veteran:
-					assignCharacter(allPlayers.get(i), new Veteran(allPlayers.get(i)));
+					assignCharacter(allPlayers.get(i),
+							new Veteran(allPlayers.get(i)));
 					break;
 				case Vigilante:
-					assignCharacter(allPlayers.get(i), new Vigilante(allPlayers.get(i)));
+					assignCharacter(allPlayers.get(i),
+							new Vigilante(allPlayers.get(i)));
 					break;
 				case Witch:
-					assignCharacter(allPlayers.get(i), new Witch(allPlayers.get(i)));
+					assignCharacter(allPlayers.get(i),
+							new Witch(allPlayers.get(i)));
 					break;
 				case WitchDoctor:
 					break;

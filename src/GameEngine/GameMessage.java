@@ -72,16 +72,20 @@ public class GameMessage {
 	// DETECTIVE MESSAGE
 	// ----------------------------------------------
 	public static final String DETECTIVE_RESULTS(List<Player> tracker) {
-		StringBuffer result = new StringBuffer();
-		result.append("Your target visited ");
-		for (int i = 0; i < tracker.size(); i++) {
-			result.append(tracker.get(i).getName());
-			if (i + 1 != tracker.size()) {
-				result.append(", ");
+		if (tracker.isEmpty()) {
+			return "Your target did not visit anyone.";
+		} else {
+			StringBuffer result = new StringBuffer();
+			result.append("Your target visited ");
+			for (int i = 0; i < tracker.size(); i++) {
+				result.append(tracker.get(i).getName());
+				if (i + 1 != tracker.size()) {
+					result.append(", ");
+				}
+				result.append(".");
 			}
-			result.append(".");
+			return result.toString();
 		}
-		return result.toString();
 	}
 
 	// ------------------------------------------
@@ -102,24 +106,26 @@ public class GameMessage {
 	// SHERIFF MESSAGES
 	// ------------------------------------------------
 	public static final String SHERIFF_FEEDBACK(String result) {
-		return "The outcome of your results suggests your target is " + result;
+		return "The outcome of your results suggests your target is " + result + ".";
 	}
-	
-	//-------------------------------------
+
+	// -------------------------------------
 	// LOOKOUT MESSSAGES
-	//--------------------------------------
+	// --------------------------------------
 	public static final String LOOKOUT_FEEDBACK(List<Player> tracker) {
 		StringBuffer result = new StringBuffer();
-		result.append("Your was visited by ");
+		result.append("Your target was visited by ");
 		for (int i = 0; i < tracker.size(); i++) {
 			result.append(tracker.get(i).getName());
-			if (i + 1 != tracker.size()) {
-				result.append(", ");
+			if (i + 1 == tracker.size()) {
+				result.append(".");
+				break;
 			}
-			result.append(".");
+			result.append(", ");
 		}
 		return result.toString();
 	}
+
 	// ------------------------------------------
 	// ARSONIST MESSAGES
 	// -----------------------------------------------
@@ -156,7 +162,7 @@ public class GameMessage {
 	// ERROR MESSAGES
 	// ----------------------------------------------------
 	public static final String NO_CHARACTER(Player player) {
-		return "Cannot find player" + player.getName() + " in game engine.";
+		return "Cannot find player " + player.getName() + " in game engine.";
 	}
 
 	public static final String NO_CHARACTER(Player player1, Player player2) {

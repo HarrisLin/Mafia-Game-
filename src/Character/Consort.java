@@ -21,7 +21,7 @@ import GameEngine.Player;
 public class Consort extends Character {
 
 	public Consort(Player player) {
-		super(Roles.Escort, player);
+		super(Roles.Consort, player);
 	}
 
 	/**
