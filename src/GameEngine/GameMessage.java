@@ -72,7 +72,6 @@ public class GameMessage {
 	// DETECTIVE MESSAGE
 	// ----------------------------------------------
 	public static final String DETECTIVE_RESULTS(List<Player> tracker) {
-<<<<<<< HEAD
 		if (tracker.isEmpty()) {
 			return "Your target did not visit anyone.";
 		} else {
@@ -87,18 +86,6 @@ public class GameMessage {
 			}
 			return result.toString();
 		}
-=======
-		StringBuffer result = new StringBuffer();
-		result.append("Your target visited ");
-		for (int i = 0; i < tracker.size(); i++) {
-			result.append(tracker.get(i).getName());
-			if (i + 1 != tracker.size()) {
-				result.append(", ");
-			}
-			result.append(".");
-		}
-		return result.toString();
->>>>>>> 8d053fa15ece2586f6bb4814a4ef28d849c835e7
 	}
 
 	// ------------------------------------------
@@ -119,7 +106,6 @@ public class GameMessage {
 	// SHERIFF MESSAGES
 	// ------------------------------------------------
 	public static final String SHERIFF_FEEDBACK(String result) {
-<<<<<<< HEAD
 		return "The outcome of your results suggests your target is " + result + ".";
 	}
 
@@ -140,26 +126,6 @@ public class GameMessage {
 		return result.toString();
 	}
 
-=======
-		return "The outcome of your results suggests your target is " + result;
-	}
-	
-	//-------------------------------------
-	// LOOKOUT MESSSAGES
-	//--------------------------------------
-	public static final String LOOKOUT_FEEDBACK(List<Player> tracker) {
-		StringBuffer result = new StringBuffer();
-		result.append("Your was visited by ");
-		for (int i = 0; i < tracker.size(); i++) {
-			result.append(tracker.get(i).getName());
-			if (i + 1 != tracker.size()) {
-				result.append(", ");
-			}
-			result.append(".");
-		}
-		return result.toString();
-	}
->>>>>>> 8d053fa15ece2586f6bb4814a4ef28d849c835e7
 	// ------------------------------------------
 	// ARSONIST MESSAGES
 	// -----------------------------------------------
@@ -196,11 +162,7 @@ public class GameMessage {
 	// ERROR MESSAGES
 	// ----------------------------------------------------
 	public static final String NO_CHARACTER(Player player) {
-<<<<<<< HEAD
 		return "Cannot find player " + player.getName() + " in game engine.";
-=======
-		return "Cannot find player" + player.getName() + " in game engine.";
->>>>>>> 8d053fa15ece2586f6bb4814a4ef28d849c835e7
 	}
 
 	public static final String NO_CHARACTER(Player player1, Player player2) {
