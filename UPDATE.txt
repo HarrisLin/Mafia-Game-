@@ -35,6 +35,7 @@ Uses json in this format:
     ]
   }
 }
+A good place to convert format is: http://parsejson.com/
 3) Did some cleaning up.
 
 UPDATE #2 -- will no longer use README.md for update, instead a separate UPDATE.txt.
