@@ -79,11 +79,11 @@ public class AssignAllPlayers_Test {
 			fail("Cannot make players");
 		}
 		
+		GameEngine.assignAllCharacters(0);
 	}
 
 	@Test
 	public void test() {
-		GameEngine.assignAllCharacters(0);
 		
 		GameEngine.getAlivePlayer();
 		for(Character character : GameEngine.getAlivePlayer()) {

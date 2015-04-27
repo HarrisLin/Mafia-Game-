@@ -109,7 +109,7 @@ public class GameEngine {
 		Collections.shuffle(allPlayers);
 		FileInputStream jsonStream;
 		try {
-			jsonStream = new FileInputStream("GameGenerator/" + allPlayers.size() + ".json");
+			jsonStream = new FileInputStream("gamegenerator/" + allPlayers.size() + ".json");
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);
 		}
