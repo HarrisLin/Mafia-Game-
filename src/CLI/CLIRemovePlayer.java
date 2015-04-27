@@ -17,12 +17,12 @@ public class CLIRemovePlayer {
 
 		try{				
 			player_name = CLI.readString();
-			if (GameEngine.removePlayer(player_name)) {
+			//if (GameEngine.removePlayer(player_name)) {
 				System.out.println(CLIStrings.SUCCESSFULLY_REMOVED_PLAYER(player_name));
-			} else {
+			//} else {
 				System.out.println(CLIStrings.PLAYER_DOES_NOT_EXIST(player_name));
 				System.out.println("");
-			}		
+			//}		
 		} catch (Exception e) {
 			System.out.println(CLIStrings.INVALID_INPUT);
 		}

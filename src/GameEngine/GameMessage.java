@@ -159,6 +159,7 @@ public class GameMessage {
 				+ "To add player: addplayer [name]\n"
 				+ "To remove player: removeplayer [name]\n"
 				+ "To start game: startgame [admin password]\n"
+				+ "To reboot game: rebootgame [admin password]\n"
 				+ "To clear game: cleargame [admin password]\n"
 				+ "To get player list: listplayer\n"
 				+ "To get alive player list: listalive\n"

@@ -1,7 +1,7 @@
 package Enumerators;
 
 public enum CLInput {
-	Help, AddPlayer, RemovePlayer, StartGame, ClearGame, ListPlayer, ListAlive, Vote, ShowVote, Target, LastWill, Daily, Admin, BadInput;
+	Help, AddPlayer, RemovePlayer, StartGame, RebootGame, ClearGame, NewDay, ListPlayer, ListAlive, Vote, ShowVote, Target, LastWill, Daily, Admin, BadInput;
 
 	public static CLInput fromString(String input) {
 		CLInput CLICommand;
@@ -18,9 +18,14 @@ public enum CLInput {
 		case "startgame":
 			CLICommand = CLInput.StartGame;
 			break;
+		case "rebootgame":
+			CLICommand = CLInput.RebootGame;
+			break;
 		case "cleargame":
 			CLICommand = CLInput.ClearGame;
 			break;
+		case "forcenewday":
+			CLICommand = CLInput.NewDay;
 		case "listplayer":
 			CLICommand = CLInput.ListPlayer;
 			break;

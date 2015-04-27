@@ -165,6 +165,30 @@ public class Server extends Thread {
 				outputLine = GameMessage.BAD_INPUT();
 			}
 			break;
+		case NewDay:
+			if (inputArray.length == 3) {
+				CLInput adminKey = CLInput.fromString(inputArray[2]);
+				if (adminKey.equals(CLInput.Admin)) {
+					outputLine = "Not yet implemented yet but yes he is.";
+				} else {
+					outputLine = GameMessage.BAD_INPUT();
+				}
+			} else {
+				outputLine = GameMessage.BAD_INPUT();
+			}
+			break;
+		case RebootGame:
+			if (inputArray.length == 3) {
+				CLInput adminKey = CLInput.fromString(inputArray[2]);
+				if (adminKey.equals(CLInput.Admin)) {
+					outputLine = "Not yet implemented yet but yes he is.";
+				} else {
+					outputLine = GameMessage.BAD_INPUT();
+				}
+			} else {
+				outputLine = GameMessage.BAD_INPUT();
+			}
+			break;
 		case RemovePlayer:
 			if (inputArray.length == 3) {
 				outputLine = GameEngine.removePlayer(inputArray[2]);
@@ -183,7 +207,7 @@ public class Server extends Thread {
 			if (inputArray.length == 3) {
 				CLInput adminKey = CLInput.fromString(inputArray[2]);
 				if (adminKey.equals(CLInput.Admin)) {
-					outputLine = "Not yet implemented yet and yes he is.";
+					outputLine = "Not yet implemented yet but yes he is.";
 				} else {
 					outputLine = GameMessage.BAD_INPUT();
 				}
@@ -206,7 +230,7 @@ public class Server extends Thread {
 			}
 			break;
 		default:
-			// outputLine = GameMessage.BAD_INPUT();
+			// outputLine = GameMessage.BAD_INPUT(1;
 			break;
 		}
 		return outputLine;

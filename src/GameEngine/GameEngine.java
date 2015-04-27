@@ -468,7 +468,7 @@ public class GameEngine {
 	 * If the game crashes, then it will reboot from the database using this
 	 * method.
 	 */
-	public static void reboot() {
-
+	public static String reboot() {
+		return "not yet implemented";
 	}
 }
