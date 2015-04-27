@@ -55,6 +55,9 @@ public class GameEngine {
 		return new ArrayList<Character>(alive_player);
 	}
 
+	//--------------------------------------------------------------------
+	// PLAYER REGISTRATION METHODS
+	//--------------------------------------------------------------------
 	/**
 	 * @return all characters
 	 */
@@ -316,7 +319,6 @@ public class GameEngine {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-
 		return true;
 	}
 
@@ -335,24 +337,23 @@ public class GameEngine {
 		alive_player.add(character);
 		return true;
 	}
-
-	// -------------------------------------------------------------
+	
+	//-------------------------------------------------------------
 	// GAME MECHANICS AND ACTION METHODS
-	// -------------------------------------------------------------
+	//-------------------------------------------------------------
 	/**
 	 * @return TRUE if successfully killed and FALSE if not
 	 */
 	public static boolean killCharacter(Character character) {
-		if (!dead_player.contains(character)
-				|| alive_player.contains(character)) {
+		if(!dead_player.contains(character) || alive_player.contains(character)) {
 			dead_player.add(character);
 			alive_player.remove(character);
 			return true;
-		} else {
+		}
+		else {
 			return false;
 		}
 	}
-
 	/**
 	 * GameEngine.setTarget
 	 * 
