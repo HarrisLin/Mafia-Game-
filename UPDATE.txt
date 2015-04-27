@@ -1,6 +1,42 @@
 UPDATES FOR THE MAFIA CODE
 *Note No longer using README.md as a memo because README.md should be reserved for a manual of the game.
 
+UPDATE #3
+1) Added a simple echo server client for now. The server is multi-threaded.
+The server is the game server while the client will eventually be turned into whichever input method we use. 
+2) Implemented assign all character method.
+Uses json in this format:
+{
+  "20.0": {
+    "id": 1054,
+    "size": 20,
+    "name": "Assign All Character Example",
+    "characters": [
+      "Mayor",
+      "Vigilante",
+      "Vigilante",
+      "Doctor",
+      "Doctor",
+      "Investigator",
+      "Investigator",
+      "Escort",
+      "Escort",
+      "BusDriver",
+      "Detective",
+      "Lookout",
+      "Sheriff",
+      "Godfather",
+      "Consigliere",
+      "Mafioso",
+      "Mafioso",
+      "Consort",
+      "SerialKiller",
+      "Arsonist"
+    ]
+  }
+}
+3) Did some cleaning up.
+
 UPDATE #2 -- will no longer use README.md for update, instead a separate UPDATE.txt.
 1) New SCRUM.txt to be a log of the scrum meetings. It's good to keep track of everything we discussed in the meeting and know what we have done.
 
