@@ -1,7 +1,7 @@
 package Enumerators;
 
 public enum CLInput {
-	Help, AddPlayer, RemovePlayer, StartGame, RebootGame, ResetGame, NewDay, ListPlayer, ListAlive, Vote, ShowVote, Target, LastWill, Daily, Admin, BadInput;
+	Help, Status, AddPlayer, RemovePlayer, StartGame, RebootGame, ResetGame, NewDay, ListPlayer, ListAlive, ListDead, Vote, ShowVote, SeeVote, Target, ShowTarget, LastWill, ShowLastWill, ShowDaily, ShowRole, Admin, AdminKey, BadInput;
 
 	public static CLInput fromString(String input) {
 		CLInput CLICommand;
@@ -44,8 +44,15 @@ public enum CLInput {
 		case "lastwill":
 			CLICommand = CLInput.LastWill;
 			break;
-		case "daily":
-			CLICommand = CLInput.Daily;
+		case "showlastwill":
+			CLICommand = CLInput.ShowLastWill;
+		case "showdaily":
+			CLICommand = CLInput.ShowDaily;
+			break;
+		case "showrole":
+			CLICommand = CLInput.ShowRole;
+		case "admin":
+			CLICommand = CLInput.Admin;
 			break;
 		case "harrisisgay":
 			CLICommand = CLInput.Admin;

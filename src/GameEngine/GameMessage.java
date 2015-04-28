@@ -123,15 +123,88 @@ public class GameMessage {
 				+ player2.getName() + " in game engine.";
 	}
 
-	public static final String TARGET_SIZE2_ERROR() {
-		return "Please select two characters for target.";
+	public static final String ERROR_PLAYER_NOT_IN_GAME(String player1,
+			String player2) {
+		return "Cannot find player " + player1 + " or player " + player2
+				+ " in game engine.";
+	}
+
+	public static final String ERROR_TARGET_SIZE1() {
+		return "Please select one player for target.";
+	}
+
+	public static final String ERROR_TARGET_SIZE2() {
+		return "Please select two players for target.";
+	}
+
+	public static final String ERROR_GENERAL() {
+		return "Oops. Something went wrong.";
+	}
+
+	public static final String IN_GAME_ERROR() {
+		return "Game is already in session. Changes canannot be made.";
+	}
+
+	public static final String NOT_IN_GAME_ERROR() {
+		return "The game has not started yet. Item cannot be displayed.";
+	}
+
+	public static final String BAD_INPUT() {
+		return "Bad input. Learn to type.";
+	}
+
+	public static final String BAD_ADMIN_KEY() {
+		return "Bad Admin Key. No hacks pl0x..";
+	}
+
+	public static final String ERROR_PLAYER_IS_DEAD(String name) {
+		return name + " is dead. Cannot select " + name + " for target";
 	}
 
 	// ----------------------------------------------------------
 	// GAME ENGINE MESSAGES
+	// ----------------------------------------------------------
+	// ------------------------------------------------------------
+	// Help Messages
+	// -----------------------------------------------------------
+	public static final String HELP_MESSAGE() {
+		return "To request help: help\n" + "To request admin help: admin\n"
+				+ "To add player: addplayer\n"
+				+ "To remove player: removeplayer\n"
+				+ "To get player list: listplayer\n"
+				+ "To get alive player list: listalive\n"
+				+ "To get dead player list: listdead\n"
+				+ "To vote player for lynch: vote [name]\n"
+				+ "To show your vote: showvote\n"
+				+ "See all the votes: seevote\n"
+				+ "To target someone: target [name]\n"
+				+ "To show your target: showtarget\n"
+				+ "To update last will: lastwill [message]\n"
+				+ "To show last will: showlastwill\n"
+				+ "To show mafia daily: showdaily\n"
+				+ "To show your character role: showrole\n" 
+				+ "To show game status: status";
+	}
+
+	public static final String HELP_ADMIN() {
+		return "To request admin help: admin\n"
+				+ "To add player: addplayer [admin key] [name]\n"
+				+ "To remove player: removeplayer [admin key] [name]\n"
+				+ "To show player role: showrole [admin key] [name]\n"
+				+ "To show player last will: showlastwill [admin key] [name]\n"
+				+ "To show player target: showtarget [admin key] [name]\n"
+				+ "To show player vote: showvote [admin key] [name]\n"
+				+ "To show game status: status [admin key]\n"
+				+ "To start game: startgame [admin key]\n"
+				+ "To start game with specific characters: startgame [admin key] Mayor Godfather etc...\n"
+				+ "To start a new day: forcenewday [admin key]"
+				+ "To reboot game: rebootgame [admin key]\n"
+				+ "To reset game: resetgame [admin key]";
+	}
+
 	// --------------------------------------------------------
 	public static final String REGISTERED_PLAYER(String name) {
-		return "Successfully registered " + name + "in the game engine.";
+		return "Successfully registered " + name + " in the game engine.";
 	}
 
 	public static final String REGISTER_ERROR(String name) {
@@ -139,7 +212,7 @@ public class GameMessage {
 	}
 
 	public static final String REMOVE_PLAYER(String name) {
-		return "Successfully removed " + name + "in the game engine.";
+		return "Successfully removed " + name + " in the game engine.";
 	}
 
 	public static final String REMOVE_ERROR(String name) {

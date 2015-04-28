@@ -1,6 +1,8 @@
 package ClientServer;
 
 import java.net.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.io.*;
 
 import GameEngine.GameEngine;
@@ -134,6 +136,7 @@ public class Server extends Thread {
 				outputLine = GameMessage.BAD_INPUT();
 			}
 			break;
+<<<<<<< HEAD
 		case Daily:
 			if (inputArray.length == 2) {
 				outputLine = "Not implemented yet. Try again later.";
@@ -141,6 +144,8 @@ public class Server extends Thread {
 				outputLine = GameMessage.BAD_INPUT();
 			}
 			break;
+=======
+>>>>>>> partially working
 		case Help:
 			if (inputArray.length == 2) {
 				outputLine = GameMessage.HELP_MESSAGE();
@@ -190,8 +195,45 @@ public class Server extends Thread {
 			}
 			break;
 		case RemovePlayer:
-			if (inputArray.length == 3) {
-				outputLine = GameEngine.removePlayer(inputArray[2]);
+			if (inputArray.length == 2) {
+				outputLine = GameEngine.removePlayer(inputArray[0]);
+			} else if (inputArray.length == 4) {
+				CLInput adminKey = CLInput.fromString(inputArray[2]);
+				if (adminKey.equals(CLInput.AdminKey)) {
+					outputLine = GameEngine.removePlayer(inputArray[3]);
+				} else {
+					outputLine = GameMessage.BAD_ADMIN_KEY();
+				}
+			} else {
+				outputLine = GameMessage.BAD_INPUT();
+			}
+			break;
+		case SeeVote:
+			if (inputArray.length == 2) {
+				outputLine = GameEngine.getVoteList();
+			} else {
+				outputLine = GameMessage.BAD_INPUT();
+			}
+			break;
+		case ShowDaily:
+			if (inputArray.length == 2) {
+				outputLine = GameEngine.getDaily();
+			} else {
+				outputLine = GameMessage.BAD_INPUT();
+			}
+			break;
+		case ShowLastWill:
+			if (inputArray.length == 2) {
+				outputLine = GameEngine.getLastWill(inputArray[0]);
+			} else {
+				outputLine = GameMessage.BAD_INPUT();
+			}
+			break;
+		case ShowRole:
+			break;
+		case ShowTarget:
+			if (inputArray.length == 2) {
+				outputLine = GameEngine.getTarget(inputArray[0]);
 			} else {
 				outputLine = GameMessage.BAD_INPUT();
 			}
@@ -217,14 +259,18 @@ public class Server extends Thread {
 			break;
 		case Target:
 			if (inputArray.length == 3 || inputArray.length == 4) {
-				outputLine = "Not implemented yet. Try again later.";
+				List<String> targetList = new ArrayList<String>();
+				for(int i = 2; i < inputArray.length; i++) {
+					targetList.add(inputArray[i]);
+				}
+				outputLine = GameEngine.setTarget(inputArray[0], targetList);
 			} else {
 				outputLine = GameMessage.BAD_INPUT();
 			}
 			break;
 		case Vote:
 			if (inputArray.length == 3) {
-				outputLine = "Not implemented yet. Try again later.";
+				outputLine = GameEngine.setVote(inputArray[0], inputArray[2]);
 			} else {
 				outputLine = GameMessage.BAD_INPUT();
 			}

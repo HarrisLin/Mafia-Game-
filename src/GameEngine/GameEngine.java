@@ -73,8 +73,12 @@ public class GameEngine {
 	 * @return true if successful, false if not.
 	 */
 	public static String registerPlayer(String name) {
-		if (Player.register(name)) {
-			return GameMessage.REGISTERED_PLAYER(name);
+		if (!inGame) {
+			if (Player.register(name)) {
+				return GameMessage.REGISTERED_PLAYER(name);
+			} else {
+				return GameMessage.REGISTER_ERROR(name);
+			}
 		} else {
 			return GameMessage.REGISTER_ERROR(name);
 		}
@@ -87,8 +91,12 @@ public class GameEngine {
 	 * @return true if successful, false if not.
 	 */
 	public static String removePlayer(String name) {
-		if (Player.remove(name)) {
-			return GameMessage.REGISTERED_PLAYER(name);
+		if (!inGame) {
+			if (Player.remove(name)) {
+				return GameMessage.REGISTERED_PLAYER(name);
+			} else {
+				return GameMessage.REMOVE_ERROR(name);
+			}
 		} else {
 			return GameMessage.REMOVE_ERROR(name);
 		}
