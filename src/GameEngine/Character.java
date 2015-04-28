@@ -337,10 +337,10 @@ public abstract class Character {
 	public boolean vote(Player lynchVote) {
 		try {
 			if (GameEngine.getCharacter(lynchVote).isAlive()) {
-				if (lynchTarget.get(0) == null) {
-					lynchTarget = new ArrayList<Player>();
-					lynchTarget.add(lynchVote);
-					GameEngine.getCharacter(lynchTarget.get(0)).addLynchCount();
+				if (voteTarget.isEmpty()) {
+					voteTarget = new ArrayList<Player>();
+					voteTarget.add(lynchVote);
+					GameEngine.getCharacter(voteTarget.get(0)).addLynchCount();
 					return true;
 				} else {
 					GameEngine.getCharacter(lynchTarget.get(0)).subLynchCount();

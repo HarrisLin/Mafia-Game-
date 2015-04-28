@@ -182,7 +182,7 @@ public class GameMessage {
 				+ "To update last will: lastwill [message]\n"
 				+ "To show last will: showlastwill\n"
 				+ "To show mafia daily: showdaily\n"
-				+ "To show your character role: showrole\n" 
+				+ "To show your character role: showrole\n"
 				+ "To show game status: status";
 	}
 
@@ -223,6 +223,22 @@ public class GameMessage {
 		return "Bad input. Learn to type.";
 	}
 
+	// --------------------------------------------
+	// Get status Messages
+	// -------------------------------
+	public static final String FORMAT_STATUS(boolean inGame) {
+		int sizeOfGame = Player.listAllPlayers().size();
+		if (inGame) {
+			int sizeOfLiving = GameEngine.getAliveCharacter().size();
+			int sizeOfDead = GameEngine.getDeadCharacter().size();
+			return "Currently in game. " + sizeOfGame + " playing.\n"
+					+ sizeOfLiving + " people alive, " + sizeOfDead
+					+ " people dead.";
+		} else {
+			return "Not in game yet. Currently " + sizeOfGame + " registered.";
+		}
+	}
+
 	public static final String RESET_GAME() {
 		return "The game has been reset.";
 	}
@@ -258,5 +274,122 @@ public class GameMessage {
 			}
 		}
 		return result.toString();
+	}
+
+	public static final String LIST_ALIVE_PLAYERS() {
+		List<Player> alivePlayers = GameEngine.getAlivePlayer();
+		StringBuilder result = new StringBuilder();
+		result.append("People still alive in this round are: ");
+		for (int i = 0; i < alivePlayers.size(); i++) {
+			result.append(alivePlayers.get(i).getName());
+			if (i + 1 != alivePlayers.size()) {
+				result.append(", ");
+			} else {
+				result.append(".");
+			}
+		}
+		return result.toString();
+	}
+
+	public static final String LIST_DEAD_PLAYERS() {
+		List<Player> deadPlayers = GameEngine.getDeadPlayer();
+		StringBuilder result = new StringBuilder();
+		result.append("People dead in this round are: ");
+		for (int i = 0; i < deadPlayers.size(); i++) {
+			result.append(deadPlayers.get(i).getName());
+			if (i + 1 != deadPlayers.size()) {
+				result.append(", ");
+			} else {
+				result.append(".");
+			}
+		}
+		return result.toString();
+	}
+
+	public static final String LIST_VOTE_MAP() {
+		StringBuilder voteMap = new StringBuilder();
+		for (Character character : GameEngine.getAliveCharacter()) {
+			voteMap.append(character.getPlayer().getName() + "has"
+					+ character.getLynchCount() + "votes\n");
+		}
+		if (voteMap.length() > 0) {
+			   voteMap.setLength(voteMap.length() - 1);
+			}
+		return voteMap.toString();
+	}
+
+	public static final String LIST_ROLE_MAP() {
+		StringBuilder roleMap = new StringBuilder();
+		for (Character character : GameEngine.getAliveCharacter()) {
+			roleMap.append(character.getPlayer().getName() + " is the role "
+					+ character.getRoleString() + ".\n");
+		}
+		if (roleMap.length() > 0) {
+			   roleMap.setLength(roleMap.length() - 1);
+			}
+		return roleMap.toString();
+	}
+
+	// ---------------------------------------------
+	// Vote, Night Actions, Last Will, Role, messages.
+	// ---------------------------------------------
+
+	public static final String UPDATED_LAST_WILL() {
+		return "Thank you. Your last will has been updated";
+	}
+
+	public static final String SHOW_LAST_WILL(String lastWill) {
+		return "Your last will is:" + lastWill;
+	}
+
+	public static final String UPDATED_TARGETS() {
+		return "Thank you. Your target(s) has been updated";
+	}
+
+	public static final String SHOW_TARGETS(List<Player> targetList) {
+		StringBuilder result = new StringBuilder();
+		result.append("Your target(s) is/are ");
+		for (int i = 0; i < targetList.size(); i++) {
+			result.append(targetList.get(i).getName());
+			if (i + 1 != targetList.size()) {
+				result.append(", ");
+			} else {
+				result.append(".");
+			}
+		}
+		return result.toString();
+	}
+
+	public static final String UPDATED_VOTES() {
+		return "Thank you. Your vote(s) has been updated";
+	}
+
+	public static final String SHOW_VOTES(List<Player> targetList) {
+		StringBuilder result = new StringBuilder();
+		result.append("Your vote target is ");
+		for (int i = 0; i < targetList.size(); i++) {
+			result.append(targetList.get(i).getName());
+			if (i + 1 != targetList.size()) {
+				result.append(", ");
+			} else {
+				result.append(".");
+			}
+		}
+		return result.toString();
+	}
+
+	public static final String SHOW_ROLE(String role) {
+		return "Your role is " + role + ".";
+	}
+
+	// --------------------------------------------
+	// Game Setup Messages
+	// -----------------------------------------
+	public static final String NEW_GAME() {
+		return "Sucessfully assigned all players. Game has started.";
+	}
+
+	public static final String RESET_GAME() {
+		return "The game has been reset.";
 	}
 }

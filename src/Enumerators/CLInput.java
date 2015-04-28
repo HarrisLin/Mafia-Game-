@@ -26,6 +26,7 @@ public enum CLInput {
 			break;
 		case "forcenewday":
 			CLICommand = CLInput.NewDay;
+			break;
 		case "listplayer":
 			CLICommand = CLInput.ListPlayer;
 			break;

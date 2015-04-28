@@ -9,6 +9,12 @@ import GameEngine.GameEngine;
 import GameEngine.GameMessage;
 import Enumerators.CLInput;
 
+/**
+ * Server side of the communication
+ * 
+ * @author pacified
+ *
+ */
 public class Server extends Thread {
 	protected static boolean serverContinue;
 	protected Socket clientSocket;
@@ -50,6 +56,11 @@ public class Server extends Thread {
 		return;
 	}
 
+	/**
+	 * Start a new server thread
+	 * 
+	 * @param clientSoc
+	 */
 	private Server(Socket clientSoc) {
 		clientSocket = clientSoc;
 		start();
@@ -106,7 +117,14 @@ public class Server extends Thread {
 		}
 	}
 
-	private String processLine(String inputLine) {
+	/**
+	 * Processes the line and gives output/feedback
+	 * 
+	 * @param inputLine
+	 * @return 
+	 * @return output/feedback
+	 */
+	private synchronized String processLine(String inputLine) {
 		String[] inputArray = inputLine.split(" ");
 		String outputLine = "Something went wrong.";
 		if (inputArray.length < 2) {
@@ -225,22 +243,55 @@ public class Server extends Thread {
 		case ShowLastWill:
 			if (inputArray.length == 2) {
 				outputLine = GameEngine.getLastWill(inputArray[0]);
+			} else if (inputArray.length == 4) {
+				CLInput adminKey = CLInput.fromString(inputArray[2]);
+				if (adminKey.equals(CLInput.AdminKey)) {
+					outputLine = GameEngine.getLastWill(inputArray[3]);
+				} else {
+					outputLine = GameMessage.BAD_ADMIN_KEY();
+				}
 			} else {
 				outputLine = GameMessage.BAD_INPUT();
 			}
 			break;
 		case ShowRole:
+			if (inputArray.length == 2) {
+				outputLine = GameEngine.getRole(inputArray[0]);
+			} else if (inputArray.length == 4) {
+				CLInput adminKey = CLInput.fromString(inputArray[2]);
+				if (adminKey.equals(CLInput.AdminKey)) {
+					outputLine = GameEngine.getRole(inputArray[3]);
+				} else {
+					outputLine = GameMessage.BAD_ADMIN_KEY();
+				}
+			} else {
+				outputLine = GameMessage.BAD_INPUT();
+			}
 			break;
 		case ShowTarget:
 			if (inputArray.length == 2) {
 				outputLine = GameEngine.getTarget(inputArray[0]);
+			} else if (inputArray.length == 4) {
+				CLInput adminKey = CLInput.fromString(inputArray[2]);
+				if (adminKey.equals(CLInput.AdminKey)) {
+					outputLine = GameEngine.getTarget(inputArray[3]);
+				} else {
+					outputLine = GameMessage.BAD_ADMIN_KEY();
+				}
 			} else {
 				outputLine = GameMessage.BAD_INPUT();
 			}
 			break;
 		case ShowVote:
 			if (inputArray.length == 2) {
-				outputLine = "Not implemented yet. Try again later.";
+				outputLine = GameEngine.getVote(inputArray[0]);
+			} else if (inputArray.length == 4) {
+				CLInput adminKey = CLInput.fromString(inputArray[2]);
+				if (adminKey.equals(CLInput.AdminKey)) {
+					outputLine = GameEngine.getVote(inputArray[3]);
+				} else {
+					outputLine = GameMessage.BAD_ADMIN_KEY();
+				}
 			} else {
 				outputLine = GameMessage.BAD_INPUT();
 			}
@@ -248,10 +299,28 @@ public class Server extends Thread {
 		case StartGame:
 			if (inputArray.length >= 3) {
 				CLInput adminKey = CLInput.fromString(inputArray[2]);
-				if (adminKey.equals(CLInput.Admin)) {
-					outputLine = "Not yet implemented yet but yes he is.";
+				if (adminKey.equals(CLInput.AdminKey)) {
+					if (inputArray.length == 3) {
+						outputLine = GameEngine.start();
+					} else {
+						outputLine = "This option has not been implemented yet.";
+					}
 				} else {
-					outputLine = GameMessage.BAD_INPUT();
+					outputLine = GameMessage.BAD_ADMIN_KEY();
+				}
+			} else {
+				outputLine = GameMessage.BAD_INPUT();
+			}
+			break;
+		case Status:
+			if (inputArray.length == 2) {
+				return GameEngine.getStatus(1);
+			} else if (inputArray.length == 3) {
+				CLInput adminKey = CLInput.fromString(inputArray[2]);
+				if (adminKey.equals(CLInput.AdminKey)) {
+					outputLine = GameEngine.getStatus(2);
+				} else {
+					outputLine = GameMessage.BAD_ADMIN_KEY();
 				}
 			} else {
 				outputLine = GameMessage.BAD_INPUT();
@@ -260,7 +329,7 @@ public class Server extends Thread {
 		case Target:
 			if (inputArray.length == 3 || inputArray.length == 4) {
 				List<String> targetList = new ArrayList<String>();
-				for(int i = 2; i < inputArray.length; i++) {
+				for (int i = 2; i < inputArray.length; i++) {
 					targetList.add(inputArray[i]);
 				}
 				outputLine = GameEngine.setTarget(inputArray[0], targetList);
