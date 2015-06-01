@@ -1,24 +1,26 @@
 # Mafia
-
-Our mafia game repository
+Our mafia game repository.
 BASED OFF: http://sc2mafia.wikia.com/wiki/StarCraft_II_Mafia_Wiki
 
-## Code Process
+## Development
 
-Please commit all code on a separate branch and use a pull request to merge code in.
+### To clone a copy locally
+`$git clone repo`
+Please commit all code on a separate branch and use a pull request to merge code in. Must have one other dev member comment and QC your PR before merge occurs!
 
-># update master
->
->git checkout master
->
->git pull origin master
->
-># Create a new branch
->
->git branch newbranch
->
->git checkout newbranch
->
-># Push the new branch
->
->git push origin newbranch
+### Update master branch
+`$git checkout master`
+`$git pull origin master`
+
+### Create a new branch
+`$git branch newbranch`
+`$git checkout newbranch`
+
+### Push the new branch
+`$git add .`
+`$git commit -m "commit message"`
+`$git push origin newbranch`
+
+### Delete your branch
+`$git stash` if necessary
+`$git branch -D newbranch`
