@@ -1,11 +1,11 @@
 **04.06.2015**
 
 _CHANGES:_
-
-    - Add and updated .gitignore
-    - Guys use IntelliJ for development, Eclipse sucks
-    - UPDATE.txt -> CHANGELOG.md
-    - From now on non-administrative changes will be done only through PR-and-review before being passed into master
+ 
+ - Add and updated .gitignore
+ - Guys use IntelliJ for development, Eclipse sucks
+ - UPDATE.txt -> CHANGELOG.md
+ - From now on non-administrative changes will be done only through PR-and-review before being passed into master
     
 **Before 04.06.2015**
 
