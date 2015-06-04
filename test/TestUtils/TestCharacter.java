@@ -31,7 +31,7 @@ public class TestCharacter extends Character {
 
 	@Override
 	public boolean setTarget(List<Player> targets) {
-		return super.setTargets(targets);
+		return super.setTarget(targets);
 	}
 		
 	/**
@@ -51,9 +51,9 @@ public class TestCharacter extends Character {
 	 * @return true if target was added successfully, false otherwise
 	 */
 	public boolean addTarget(Player player) {
-		ArrayList<Player> new_targets = (ArrayList<Player>) getTargets();
+		ArrayList<Player> new_targets = (ArrayList<Player>) getTarget();
 		new_targets.add(player);
-		return super.setTargets(new_targets);
+		return super.setTarget(new_targets);
 	}
 	
 	@Override

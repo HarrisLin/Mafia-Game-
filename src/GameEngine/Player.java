@@ -1,6 +1,5 @@
 package GameEngine;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,27 +10,21 @@ import java.util.List;
  * will have to be first registered into the Player class's data map so that
  * their real-world name will be considered valid within the data type.
  */
+
+//------------------------------------------------------
+// PLEASE NOTE THAT THIS CLASS RELIES ON THE INSTANCE 'NAME' FOR OBJECT EQUALITY
+// INSTEAD OF USING THE OBJECT ITSELF FOR OBJECT EQUALITY. THAT MEANS THERE CAN
+// BE ANY INSTANCES OF THE OBJECT OF THE SAME PLAYER, BUT THEY WILL BE EQUAL IN
+// RESPECT WITH THE EQUALS METHOD. DO NOT ADD MORE PRIVATE METHODS OR INSTANCES
+// TO THIS CLASS.
+//-----------------------------------------------------
+
 public class Player {
 
 	// Class-wide validation map of human player names
 	static private final ArrayList<String> valid_names = new ArrayList<String>();
 
 	private final String name;
-	private int lynchVotes = 0;
-
-	/**
-	 * @return the lynchVotes
-	 */
-	public int getLynchVotes() {
-		return lynchVotes;
-	}
-
-	/**
-	 * @param lynchVotes the lynchVotes to set
-	 */
-	private void setLynchVotes(int lynchVotes) {
-		this.lynchVotes = lynchVotes;
-	}
 
 	/**
 	 * Player.get creates a new player of class player if player name is in list
@@ -51,20 +44,13 @@ public class Player {
 			throw new CannotGetPlayerException("Player is not a valid name");
 		}
 	}
-
-	/**
-	 * Clears all registered players
-	 */
-	protected static void clearAllPlayers() {
-		valid_names.clear();
-	}
 	
 	/**
 	 * Player.getAllPlayers
 	 * 
 	 * @return A list of all registered players
 	 */
-	public static List<Player> getAllPlayers() {
+	public static List<Player> listAllPlayers() {
 		List<Player> list = new ArrayList<Player>();
 		for (String name : valid_names) {
 			list.add(new Player(name));
@@ -88,7 +74,7 @@ public class Player {
 			return valid_names.add(name);
 		}
 	}
-
+	
 	/**
 	 * Player.remove Removes a human name from the list of valid player names.
 	 * This method is protected as we want players to be removed through the
@@ -108,13 +94,10 @@ public class Player {
 	}
 	
 	/**
-	 * Player.vote
-	 * 
-	 * @param targets
-	 *            The target(s) of the action
+	 * Clears all registered players
 	 */
-	public static void vote(Player target) {
-		target.setLynchVotes( target.getLynchVotes() + 1 );
+	protected static void removeAllPlayers() {
+		valid_names.clear();
 	}
 
 	/**

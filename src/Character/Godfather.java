@@ -1,8 +1,7 @@
 package Character;
 
-import java.util.List;
-
 import Enumerators.Roles;
+import GameEngine.CannotGetPlayerException;
 import GameEngine.Character;
 import GameEngine.GameEngine;
 import GameEngine.GameMessage;
@@ -26,27 +25,31 @@ public class Godfather extends Character {
 	 * @return returns true if target was successfully set, else false
 	 * @see GameEngine.Character#setTarget(java.util.List)
 	 */
-	@Override
-	public boolean setTarget(List<Player> targets) {
-		if (targets.size() != 1
-				|| !GameEngine.alive_player.containsAll(targets)) {
-			return false;
-		}
-		return setTargets(targets);
-	}
+
 	/**
 	 * Performs kill action on target list
+	 * @throws CannotGetPlayerException 
 	 * @see GameEngine.Character#doAction()
 	 */
 	@Override
-	public String doAction() {
-		List<Player> targets = getTargets();
-		if(targets.isEmpty()) {
-			return GameMessage.NO_ACTION;
+	public String doAction() throws CannotGetPlayerException {
+		if (getTarget().size() != 1) {
+			return GameMessage.NO_ACTION();
 		}
-		String message = "You've attempted to kill your target" + targets.get(0).getName();
-		GameEngine.getCharacter(targets.get(0)).addVisitor(getPlayer());
-		GameEngine.getCharacter(targets.get(0)).kill();	
-		return message;
+		
+		Player target = getTarget().get(0);
+		
+		if(!GameEngine.getCharacter(target).isAlive()) {
+			return GameMessage.TARGET_DEAD();
+		}
+		if (this.isRoleBlocked()) {
+			return GameMessage.NO_FEEDBACK();
+		}
+		
+		GameEngine.getCharacter(target).addVisitor(getPlayer());
+
+		GameEngine.getCharacter(target).kill();	
+		
+		return GameMessage.NO_FEEDBACK();
 	}
 }

@@ -1,8 +1,7 @@
 package Character;
 
-import java.util.List;
-
 import Enumerators.Roles;
+import GameEngine.CannotGetPlayerException;
 import GameEngine.Character;
 import GameEngine.GameEngine;
 import GameEngine.GameMessage;
@@ -25,30 +24,29 @@ public class Escort extends Character {
 		super(Roles.Escort, player);
 	}
 
-	@Override
-	public boolean setTarget(List<Player> targets) {
-		if (targets.size() != 1
-				|| !GameEngine.alive_player.containsAll(targets)) {
-			return false;
-		}
-		return setTargets(targets);
-	}
-
 	/**
 	 * Removes target's targets
+	 * @throws CannotGetPlayerException 
 	 */
 	@Override
-	public String doAction() {
-		List<Player> targets = getTargets();
-		if(targets.isEmpty()) {
-			return GameMessage.NO_ACTION;
+	public String doAction() throws CannotGetPlayerException {
+		if (getTarget().size() != 1) {
+			return GameMessage.NO_ACTION();
 		}
-		String message = "Thank you for performing your action you filthy whore.";
+		
+		Player target = getTarget().get(0);
+		
+		if(!GameEngine.getCharacter(target).isAlive()) {
+			return GameMessage.TARGET_DEAD();
+		}
 		if (this.isRoleBlocked()) {
-			return message;
+			return GameMessage.BLOCK_FEEDBACK();
 		}
-		GameEngine.getCharacter(targets.get(0)).addVisitor(getPlayer());
-		GameEngine.getCharacter(targets.get(0)).blockNightAction();
-		return message;
+		
+		GameEngine.getCharacter(target).addVisitor(getPlayer());
+
+		GameEngine.getCharacter(target).blockNightAction();
+		
+		return GameMessage.BLOCK_FEEDBACK();
 	}
 }

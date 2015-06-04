@@ -12,7 +12,7 @@ import GameEngine.CannotGetPlayerException;
 import GameEngine.GameEngine;
 import GameEngine.Player;
 
-public class LookoutTest {
+public class Lookout_Test {
 
 	Player player1;
 	Player player2;
@@ -22,16 +22,15 @@ public class LookoutTest {
 	String string1;
 	String string2;
 	String string3;
-	
+
 	String gameMessageResult;
 	List<Player> target;
 	List<Player> lookoutTarget;
 	List<Player> targets;
 	List<Player> visitors;
-	
-	
+
 	@Before
-	public void setup() {
+	public void setup() throws CannotGetPlayerException {
 		GameEngine.reset();
 		GameEngine.registerPlayer("Eleanor");
 		GameEngine.registerPlayer("Derek");
@@ -45,44 +44,53 @@ public class LookoutTest {
 		} catch (CannotGetPlayerException e) {
 			fail("Cannot make players");
 		}
-		
+
 		GameEngine.assignCharacter(player1, new Lookout(player1));
 		GameEngine.assignCharacter(player2, new Escort(player2));
 		GameEngine.assignCharacter(player3, new Detective(player3));
 		GameEngine.assignCharacter(player4, new Detective(player4));
-		
+
 		// Make Connie and Harris visit Derek
 		target = new ArrayList<Player>();
 		target.add(player2);
 		assertTrue(GameEngine.setTarget(player3, target));
-		assertTrue(GameEngine.setTarget(player4, target));  // Get Connie and Harris to Visit Derek
+		assertTrue(GameEngine.setTarget(player4, target)); // Get Connie and
+															// Harris to Visit
+															// Derek
 		string1 = GameEngine.getCharacter(player3).doAction();
 		string2 = GameEngine.getCharacter(player4).doAction();
 	}
-	
+
 	@Test
-	public void test_visited() {
+	public void test_visited() throws CannotGetPlayerException {
 		lookoutTarget = new ArrayList<Player>();
 		lookoutTarget.add(player2);
 		GameEngine.setTarget(player1, lookoutTarget);
-		
+
 		// Check Harris and Connie Visit Derek
-		assertTrue(GameEngine.getCharacter(player2).getVistors().contains(player3));
-		assertTrue(GameEngine.getCharacter(player2).getVistors().contains(player4));
-		
+		assertTrue(GameEngine.getCharacter(player2).getVistors()
+				.contains(player3));
+		assertTrue(GameEngine.getCharacter(player2).getVistors()
+				.contains(player4));
+
 		// Check Eleanor targets Derek
 		targets = new ArrayList<Player>();
-		targets.add(player1); targets.add(player2);
-		assertTrue(GameEngine.getCharacter(player1).getTargets().contains(player2));
+		targets.add(player1);
+		targets.add(player2);
+		assertTrue(GameEngine.getCharacter(player1).getTarget()
+				.contains(player2));
 	}
-	
+
 	@Test
-	public void test_lookout_action() {
+	public void test_lookout_action() throws CannotGetPlayerException {
 		lookoutTarget = new ArrayList<Player>();
 		lookoutTarget.add(player2);
-		assertTrue(GameEngine.setTarget(player1,lookoutTarget));
+		assertTrue(GameEngine.setTarget(player1, lookoutTarget));
 		gameMessageResult = GameEngine.getCharacter(player1).doAction();
-		String expectedMessageResult = "Your target was visited by " + player3.getName() + "," + player4.getName() + ",";
+		String expectedMessageResult = "Your target was visited by "
+				+ player3.getName() + ", " + player4.getName() + ", "
+				+ player1
+				.getName() + ".";
 		assertEquals(gameMessageResult, expectedMessageResult);
 	}
 }

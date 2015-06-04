@@ -34,7 +34,7 @@ public class DatabaseManager_PrivateMethods_Test {
 	@Test
 	public void test_concatenateTargets_singleTarget() {
 		GameEngine.registerPlayer("Derek");
-		assertEquals("Derek", TestDatabaseManager.testConcatenateTargets(Player.getAllPlayers()));
+		assertEquals("Derek", TestDatabaseManager.testConcatenateTargets(Player.listAllPlayers()));
 	}
 
 	@Test
@@ -42,7 +42,7 @@ public class DatabaseManager_PrivateMethods_Test {
 		GameEngine.registerPlayer("Derek");
 		GameEngine.registerPlayer("Harris");
 		GameEngine.registerPlayer("Andy");
-		assertEquals("Derek##Harris##Andy", TestDatabaseManager.testConcatenateTargets(Player.getAllPlayers()));
+		assertEquals("Derek##Harris##Andy", TestDatabaseManager.testConcatenateTargets(Player.listAllPlayers()));
 	}
 
 	@Test
@@ -77,7 +77,7 @@ public class DatabaseManager_PrivateMethods_Test {
 		character.setTarget(Player.get("Harris"));
 		character.addTarget(Player.get("Connie"));
 		character.addTarget(Player.get("Eleanor"));
-		assertEquals(3, character.getTargets().size());
+		assertEquals(3, character.getTarget().size());
 		GameEngine.assignCharacter(Player.get("Derek"), character);
 		assertEquals("INSERT OR REPLACE INTO DATA (NAME,ROLE,SIDE,ALIVE,TARGETS,LYNCH_TARGET,LAST_WILL,DOUSED,ROLE_INFO) " +
 				"VALUES ('Derek', 'Detective', 'Town', '1', 'Harris##Connie##Eleanor', 'NULL', 'No last will.', '0', '');",

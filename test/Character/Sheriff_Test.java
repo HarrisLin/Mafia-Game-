@@ -72,7 +72,7 @@ public class Sheriff_Test {
 	}
 
 	@Test
-	public void test_visited1() {
+	public void test_visited1() throws CannotGetPlayerException {
 		// make Derek target Harris
 		target = new ArrayList<Player>();
 		target.add(player3);
@@ -95,7 +95,7 @@ public class Sheriff_Test {
 	}
 
 	@Test
-	public void test_visited2() {
+	public void test_visited2() throws CannotGetPlayerException {
 		// make Derek target Harris
 		target = new ArrayList<Player>();
 		target.add(player3);
@@ -114,7 +114,7 @@ public class Sheriff_Test {
 	}
 
 	@Test
-	public void test_detect_mafia_on() {
+	public void test_detect_mafia_on() throws CannotGetPlayerException {
 		// make Derek target Harris
 		target = new ArrayList<Player>();
 		target.add(player3);
@@ -125,7 +125,7 @@ public class Sheriff_Test {
 	}
 
 	@Test
-	public void test_detect_mafia_off() {
+	public void test_detect_mafia_off() throws CannotGetPlayerException {
 		// make Connie target Harris
 		target = new ArrayList<Player>();
 		target.add(player3);
@@ -136,7 +136,7 @@ public class Sheriff_Test {
 	}
 
 	@Test
-	public void test_detect_arsonist_on() {
+	public void test_detect_arsonist_on() throws CannotGetPlayerException {
 		// make Connie target Andy
 		target = new ArrayList<Player>();
 		target.add(player4);
@@ -147,7 +147,7 @@ public class Sheriff_Test {
 	}
 
 	@Test
-	public void test_detect_arsonist_off() {
+	public void test_detect_arsonist_off() throws CannotGetPlayerException {
 		// make Derek target Andy
 		target = new ArrayList<Player>();
 		target.add(player4);
@@ -158,7 +158,7 @@ public class Sheriff_Test {
 	}
 
 	@Test
-	public void test_detect_cultist_on() {
+	public void test_detect_cultist_on() throws CannotGetPlayerException {
 		// make Connie target Don
 		target = new ArrayList<Player>();
 		target.add(player6);
@@ -169,7 +169,7 @@ public class Sheriff_Test {
 	}
 
 	@Test
-	public void test_detect_cultist_off() {
+	public void test_detect_cultist_off() throws CannotGetPlayerException {
 		// make Derek target Don
 		target = new ArrayList<Player>();
 		target.add(player6);
@@ -180,7 +180,7 @@ public class Sheriff_Test {
 	}
 
 	@Test
-	public void test_detect_massmurderer_on() {
+	public void test_detect_massmurderer_on() throws CannotGetPlayerException {
 		// make Connie target Kaibo
 		target = new ArrayList<Player>();
 		target.add(player5);
@@ -191,7 +191,7 @@ public class Sheriff_Test {
 	}
 
 	@Test
-	public void test_detect_massmurderer_off() {
+	public void test_detect_massmurderer_off() throws CannotGetPlayerException {
 		// make Derek target Kaibo
 		target = new ArrayList<Player>();
 		target.add(player5);
@@ -202,7 +202,7 @@ public class Sheriff_Test {
 	}
 
 	@Test
-	public void test_detect_town1() {
+	public void test_detect_town1() throws CannotGetPlayerException {
 		// make Derek target Nathan
 		target = new ArrayList<Player>();
 		target.add(player7);
@@ -213,7 +213,7 @@ public class Sheriff_Test {
 	}
 
 	@Test
-	public void test_detect_town2() {
+	public void test_detect_town2() throws CannotGetPlayerException {
 		// make Connie target Nathan
 		target = new ArrayList<Player>();
 		target.add(player7);

@@ -6,9 +6,9 @@ import java.util.List;
  * A class to store all the game messages the game need to display so instead of
  * having to search everywhere for what the game needs to display, it uses this
  * as a median to maintain easy organized strings/messages to display to user.
- * 
+ *
  * Also makes changing string messages easier.
- * 
+ *
  * @author pacified
  *
  */
@@ -24,7 +24,7 @@ public class GameMessage {
 	public static final String NO_RESULT = "Cannot get your results.";
 	public static final String NO_KILL = "Nobody was killed.";
 	public static final String ROLE_BLOCKED = "You were unable to perform your action.";
-	
+
 	public static final String KILL_ATTEMPT(Player player) {
 		return "You have attempted to kill " + player.getName() +".";
 	}

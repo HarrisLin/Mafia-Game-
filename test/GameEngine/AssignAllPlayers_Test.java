@@ -1,4 +1,4 @@
-package Character;
+package GameEngine;
 
 import static org.junit.Assert.*;
 
@@ -8,23 +8,18 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import GameEngine.CannotGetPlayerException;
-import GameEngine.GameEngine;
-import GameEngine.Player;
-import GameEngine.Character;
-
-public class Detective_Test {
-
+public class AssignAllPlayers_Test {
+	
 	List<Player> playerList;
 	List<String> nameList;
 	List<Player> actionTarget;
 	List<Player> lynchTarget;
 	List<Character> allCharacters;
 	Character character;
-
+	
 	@Before
 	public void setup() {
-
+		
 		GameEngine.reset();
 
 		nameList = new ArrayList<String>();
@@ -50,7 +45,27 @@ public class Detective_Test {
 		nameList.add("Kevin");
 		nameList.add("Marc");
 		nameList.add("Jordan");
-
+		//nameList.add("Samuel");
+		//nameList.add("Jasmin");
+		//nameList.add("Will");
+		//nameList.add("Barry");
+		//nameList.add("Jacqueline");
+		//nameList.add("Johnny");
+		//nameList.add("Reanne");
+		//nameList.add("Ray");
+		//nameList.add("Lucy");
+		//nameList.add("Eddie");
+		//nameList.add("Amber");
+		//nameList.add("Mario");
+		//nameList.add("Adam");
+		//nameList.add("Jessica");
+		//nameList.add("Emmitt");
+		//nameList.add("Shelby");
+		//nameList.add("Kayla");
+		//nameList.add("Catherine");
+		//nameList.add("Jay");
+		//nameList.add("Chris");
+		
 		try {
 			for (String name : nameList) {
 				GameEngine.registerPlayer(name);
@@ -59,49 +74,21 @@ public class Detective_Test {
 		} catch (CannotGetPlayerException e) {
 			fail("Cannot make players");
 		}
-
+		
 		GameEngine.assignAllCharacters(0);
-
+		
 		allCharacters = GameEngine.getAllCharacters();
 	}
 
 	@Test
-	public void test_detective_action_1() {
+	public void test() {
+
+		GameEngine.getAlivePlayer();
+		for(Character character : GameEngine.getAlivePlayer()) {
+			System.out.println(character.getPlayer().getName() + ": " + character.getRoleString());
+		}
 		
-		for (Character search : allCharacters) {
-			if (search.getRoleString().equals("Detective")) {
-				character = search;
-				break;
-			}
-		}
-		actionTarget = new ArrayList<Player>();
-		actionTarget.add(playerList.get(5));
-		assertTrue(GameEngine.setTarget(character.getPlayer(), actionTarget));
-		try {
-			System.out.println(character.doAction());
-		} catch (CannotGetPlayerException e) {
-			fail("cannot find target");
-		}
-	}
-	
-	@Test
-	public void test_detective_action_2() {
-		
-		for (Character search : allCharacters) {
-			if (search.getRoleString().equals("Detective")) {
-				character = search;
-				break;
-			}
-		}
-		actionTarget = new ArrayList<Player>();
-		actionTarget.add(playerList.get(5));
-		assertTrue(GameEngine.setTarget(character.getPlayer(), actionTarget));
-		assertTrue(GameEngine.setTarget(playerList.get(5), actionTarget));		
-		try {
-			System.out.println(character.doAction());
-		} catch (CannotGetPlayerException e) {
-			fail("cannot find target");
-		}
+		assertEquals(allCharacters.size(), 20);
 	}
 
 }

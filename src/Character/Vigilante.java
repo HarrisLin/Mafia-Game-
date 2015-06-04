@@ -1,9 +1,10 @@
 package Character;
-import java.util.List;
 
 import Enumerators.Roles;
+import GameEngine.CannotGetPlayerException;
 import GameEngine.Character;
 import GameEngine.GameEngine;
+import GameEngine.GameMessage;
 import GameEngine.Player;
 
 public class Vigilante extends Character {
@@ -12,28 +13,35 @@ public class Vigilante extends Character {
 	
 	public Vigilante(Player player) {
 		super(Roles.Vigilante, player);
-		shots = 2;
+		shots = 3;
 	}
 
 	@Override
-	public boolean setTarget(List<Player> targets) {
-		if (targets.size() != 1
-				|| !GameEngine.alive_player.containsAll(targets)) {
-			return false;
+	public String doAction() throws CannotGetPlayerException {
+		if (getTarget().size() != 1) {
+			return GameMessage.NO_ACTION();
 		}
-		return setTargets(targets);
-	}
-
-	@Override
-	public String doAction() {
-		String message = "You have " + shots + " left.";
-		if(shots == 0) {
-			return "You have used all your shots";
+		
+		Player target = getTarget().get(0);
+		
+		if(!GameEngine.getCharacter(target).isAlive()) {
+			return GameMessage.TARGET_DEAD();
 		}
+		
 		if(this.isRoleBlocked()) {
-			return message;
+			shots--;
+			return GameMessage.VIGILANTE_FEEDBACK(shots);
 		}
-		// TODO Auto-generated method stub
-		return message;
+		
+		if(shots <= 0) {
+			return GameMessage.VIGILANTE_FEEDBACK(shots);
+		}
+		GameEngine.getCharacter(target).addVisitor(getPlayer());
+
+		GameEngine.getCharacter(target).kill();	
+		
+		shots--;
+		
+		return GameMessage.VIGILANTE_FEEDBACK(shots);
 	}
 }

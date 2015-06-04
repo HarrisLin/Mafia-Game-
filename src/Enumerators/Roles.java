@@ -41,14 +41,17 @@ public enum Roles {
 
 	/**
 	 * Constructor
-	 * @param side : Side of the character
-	 * @param role : Role as a string
+	 * 
+	 * @param side
+	 *            : Side of the character
+	 * @param role
+	 *            : Role as a string
 	 */
 	Roles(Sides side, String role) {
 		this.side = side;
 		this.role = role;
 	}
-	
+
 	/**
 	 * 
 	 * @return the side of the character
@@ -56,11 +59,27 @@ public enum Roles {
 	public Sides getSide() {
 		return side;
 	}
-	
+
 	/**
 	 * Returns role as a string
 	 */
 	public String toString() {
 		return role;
+	}
+
+	/**
+	 * Get the role from string
+	 * @param text
+	 * @return role
+	 */
+	public static Roles fromString(String string) {
+		if (string != null) {
+			for (Roles role : Roles.values()) {
+				if (string.equalsIgnoreCase(role.role)) {
+					return role;
+				}
+			}
+		}
+		return null;
 	}
 }

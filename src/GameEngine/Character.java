@@ -34,9 +34,11 @@ public abstract class Character {
 	// of the character that night (be sure to clear this every night)
 	private List<Player> visitors;
 	// Lists of target the player has chosen to perform night actions
-	private List<Player> targets;
+	protected List<Player> actionTarget;
 	// Target the player has chosen to vote for lynch
-	private Player lynchTarget;
+	protected List<Player> lynchTarget;
+	// Vote count on this character
+	private int lynchCount;
 	// Last Will must be written before night
 	private String lastWill;
 	// *********************************************************
@@ -67,11 +69,13 @@ public abstract class Character {
 	protected Character(Roles role, Player player) {
 		this.role = role;
 		this.player = player;
-		alive = true;
 		invulnerable = false;
 		blockImmune = false;
-		targets = new ArrayList<Player>();
+		alive = true;
 		visitors = new ArrayList<Player>();
+		actionTarget = new ArrayList<Player>();
+		lynchTarget = new ArrayList<Player>();
+		lynchCount = 0;
 		lastWill = "No last will.";
 		doused = false;
 		investigation = Investigations.doInvestigation(role);
@@ -90,11 +94,13 @@ public abstract class Character {
 	protected Character(Roles role, Player player, boolean invulnerable) {
 		this.role = role;
 		this.player = player;
-		alive = true;
 		this.invulnerable = invulnerable;
 		blockImmune = false;
-		targets = new ArrayList<Player>();
+		alive = true;
 		visitors = new ArrayList<Player>();
+		actionTarget = new ArrayList<Player>();
+		lynchTarget = new ArrayList<Player>();
+		lynchCount = 0;
 		lastWill = "No last will.";
 		doused = false;
 		investigation = Investigations.doInvestigation(role);
@@ -116,18 +122,20 @@ public abstract class Character {
 			boolean blockImmune) {
 		this.role = role;
 		this.player = player;
-		alive = true;
 		this.invulnerable = invulnerable;
 		this.blockImmune = blockImmune;
-		targets = new ArrayList<Player>();
+		alive = true;
 		visitors = new ArrayList<Player>();
+		actionTarget = new ArrayList<Player>();
+		lynchTarget = new ArrayList<Player>();
+		lynchCount = 0;
 		lastWill = "No last will.";
 		doused = false;
 		investigation = Investigations.doInvestigation(role);
 		roleBlocked = false;
 		healed = false;
 	}
-	
+
 	// ***************************************************************
 	// find new day
 	// METHOD THAT RESETS THE VALUES OF THIS CHARACTER FOR A NEW DAY
@@ -141,8 +149,9 @@ public abstract class Character {
 	public String newDay() {
 		String data = "No data";
 		visitors.clear();
-		targets.clear();
-		lynchTarget = null;
+		actionTarget.clear();
+		lynchTarget.clear();
+		lynchCount = 0;
 		roleBlocked = false;
 		healed = false;
 		return data;
@@ -163,8 +172,17 @@ public abstract class Character {
 	/**
 	 * @return the roll of the character
 	 */
-	public Roles getCharacterRole() {
+	public Roles getRole() {
 		return role;
+	}
+
+	/**
+	 * Returns the affiliation of the character
+	 * 
+	 * @return Sides.Town, Sides.Triad, Sides.Neutral, or Sides.Mafia
+	 */
+	public Enumerators.Sides getSide() {
+		return role.getSide();
 	}
 
 	// *************************************
@@ -178,25 +196,51 @@ public abstract class Character {
 		return player;
 	}
 
-	//************************************
+	// ************************************
 	// find target
 	// METHODS THAT HAVE TO DO WITH TARGET
 	// ***********************************
 	/**
 	 * Set targets
+	 * 
 	 * @param targets
 	 * @return TRUE
 	 */
-	protected boolean setTargets(List<Player> targets) {
-		this.targets = new ArrayList<Player>(targets);
+	public boolean setTarget(List<Player> target) {
+		if (target.size() != 1) {
+			return false;
+		}
+		try {
+			if (!GameEngine.getCharacter(target.get(0)).isAlive()) {
+				return false;
+			}
+		} catch (CannotGetPlayerException e) {
+			System.out.println(GameMessage.NO_CHARACTER(target.get(0)));
+			return false;
+		}
+		actionTarget = new ArrayList<Player>(target);
 		return true;
 	}
-	
+
+	public boolean setTarget(Player target) {
+		try {
+			if (!GameEngine.getCharacter(target).isAlive()) {
+				return false;
+			}
+		} catch (CannotGetPlayerException e) {
+			System.out.println(GameMessage.NO_CHARACTER(target));
+			return false;
+		}
+		actionTarget = new ArrayList<Player>();
+		actionTarget.add(target);
+		return true;
+	}
+
 	/**
 	 * @return list of night action targets of the player
 	 */
-	public List<Player> getTargets() {
-		return new ArrayList<Player>(targets);
+	public List<Player> getTarget() {
+		return new ArrayList<Player>(actionTarget);
 	}
 
 	// ********************************************************
@@ -209,11 +253,12 @@ public abstract class Character {
 	 */
 	public boolean kill() {
 		if (!invulnerable && !healed && alive) {
-			GameEngine.killPlayer(getPlayer());
+			GameEngine.killCharacter(this);
 			alive = false;
 			return true;
+		} else {
+			return false;
 		}
-		return false;
 	}
 
 	/**
@@ -221,7 +266,7 @@ public abstract class Character {
 	 * 
 	 * @return true if alive, false if dead
 	 */
-	public boolean checkAlive() {
+	public boolean isAlive() {
 		return alive;
 	}
 
@@ -244,8 +289,16 @@ public abstract class Character {
 	 * @return TRUE
 	 */
 	public boolean addVisitor(Player player) {
-		visitors.add(player);
-		return true;
+		try {
+			if (GameEngine.getCharacter(player).isAlive()) {
+				visitors.add(player);
+				return true;
+			} else {
+				return false;
+			}
+		} catch (CannotGetPlayerException e) {
+			return false;
+		}
 	}
 
 	// *************************************
@@ -257,20 +310,87 @@ public abstract class Character {
 	 * @param lynches
 	 * @return TRUE if lynch target selected successfully or FALSE if not
 	 */
-	public boolean vote(Player lynchVote) {
-		if (GameEngine.getCharacter(lynchVote).checkAlive()) {
-			lynchTarget = lynchVote;
-			return true;
+	public boolean vote(List<Player> lynchVote) {
+		if (lynchVote.size() != 1) {
+			return false;
 		}
-		return false;
+		try {
+			if (GameEngine.getCharacter(lynchVote.get(0)).isAlive()) {
+				if (lynchTarget.get(0) == null) {
+					lynchTarget = lynchVote;
+					GameEngine.getCharacter(lynchTarget.get(0)).addLynchCount();
+					return true;
+				} else {
+					GameEngine.getCharacter(lynchTarget.get(0)).subLynchCount();
+					lynchTarget = lynchVote;
+					GameEngine.getCharacter(lynchTarget.get(0)).addLynchCount();
+					return true;
+				}
+			} else {
+				return false;
+			}
+		} catch (CannotGetPlayerException e) {
+			return false;
+		}
+	}
+
+	public boolean vote(Player lynchVote) {
+		try {
+			if (GameEngine.getCharacter(lynchVote).isAlive()) {
+				if (lynchTarget.get(0) == null) {
+					lynchTarget = new ArrayList<Player>();
+					lynchTarget.add(lynchVote);
+					GameEngine.getCharacter(lynchTarget.get(0)).addLynchCount();
+					return true;
+				} else {
+					GameEngine.getCharacter(lynchTarget.get(0)).subLynchCount();
+					lynchTarget = new ArrayList<Player>();
+					lynchTarget.add(lynchVote);
+					GameEngine.getCharacter(lynchTarget.get(0)).addLynchCount();
+					return true;
+				}
+			} else {
+				return false;
+			}
+		} catch (CannotGetPlayerException e) {
+			return false;
+		}
+	}
+
+	/**
+	 * Lynch target for kill
+	 */
+	public boolean lynch() {
+		alive = false;
+		GameEngine.killCharacter(this);
+		return true;
 	}
 
 	/**
 	 * 
 	 * @return target player of which this character wishes to lynch
 	 */
-	public Player getLynchTarget() {
+	public List<Player> getLynchTarget() {
 		return lynchTarget;
+	}
+
+	/**
+	 * @return how many people voted this character/player for lynch
+	 */
+	public int getLynchCount() {
+		return lynchCount;
+	}
+
+	public int addLynchCount() {
+		return lynchCount++;
+	}
+
+	public int subLynchCount() {
+		if (lynchCount > 0) {
+			return lynchCount--;
+		} else {
+			return lynchCount;
+		}
 	}
 
 	// ***********************************************
@@ -284,8 +404,12 @@ public abstract class Character {
 	 * @return TRUE
 	 */
 	public boolean updateLastWill(String lastWill) {
-		this.lastWill = lastWill;
-		return true;
+		if (alive) {
+			this.lastWill = lastWill;
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -328,7 +452,11 @@ public abstract class Character {
 	 * @return TRUE
 	 */
 	public boolean douse() {
-		return doused = true;
+		if (alive) {
+			return doused = true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -349,17 +477,18 @@ public abstract class Character {
 	 * @return TRUE if character is successfully blocked and FALSE if not
 	 */
 	public boolean blockNightAction() {
-		if (blockImmune) {
+		if (alive && !blockImmune) {
+			return roleBlocked = true;
+		} else {
 			return false;
 		}
-		return roleBlocked = true;
 	}
 
 	/**
 	 * 
 	 * @return TRUE if character is role blocked or FALSE if character is not
 	 */
-	protected boolean isRoleBlocked() {
+	public boolean isRoleBlocked() {
 		return roleBlocked;
 	}
 
@@ -374,98 +503,91 @@ public abstract class Character {
 	 * @return TRUE
 	 */
 	public boolean healPlayer() {
-		return healed = true;
+		if (alive) {
+			return healed = true;
+		} else {
+			return false;
+		}
+	}
+
+	public boolean isHealed() {
+		return healed;
 	}
 
 	// *******************************
-	// find abstract
-	// THE FOLLOW ARE ABSTRACT CLASSES
+	// find database
+	// THE FOLLOW ARE METHODS FOR THE DATABASE
 	// *******************************
 	/**
-	 * 
-	 * @param targets
-	 * @return TRUE if targets are set and FALSE it not
-	 */
-	public abstract boolean setTarget(List<Player> targets);
-
-	/**
-	 * Consider role block and visiting
-	 * 
-	 * @return String reported to player
-	 */
-	public abstract String doAction();
-	
-	/**
-	 * Returns the affiliation of the character
-	 * 
-	 * @return Sides.Town, Sides.Triad, Sides.Neutral, or Sides.Mafia
-	 */
-	public Enumerators.Sides getSide() {
-		return role.getSide();
-	}
-
-	/**
-	 * @return the role of the character
-	 */
-	protected Enumerators.Roles getRole() {
-		return role;
-	}
-
-	/**
-	 * Returns a string separated by "##" that contains all
-	 * character role-specific information that needs to be
-	 * saved in a database.
+	 * Returns a string separated by "##" that contains all character
+	 * role-specific information that needs to be saved in a database.
 	 *
-	 * THIS MUST BE OVERRIDDEN FOR CHARACTERS THAT NEED TO SAVE ROLE-SPECIFIC VALUES.
+	 * THIS MUST BE OVERRIDDEN FOR CHARACTERS THAT NEED TO SAVE ROLE-SPECIFIC
+	 * VALUES.
 	 *
-	 * For example, if we needed to store these values for Veteran
-	 * - Game Option (String): TWO_SHOTS_PER_GAME
-	 * - Number of shots remaining (int): 2
-	 * It would be stored as
-	 * "TWO_SHOTS_PER_GAME##2"
-	 * @return A string with data fields separated by "##" to be
-	 * inserted into the database
+	 * For example, if we needed to store these values for Veteran - Game Option
+	 * (String): TWO_SHOTS_PER_GAME - Number of shots remaining (int): 2 It
+	 * would be stored as "TWO_SHOTS_PER_GAME##2"
+	 * 
+	 * @return A string with data fields separated by "##" to be inserted into
+	 *         the database
 	 */
 	protected String getDatabaseRoleInfoString() {
 		return "";
 	}
 
 	/**
-	 * Imports character role-specific information that needs to be saved
-	 * in a database.
+	 * Imports character role-specific information that needs to be saved in a
+	 * database.
 	 *
-	 * THIS MUST BE OVERRIDDEN FOR CHARACTERS THAT NEED TO SAVE ROLE-SPECIFIC VALUES.
+	 * THIS MUST BE OVERRIDDEN FOR CHARACTERS THAT NEED TO SAVE ROLE-SPECIFIC
+	 * VALUES.
 	 *
-	 * For example, if we had this string from Veteran
-	 * "TWO_SHOTS_PER_GAME##2"
-	 * We would parse the string and set the following values:
-	 * - Game Option (enum): TWO_SHOTS_PER_GAME
-	 * - Number of shots remaining (int): 2
-	 * @param role_info The data retrieved from the database, with each field separated by "##".
+	 * For example, if we had this string from Veteran "TWO_SHOTS_PER_GAME##2"
+	 * We would parse the string and set the following values: - Game Option
+	 * (enum): TWO_SHOTS_PER_GAME - Number of shots remaining (int): 2
+	 * 
+	 * @param role_info
+	 *            The data retrieved from the database, with each field
+	 *            separated by "##".
 	 * @return true if successful, false otherwise
 	 */
 	protected boolean importDatabaseRoleInfo(String role_info) {
 		return true;
 	}
-	
+
+	// *******************************
+	// find abstract
+	// THE FOLLOW ARE ABSTRACT METHODS
+	// *******************************
+
+	/**
+	 * Consider role block and visiting
+	 * 
+	 * @return String reported to player
+	 */
+	public abstract String doAction() throws CannotGetPlayerException;
+
+	// *******************************
+	// find equals
+	// THE FOLLOW ARE THE EQUAL AND HASH METHODS
+	// *******************************
 	@Override
 	public boolean equals(Object o) {
 		if (o instanceof Character == false) {
 			return false;
 		}
-		Character other = (Character)o;
-		if ((this.role == other.role) &&
-			(this.player == other.player) &&
-			(this.alive == other.alive) &&
-			(this.doused == other.doused) &&
-			(this.blockImmune == other.blockImmune) &&
-			(this.healed == other.healed) &&
-			(this.invulnerable == other.invulnerable) &&
-			(this.roleBlocked == other.roleBlocked) &&
-			(this.lastWill == other.lastWill) &&
-			(this.lynchTarget == other.lynchTarget) &&
-			(this.targets == other.targets) &&
-			(this.visitors == other.visitors)) {
+		Character other = (Character) o;
+		if ((this.role == other.role) && (this.player == other.player)
+				&& (this.alive == other.alive) && (this.doused == other.doused)
+				&& (this.blockImmune == other.blockImmune)
+				&& (this.healed == other.healed)
+				&& (this.invulnerable == other.invulnerable)
+				&& (this.roleBlocked == other.roleBlocked)
+				&& (this.lastWill == other.lastWill)
+				&& (this.lynchTarget == other.lynchTarget)
+				&& (this.actionTarget == other.actionTarget)
+				&& (this.visitors == other.visitors)) {
 			return true;
 		} else {
 			return false;

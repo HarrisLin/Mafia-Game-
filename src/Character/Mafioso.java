@@ -9,7 +9,7 @@ import GameEngine.GameMessage;
 import GameEngine.Player;
 
 public class Mafioso extends Character {
-	
+
 	private static final int MAFIOSO_MAX_NUM_TARGETS = 1;
 
 	public Mafioso(Player player) {
@@ -36,11 +36,11 @@ public class Mafioso extends Character {
 		if (getTargets().isEmpty()) {
 			return GameMessage.NO_ACTION;
 		}
-		
+
 		if (isRoleBlocked()) {
 			return GameMessage.ROLE_BLOCKED;
 		}
-		
+
 		Player victim = getTargets().get(0);
 		GameEngine.getCharacter(victim).kill();
 		return GameMessage.KILL_ATTEMPT(victim);
