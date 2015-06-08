@@ -30,7 +30,7 @@ public class GameMessage {
 	}
 
 	public static final String INVESTIGATION_EXACT(String name) {
-		return "The result of your investigation yeilded a role of " + name
+		return "The result of your investigation yielded a role of " + name
 				+ ".";
 	}
 
