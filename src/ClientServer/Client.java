@@ -35,12 +35,28 @@ public class Client {
 
 		BufferedReader stdIn = new BufferedReader(new InputStreamReader(
 				System.in));
+
 		String userInput;
+		String line;
+		StringBuilder serverOutput;
 
 		System.out.print("input: ");
 		while ((userInput = stdIn.readLine()) != null) {
 			out.println(userInput);
-			System.out.println("reply: " + in.readLine());
+
+			serverOutput = new StringBuilder();
+			line = in.readLine();
+			serverOutput.append(line);
+			while ((line = in.readLine()) != null) {
+				if (line.equals("break")) {
+					break;
+				} else {
+					serverOutput.append("\n");
+				}
+				serverOutput.append(line);
+			}
+
+			System.out.println("reply: " + serverOutput.toString());
 			System.out.print("input: ");
 		}
 
