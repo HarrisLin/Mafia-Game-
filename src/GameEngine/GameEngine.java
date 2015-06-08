@@ -422,12 +422,21 @@ public class GameEngine {
 	 * action
 	 * 
 	 * @return summary of all the deaths, last wills, etc.
+	 * @throws CannotGetPlayerException 
 	 */
 	public static String performNightActions() {
-		// If we sort the list when the game starts then we probably won't need
-		// to do this search crazy method
-		
-		return null;
+		for(Character character : getAliveCharacter()) {
+			try {
+				character.doAction();
+			} catch (CannotGetPlayerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		for(Character character : getAliveCharacter()) {
+			
+		}
+		return "done";
 	}
 
 	 * GameEngine.getCharacter
