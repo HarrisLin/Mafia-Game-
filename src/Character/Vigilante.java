@@ -1,47 +1,42 @@
 package Character;
 
-import Enumerators.Roles;
-import GameEngine.CannotGetPlayerException;
-import GameEngine.Character;
-import GameEngine.GameEngine;
-import GameEngine.GameMessage;
-import GameEngine.Player;
+import java.util.List;
+
+import Character.CharacterFactory.Roles;
+import GameEngine.GameRegistration.Player;
+import Resources.GameMessage;
 
 public class Vigilante extends Character {
-	
+
 	private int shots;
-	
-	public Vigilante(Player player) {
+
+	protected Vigilante(Player player) {
 		super(Roles.Vigilante, player);
 		shots = 3;
 	}
 
-	@Override
-	public String doAction() throws CannotGetPlayerException {
-		if (getTarget().size() != 1) {
-			return GameMessage.NO_ACTION;
-		}
-		
-		Player target = getTarget().get(0);
-		
-		if(!GameEngine.getCharacter(target).isAlive()) {
-			return GameMessage.TARGET_DEAD;
-		}
-		
-		if(this.isRoleBlocked()) {
+	public String performAction(List<Player> alive_player, Character target) {
+		if (this.character_status.isBlocked()) {
 			shots--;
-			return GameMessage.VIGILANTE_FEEDBACK(shots);
+			return GameMessage.Character.BLOCKED(this.player)
+					+ GameMessage.Character.SHOTS_LEFT(shots);
 		}
-		
-		if(shots <= 0) {
-			return GameMessage.VIGILANTE_FEEDBACK(shots);
+		if (shots <= 0) {
+			return GameMessage.Character.SHOTS_LEFT(shots);
 		}
-		GameEngine.getCharacter(target).addVisitor(getPlayer());
-
-		GameEngine.getCharacter(target).kill();	
-		
+		target.character_status.getVisitors().add(player);
 		shots--;
-		
-		return GameMessage.VIGILANTE_FEEDBACK(shots);
+		if (!target.character_status.isHealed()) {
+			alive_player.remove(target.player);
+			return GameMessage.Character.VIGILANTE_SUCCESS(shots);
+		} else {
+			return GameMessage.Character.VIGILANTE_FAIL(shots);
+		}
+	}
+
+	@Override
+	public String performAction(Character target) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
