@@ -101,7 +101,22 @@ public class GameMessage {
 		public static String NEWGAME_INGAME() {
 			// TODO Auto-generated method stub
 			return null;
+		}		
+	}
+	/**
+	 * 
+	 */
+	public static class Lastwill {
+		//No message yet
+		public static String NO_MESSAGE_YET() {
+			// TODO Auto-generated method stub
+			return null;
 		}
-		
+
+		//Successfully updated last will
+		public static String UPDATE_SUCCESS() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	}
 }

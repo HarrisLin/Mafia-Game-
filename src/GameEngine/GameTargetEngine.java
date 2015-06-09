@@ -19,7 +19,12 @@ public class GameTargetEngine {
 		return true;
 	}
 	
-	protected static String setTarget(String player) {
+	protected static String setTarget(Player player, Player target) {
+		return null;
+	}
+
+	protected static String setTarget(Player player, Player target1, Player target2) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }

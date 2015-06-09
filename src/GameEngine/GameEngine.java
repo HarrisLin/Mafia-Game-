@@ -87,6 +87,7 @@ public class GameEngine {
 			if(!in_game) {
 				in_game = true;
 				GameTargetEngine.setupTargetMap(new ArrayList<Player>(player_character_map.keySet()));
+				GameVoteEngine.setupVoteMap(new ArrayList<Player>(player_character_map.keySet()));
 			}
 			return message;
 		}
@@ -152,23 +153,23 @@ public class GameEngine {
 	 * Character inputs for performing actions in the game
 	 */
 	public static class Inputs {
-		public static String updateLastWill(String player, String lastwill) {
+		public static String updateLastWill(Player player, String lastwill) {
 			return null;
 		}
 
-		public static String setVote(String player, String target) {
-			return null;
+		public static String setVote(Player player, Player target) {
+			return GameVoteEngine.setVote(player, target);
 		}
 
-		public static String setTarget(String player, String target) {
-			return null;
+		public static String setTarget(Player player, Player target) {
+			return GameTargetEngine.setTarget(player, target);
 		}
 
-		public static String setTarget(String player, String target1, String target2) {
-			return null;
+		public static String setTarget(Player player, Player target1, Player target2) {
+			return GameTargetEngine.setTarget(player, target1, target2);
 		}
 
-		public static String tauntPlayer(String player, String target) {
+		public static String tauntPlayer(Player player, Player target) {
 			return null;
 		}
 	}
