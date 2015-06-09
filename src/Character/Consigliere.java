@@ -28,16 +28,16 @@ public class Consigliere extends Character {
 	public String doAction() throws CannotGetPlayerException {
 
 		if (getTarget().size() != 1) {
-			return GameMessage.NO_ACTION();
+			return GameMessage.NO_ACTION;
 		}
 
 		Player target = getTarget().get(0);
 
 		if (!GameEngine.getCharacter(target).isAlive()) {
-			return GameMessage.TARGET_DEAD();
+			return GameMessage.TARGET_DEAD;
 		}
 		if (this.isRoleBlocked()) {
-			return GameMessage.NO_FEEDBACK();
+			return GameMessage.ROLE_BLOCKED;
 		}
 
 		GameEngine.getCharacter(target).addVisitor(getPlayer());
@@ -46,11 +46,11 @@ public class Consigliere extends Character {
 
 		switch (detect) {
 		case DETECT_EXACT_ROLE:
-			return GameMessage.INVESTIGATION_EXACT(target);
+			return GameMessage.INVESTIGATION_EXACT(target.getName());
 		case DETECT_VAGUE_ROLE:
-			return GameMessage.INVESTIGATION_VAGUE(target);
+			return GameMessage.INVESTIGATION_VAGUE(target.getName());
 		default:
-			return GameMessage.INVESTIGATION_VAGUE(target);
+			return GameMessage.INVESTIGATION_VAGUE(target.getName());
 		}
 	}
 }

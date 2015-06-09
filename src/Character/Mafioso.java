@@ -3,6 +3,7 @@ package Character;
 import java.util.List;
 
 import Enumerators.Roles;
+import GameEngine.CannotGetPlayerException;
 import GameEngine.Character;
 import GameEngine.GameEngine;
 import GameEngine.GameMessage;
@@ -21,11 +22,10 @@ public class Mafioso extends Character {
 	 */
 	@Override
 	public boolean setTarget(List<Player> targets) {
-		if (targets.size() > MAFIOSO_MAX_NUM_TARGETS
-				|| !GameEngine.alive_player.containsAll(targets)) {
+		if (targets.size() > MAFIOSO_MAX_NUM_TARGETS) {
 			return false;
 		}
-		return setTargets(targets);
+		return super.setTarget(targets);
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class Mafioso extends Character {
 	 */
 	@Override
 	public String doAction() {
-		if (getTargets().isEmpty()) {
+		if (getTarget().isEmpty()) {
 			return GameMessage.NO_ACTION;
 		}
 
@@ -41,8 +41,10 @@ public class Mafioso extends Character {
 			return GameMessage.ROLE_BLOCKED;
 		}
 
-		Player victim = getTargets().get(0);
-		GameEngine.getCharacter(victim).kill();
+		Player victim = getTarget().get(0);
+		try {
+			GameEngine.getCharacter(victim).kill();
+		} catch (CannotGetPlayerException e) {}
 		return GameMessage.KILL_ATTEMPT(victim);
 	}
 }

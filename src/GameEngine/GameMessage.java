@@ -24,10 +24,22 @@ public class GameMessage {
 	public static final String NO_RESULT = "Cannot get your results.";
 	public static final String NO_KILL = "Nobody was killed.";
 	public static final String ROLE_BLOCKED = "You were unable to perform your action.";
+	public static final String TARGET_DEAD = "Your target was already dead.";
+	public static final String NO_FEEDBACK = "You performed your action to the best of your ability.";
 
 	public static final String KILL_ATTEMPT(Player player) {
 		return "You have attempted to kill " + player.getName() +".";
 	}
+	
+	// ------------------------------------------
+	// CONSORT/ESCORT MESSAGES
+	// --------------------------------------------
+	public static final String CONSORT_FEEDBACK = "You are blocking your target.";
+	public static final String ESCORT_FEEDBACK = "You are blocking your target.";
+	
+	// ------------------------------------------
+	// INVESTIGATOR/CONSIGLIERE MESSAGES
+	// --------------------------------------------
 
 	public static final String INVESTIGATION_EXACT(String name) {
 		return "The result of your investigation yielded a role of " + name
@@ -77,6 +89,31 @@ public class GameMessage {
 			}
 		}
 		return result.toString();
+	}
+	
+	// ------------------------------------------
+	// BUS DRIVER MESSAGES
+	// -----------------------------------------------	
+	public static final String BUS_DRIVER_FEEDBACK = "You have transported your passengers to their destinations.";
+	
+	// ------------------------------------------
+	// DETECTIVE MESSAGES
+	// -----------------------------------------------	
+	public static final String DETECTIVE_FEEDBACK(List<Player> visited) {
+		if (visited.isEmpty()) {
+			return "Your target did not visit anybody.";
+		}
+		else if (visited.size() == 1) {
+			return "Your target visited " + visited.get(0).getName() + ".";
+		}
+		else {
+			String output_message = "Your target visited ";
+			for (int k = 0; k < visited.size() - 1 ; k++) {
+				output_message += visited.get(k).getName() + ", ";				
+			}
+			output_message += " and " + visited.get(visited.size() - 1) + ".";
+			return output_message;
+		}
 	}
 
 	// ------------------------------------------
@@ -219,45 +256,20 @@ public class GameMessage {
 		return "Player " + name + " is not in game engine.";
 	}
 
-	public static final String BAD_INPUT() {
-		return "Bad input. Learn to type.";
-	}
-
 	// --------------------------------------------
 	// Get status Messages
 	// -------------------------------
 	public static final String FORMAT_STATUS(boolean inGame) {
 		int sizeOfGame = Player.listAllPlayers().size();
 		if (inGame) {
-			int sizeOfLiving = GameEngine.getAliveCharacter().size();
-			int sizeOfDead = GameEngine.getDeadCharacter().size();
+			int sizeOfLiving = GameEngine.getAlivePlayer().size();
+			int sizeOfDead = GameEngine.getDeadPlayer().size();
 			return "Currently in game. " + sizeOfGame + " playing.\n"
 					+ sizeOfLiving + " people alive, " + sizeOfDead
 					+ " people dead.";
 		} else {
 			return "Not in game yet. Currently " + sizeOfGame + " registered.";
 		}
-	}
-
-	public static final String RESET_GAME() {
-		return "The game has been reset.";
-	}
-
-	public static final String HELP_MESSAGE() {
-		return "To request help: help\n"
-				+ "To add player: addplayer [name]\n"
-				+ "To remove player: removeplayer [name]\n"
-				+ "To start game: startgame [admin password]\n"
-				+ "To start game with specific characters: startgame [admin password] Mayor Godfather etc...\n"
-				+ "To reboot game: rebootgame [admin password]\n"
-				+ "To reset game: resetgame [admin password]\n"
-				+ "To get player list: listplayer\n"
-				+ "To get alive player list: listalive\n"
-				+ "To vote player for lynch: vote [name]\n"
-				+ "To show current vote: showvote\n"
-				+ "To show target someone: target [name]\n"
-				+ "To update last will: lastwill [message]\n"
-				+ "To show mafia daily: daily";
 	}
 	
 	public static final String LIST_ALL_PLAYERS() {
@@ -277,11 +289,11 @@ public class GameMessage {
 	}
 
 	public static final String LIST_ALIVE_PLAYERS() {
-		List<Player> alivePlayers = GameEngine.getAlivePlayer();
+		List<Character> alivePlayers = GameEngine.getAlivePlayer();
 		StringBuilder result = new StringBuilder();
 		result.append("People still alive in this round are: ");
 		for (int i = 0; i < alivePlayers.size(); i++) {
-			result.append(alivePlayers.get(i).getName());
+			result.append(alivePlayers.get(i).getPlayer().getName());
 			if (i + 1 != alivePlayers.size()) {
 				result.append(", ");
 			} else {
@@ -292,11 +304,11 @@ public class GameMessage {
 	}
 
 	public static final String LIST_DEAD_PLAYERS() {
-		List<Player> deadPlayers = GameEngine.getDeadPlayer();
+		List<Character> deadPlayers = GameEngine.getDeadPlayer();
 		StringBuilder result = new StringBuilder();
 		result.append("People dead in this round are: ");
 		for (int i = 0; i < deadPlayers.size(); i++) {
-			result.append(deadPlayers.get(i).getName());
+			result.append(deadPlayers.get(i).getPlayer().getName());
 			if (i + 1 != deadPlayers.size()) {
 				result.append(", ");
 			} else {
@@ -308,7 +320,7 @@ public class GameMessage {
 
 	public static final String LIST_VOTE_MAP() {
 		StringBuilder voteMap = new StringBuilder();
-		for (Character character : GameEngine.getAliveCharacter()) {
+		for (Character character : GameEngine.getAlivePlayer()) {
 			voteMap.append(character.getPlayer().getName() + "has"
 					+ character.getLynchCount() + "votes\n");
 		}
@@ -320,7 +332,7 @@ public class GameMessage {
 
 	public static final String LIST_ROLE_MAP() {
 		StringBuilder roleMap = new StringBuilder();
-		for (Character character : GameEngine.getAliveCharacter()) {
+		for (Character character : GameEngine.getAlivePlayer()) {
 			roleMap.append(character.getPlayer().getName() + " is the role "
 					+ character.getRoleString() + ".\n");
 		}

@@ -439,7 +439,7 @@ public class GameEngine {
 		return "done";
 	}
 
-	 * GameEngine.getCharacter
+	 /* GameEngine.getCharacter
 	 * 
 	 * @param player
 	 *            The human name of the player
