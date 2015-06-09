@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import GameEngine.GameRegistration.Player;
-
+/**
+ * Mafia main method which processes commands before they enter game engine.
+ */
 public class MafiaMain {
 
 	List<Player> player_list = new ArrayList<Player>();
@@ -14,7 +16,7 @@ public class MafiaMain {
 	}
 
 	public enum CLInput {
-		ListPlayers, AddPlayer, RemovePlayer, RemoveAllPlayers, StartGame, DelayGame, PauseGame, ResumeGame, StartNewDay, StartLynch, ForceEndGame, SetLastWill, SetVote, SetTarget, TauntPlayer, ListAlivePlayers, ListDeadPlayers, ShowLastWill, ShowVote, ShowTarget, ShowDaily, ShowRole, ShowGameStatus, ShowAdminStatus, Admin, BadInput;
+		ListPlayers, AddPlayer, RemovePlayer, RemoveAllPlayers, StartGame, DelayGame, PauseGame, ResumeGame, StartNewDay, StartLynch, ForceEndGame, SetLastWill, SetVote, SetTarget, RevealMayor, TauntPlayer, ListAlivePlayers, ListDeadPlayers, ShowLastWill, ShowVote, ShowTarget, ShowDaily, ShowRole, ShowGameStatus, ShowAdminStatus, Admin, BadInput;
 
 		public static CLInput fromString(String input) {
 			CLInput CLICommand;
@@ -61,6 +63,9 @@ public class MafiaMain {
 			case "settarget":
 				CLICommand = CLInput.SetTarget;
 				break;
+			case "revealmayor":
+				CLICommand = CLInput.RevealMayor;
+				break;
 			case "tauntplayer":
 				CLICommand = CLInput.TauntPlayer;
 				break;
@@ -90,8 +95,6 @@ public class MafiaMain {
 				break;
 			case "showadminstatus":
 				CLICommand = CLInput.ShowAdminStatus;
-			case "admin":
-				CLICommand = CLInput.Admin;
 				break;
 			case "harrisisgay":
 				CLICommand = CLInput.Admin;

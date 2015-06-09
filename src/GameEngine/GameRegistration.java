@@ -6,15 +6,19 @@ import java.util.List;
 import Resources.GameMessage;
 
 /**
- * The Registration class encapsulates the abstraction for registration and
- * outputs game message strings for the user.
+ * Game Engine's component for game registration
  */
 public class GameRegistration {
+
+	private static final ArrayList<Player> valid_players = new ArrayList<Player>();
+
 	/**
 	 * Registers a player in the game
 	 * 
-	 * @param in game status
-	 * @param name of player
+	 * @param in
+	 *            game status
+	 * @param name
+	 *            of player
 	 * @return appropriate game message string
 	 */
 	protected static String registerPlayer(String name) {
@@ -28,7 +32,8 @@ public class GameRegistration {
 	/**
 	 * Unregisters a player from the game
 	 * 
-	 * @param name of player
+	 * @param name
+	 *            of player
 	 * @return appropriate game message string
 	 */
 	protected static String unregisterPlayer(String name) {
@@ -58,41 +63,83 @@ public class GameRegistration {
 	 * @return appropriate game message string
 	 */
 	protected static String listAllPlayers() {
-		List<String> allPlayers = PlayerValidation.listAll();
-		if(!allPlayers.isEmpty()) {
-			return GameMessage.Registration.LIST_ALL_PLAYERS(allPlayers);
+		List<String> all_players = PlayerValidation.listAll();
+		if (!all_players.isEmpty()) {
+			return GameMessage.Registration.LIST_ALL_PLAYERS(all_players);
 		} else {
 			return GameMessage.Registration.NO_PLAYER_REGISTERED();
 		}
 	}
-	
+
+	/**
+	 * Get all players
+	 * 
+	 * @return list of all players
+	 */
 	protected static List<Player> getAllPlayers() {
-		GameRegistration gameRegistration = new GameRegistration();
-		List<String> allPlayersString = PlayerValidation.listAll();
-		List<Player> allPlayers = new ArrayList<Player>();
-		for(String playerString : allPlayersString) {
-			allPlayers.add(gameRegistration.new Player(playerString));
+		GameRegistration game_registration = new GameRegistration();
+		List<String> all_players_string = PlayerValidation.listAll();
+		List<Player> all_players = new ArrayList<Player>();
+		for (String player_string : all_players_string) {
+			all_players.add(game_registration.new Player(player_string));
 		}
-		return allPlayers;
+		valid_players.addAll(all_players);
+		return all_players;
 	}
-	
+
+	/**
+	 * Get player with name
+	 * 
+	 * @param name
+	 * @return player if valid, else null
+	 */
+	public static Player get(String name) {
+		for(Player player : valid_players) {
+			if(player.getName().equals(name)) {
+				return player;
+			}
+		}
+		return null;
+	}
+
 	/**
 	 * The Player class acts as a data type to represent the player
 	 */
 	public class Player {
 		private final String name;
-		
-		public Player(String name) {
+
+		private Player(String name) {
 			this.name = name;
 		}
-		
+
 		public String getName() {
 			return name;
 		}
+
+		@Override
+		public boolean equals(Object other_player) {
+			if (other_player instanceof Player) {
+				Player other = (Player) other_player;
+				return (this.name.equals(other.getName()));
+			} else {
+				return false;
+			}
+		}
+
+		@Override
+		public int hashCode() {
+			return name.hashCode();
+		}
+		
+		@Override
+		public String toString() {
+			return name;
+		}
 	}
+
 	/**
-	 * The PlayerValidation class acts as a data type to manage the registration of human
-	 * players in the game.
+	 * The PlayerValidation class acts as a data type to manage the registration
+	 * of human players in the game.
 	 */
 	private static class PlayerValidation {
 
@@ -101,7 +148,8 @@ public class GameRegistration {
 		/**
 		 * Registers a player in the game
 		 * 
-		 * @param name of player
+		 * @param name
+		 *            of player
 		 * @return true if successfully registered, else false.
 		 */
 		private static boolean register(String name) {
@@ -116,7 +164,8 @@ public class GameRegistration {
 		/**
 		 * Unregisters a player from the game
 		 * 
-		 * @param name of player
+		 * @param name
+		 *            of player
 		 * @return true if successfully unregistered, else false.
 		 */
 		private static boolean unregister(String name) {

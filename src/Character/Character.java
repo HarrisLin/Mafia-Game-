@@ -53,17 +53,19 @@ public abstract class Character {
 	/**
 	 * @return String of the role
 	 */
-	public String getRole() {
-		return role.toString();
+	public Roles getRole() {
+		return role;
 	}
 
 	/**
-	 * Perform night action of character.
+	 * Perform night action
 	 * 
-	 * @return appropriate game message string 
+	 * @param target
+	 * @return game log string message
 	 */
 	public abstract String performAction(Character target);
-
+	public abstract String performAction(List<Player> alive_player, Character target);
+	
 	/**
 	 * CharacterStatus saves all the the character status information.
 	 */

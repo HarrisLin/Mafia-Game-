@@ -88,8 +88,7 @@ public class CharacterFactory {
 			break;
 		case MassMurderer:
 			break;
-		case Mayor:
-			break;
+		case Mayor: return new Mayor(player);
 		case SerialKiller:
 			break;
 		case Sheriff:
@@ -106,8 +105,7 @@ public class CharacterFactory {
 			break;
 		case Veteran:
 			break;
-		case Vigilante:
-			break;
+		case Vigilante: return new Vigilante(player);
 		case Witch:
 			break;
 		case WitchDoctor:

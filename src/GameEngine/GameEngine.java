@@ -84,6 +84,9 @@ public class GameEngine {
 		public static String startGame(List<Roles> role_list) {
 			return GameManagement.startGame(role_list, player_character_map, alive_players);
 		}
+		public static String startGame(List<Roles> role_list, int option) {
+			return GameManagement.startGame(role_list, player_character_map, alive_players, option);
+		}
 
 		/**
 		 * Delay progress in the game for hours : minutes.
@@ -118,7 +121,7 @@ public class GameEngine {
 		 * @return appropriate game message string
 		 */
 		public static String startNewDay() {
-			return null;
+			return GameManagement.startNewDay(player_character_map, alive_players);
 		}
 
 		/**
@@ -191,6 +194,10 @@ public class GameEngine {
 			return GameTargetEngine.setTarget(player, target1, target2);
 		}
 
+		public static String revealMayor(Player player) {
+			Character character = player_character_map.get(player);
+			return GameTargetEngine.revealMayor(player, character);
+		}
 		/**
 		 * Taunt a player
 		 * 
@@ -223,7 +230,7 @@ public class GameEngine {
 		 * @return appropriate game message string
 		 */
 		public static String listAlivePlayers() {
-			return null;
+			return GameInformation.listAlivePlayers(alive_players);
 		}
 
 		/**
@@ -288,7 +295,7 @@ public class GameEngine {
 		 * @return appropriate game message string
 		 */
 		public static String showRole(Player player) {
-			return null;
+			return GameInformation.showRole(player_character_map, player);
 		}
 		
 		/**
