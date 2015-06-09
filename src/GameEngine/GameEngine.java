@@ -17,7 +17,6 @@ import java.io.IOException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 /**
  * GameEngine The game engine is responsible for keeping track of everything
@@ -73,12 +72,8 @@ public class GameEngine {
 	 * @return true if successful, false if not.
 	 */
 	public static String registerPlayer(String name) {
-		if (!inGame) {
-			if (Player.register(name)) {
-				return GameMessage.REGISTERED_PLAYER(name);
-			} else {
-				return GameMessage.REGISTER_ERROR(name);
-			}
+		if (Player.register(name)) {
+			return GameMessage.REGISTERED_PLAYER(name);
 		} else {
 			return GameMessage.REGISTER_ERROR(name);
 		}
@@ -91,73 +86,11 @@ public class GameEngine {
 	 * @return true if successful, false if not.
 	 */
 	public static String removePlayer(String name) {
-		if (!inGame) {
-			if (Player.remove(name)) {
-				return GameMessage.REGISTERED_PLAYER(name);
-			} else {
-				return GameMessage.REMOVE_ERROR(name);
-			}
+		if (Player.remove(name)) {
+			return GameMessage.REGISTERED_PLAYER(name);
 		} else {
 			return GameMessage.REMOVE_ERROR(name);
 		}
-	}
-
-	/**
-	 * Resets the GameEngine. Clears all records of players and characters. This
-	 * does not clear the database.
-	 */
-	public static String reset() {
-		inGame = false;
-		Player.removeAllPlayers();
-		player_character_map.clear();
-		alive_character.clear();
-		dead_character.clear();
-		return GameMessage.RESET_GAME();
-	}
-
-	/**
-	 * Start the game Currently very simple but later can add more.
-	 */
-	public static String start() {
-		if (!inGame) {
-			if (assignAllCharacters(0)) {
-				mafiaDaily = "The daily has not yet been implemented";
-				inGame = true;
-				return GameMessage.NEW_GAME();
-			} else {
-				return GameMessage.ERROR_GENERAL();
-			}
-		} else {
-			return GameMessage.ERROR_GENERAL();
-		}
-	}
-
-	/**
-	 * starts a new day
-	 * 
-	 * @return message
-	 */
-	public static String newDay() {
-		if (inGame) {
-			lynch();
-			StringBuilder log = new StringBuilder();
-			performNightActions();
-			for (Character character : player_character_map.values()) {
-				log.append(character.newDay());
-			}
-			return log.toString() + "not yet implemnted";
-		} else {
-			return GameMessage.NOT_IN_GAME_ERROR();
-		}
-	}
-
-	/**
-	 * If the game crashes, then it will reboot from the database using this
-	 * method.
-	 */
-	public static String reboot() {
-		inGame = true;
-		return "not yet implemented";
 	}
 
 	// -------------------------------------------------------------
@@ -168,21 +101,16 @@ public class GameEngine {
 	// Get Player Role/Get Player Chracter map
 	// ----------------------------------------------
 	public static String getRole(String name) {
-		if (inGame) {
-			Player player = null;
-			try {
-				player = Player.get(name);
-			} catch (CannotGetPlayerException e) {
-				return GameMessage.ERROR_PLAYER_NOT_IN_GAME(name);
-			}
-			try {
-				return GameMessage.SHOW_ROLE(getCharacter(player)
-						.getRoleString());
-			} catch (CannotGetPlayerException e) {
-				return GameMessage.ERROR_GENERAL();
-			}
-		} else {
-			return GameMessage.NOT_IN_GAME_ERROR();
+		Player player = null;
+		try {
+			player = Player.get(name);
+		} catch (CannotGetPlayerException e) {
+			return GameMessage.ERROR_PLAYER_NOT_IN_GAME(name);
+		}
+		try {
+			return GameMessage.SHOW_ROLE(getCharacter(player).getRoleString());
+		} catch (CannotGetPlayerException e) {
+			return GameMessage.ERROR_GENERAL();
 		}
 	}
 
@@ -198,52 +126,39 @@ public class GameEngine {
 	 *            The target(s) of the action
 	 * @return true if target was successfully set, false otherwise
 	 */
-	public static boolean setTarget(Player player, List<Player> target) {
-		return player_character_map.get(player).setTarget(target);
-	}
-
 	public static String setTarget(String name, List<String> targetList) {
-		if (inGame) {
-			Player player = null;
-			List<Player> target = new ArrayList<Player>();
-			try {
-				player = Player.get(name);
-				for (String targetName : targetList) {
-					target.add(Player.get(targetName));
-				}
-			} catch (CannotGetPlayerException e) {
-				return GameMessage.ERROR_PLAYER_NOT_IN_GAME(name, "target");
+		Player player = null;
+		List<Player> target = new ArrayList<Player>();
+		try {
+			player = Player.get(name);
+			for (String targetName : targetList) {
+				target.add(Player.get(targetName));
 			}
-			try {
-				if (getCharacter(player).setTarget(target)) {
-					return GameMessage.UPDATED_TARGETS();
-				} else {
-					return GameMessage.ERROR_PLAYER_IS_DEAD("target");
-				}
-			} catch (CannotGetPlayerException e) {
-				return GameMessage.ERROR_GENERAL();
+		} catch (CannotGetPlayerException e) {	
+			return GameMessage.ERROR_PLAYER_NOT_IN_GAME(name);
+		}
+		try {
+			if (getCharacter(player).setTarget(target)) {
+				return GameMessage.UPDATED_TARGETS();
+			} else {
+				return GameMessage.ERROR_PLAYER_IS_DEAD("target");
 			}
-		} else {
-			return GameMessage.NOT_IN_GAME_ERROR();
+		} catch (CannotGetPlayerException e) {
+			return GameMessage.ERROR_GENERAL();
 		}
 	}
 
 	public static String getTarget(String name) {
-		if (inGame) {
-			Player player = null;
-			try {
-				player = Player.get(name);
-			} catch (CannotGetPlayerException e) {
-				return GameMessage.ERROR_PLAYER_NOT_IN_GAME(name);
-			}
-			try {
-				return GameMessage.SHOW_TARGETS(getCharacter(player)
-						.getTarget());
-			} catch (CannotGetPlayerException e) {
-				return GameMessage.ERROR_GENERAL();
-			}
-		} else {
-			return GameMessage.NOT_IN_GAME_ERROR();
+		Player player = null;
+		try {
+			player = Player.get(name);
+		} catch (CannotGetPlayerException e) {
+			return GameMessage.ERROR_PLAYER_NOT_IN_GAME(name);
+		}
+		try {
+			return GameMessage.SHOW_TARGETS(getCharacter(player).getTarget());
+		} catch (CannotGetPlayerException e) {
+			return GameMessage.ERROR_GENERAL();
 		}
 	}
 
@@ -251,48 +166,44 @@ public class GameEngine {
 	// Vote Methods
 	// -------------------------------
 	public static boolean setVote(Player player, List<Player> target) {
-		return player_character_map.get(player).setVote(target);
+		return player_character_map.get(player).vote(target);
 	}
 
 	public static String setVote(String name, String targetName) {
-		if (inGame) {
-			Player player = null;
-			Player target = null;
-			try {
-				player = Player.get(name);
-				target = Player.get(targetName);
-			} catch (CannotGetPlayerException e) {
-				return GameMessage.ERROR_PLAYER_NOT_IN_GAME(name, targetName);
+		Player player = null;
+		Player target = null;
+		try {
+			player = Player.get(name);
+		} catch (CannotGetPlayerException e) {
+			return GameMessage.ERROR_PLAYER_NOT_IN_GAME(name);
+		}
+		try {
+			target = Player.get(targetName);
+		} catch (CannotGetPlayerException e) {
+			return GameMessage.ERROR_PLAYER_NOT_IN_GAME(targetName);
+		}
+		try {
+			if (getCharacter(player).vote(target)) {
+				return GameMessage.UPDATED_VOTES();
+			} else {
+				return GameMessage.ERROR_PLAYER_IS_DEAD(targetName);
 			}
-			try {
-				if (getCharacter(player).setVote(target)) {
-					return GameMessage.UPDATED_VOTES();
-				} else {
-					return GameMessage.ERROR_PLAYER_IS_DEAD(targetName);
-				}
-			} catch (CannotGetPlayerException e) {
-				return GameMessage.ERROR_GENERAL();
-			}
-		} else {
-			return GameMessage.NOT_IN_GAME_ERROR();
+		} catch (CannotGetPlayerException e) {
+			return GameMessage.ERROR_GENERAL();
 		}
 	}
 
 	public static String getVote(String name) {
-		if (inGame) {
-			Player player = null;
-			try {
-				player = Player.get(name);
-			} catch (CannotGetPlayerException e) {
-				return GameMessage.ERROR_PLAYER_NOT_IN_GAME(name);
-			}
-			try {
-				return GameMessage.SHOW_VOTES(getCharacter(player).getVote());
-			} catch (CannotGetPlayerException e) {
-				return GameMessage.ERROR_GENERAL();
-			}
-		} else {
-			return GameMessage.NOT_IN_GAME_ERROR();
+		Player player = null;
+		try {
+			player = Player.get(name);
+		} catch (CannotGetPlayerException e) {
+			return GameMessage.ERROR_PLAYER_NOT_IN_GAME(name);
+		}
+		try {
+			return GameMessage.SHOW_VOTES(getCharacter(player).getLynchTarget());
+		} catch (CannotGetPlayerException e) {
+			return GameMessage.ERROR_GENERAL();
 		}
 	}
 
@@ -300,28 +211,24 @@ public class GameEngine {
 	// Last Will Methods
 	// -------------------------------------
 	public static boolean setLastWill(Player player, String lastWill) {
-		return player_character_map.get(player).setLastWill(lastWill);
+		return player_character_map.get(player).updateLastWill(lastWill);
 	}
 
 	public static String setLastWill(String name, String lastWill) {
-		if (inGame) {
-			Player player = null;
-			try {
-				player = Player.get(name);
-			} catch (CannotGetPlayerException e) {
-				return GameMessage.ERROR_PLAYER_NOT_IN_GAME(name);
+		Player player = null;
+		try {
+			player = Player.get(name);
+		} catch (CannotGetPlayerException e) {
+			return GameMessage.ERROR_PLAYER_NOT_IN_GAME(name);
+		}
+		try {
+			if (getCharacter(player).updateLastWill(lastWill)) {
+				return GameMessage.UPDATED_LAST_WILL();
+			} else {
+				return GameMessage.ERROR_PLAYER_IS_DEAD(name);
 			}
-			try {
-				if (getCharacter(player).setLastWill(lastWill)) {
-					return GameMessage.UPDATED_LAST_WILL();
-				} else {
-					return GameMessage.ERROR_PLAYER_IS_DEAD(name);
-				}
-			} catch (CannotGetPlayerException e) {
-				return GameMessage.ERROR_GENERAL();
-			}
-		} else {
-			return GameMessage.NOT_IN_GAME_ERROR();
+		} catch (CannotGetPlayerException e) {
+			return GameMessage.ERROR_GENERAL();
 		}
 	}
 
@@ -330,67 +237,34 @@ public class GameEngine {
 	}
 
 	public static String getLastWill(String name) {
-		if (inGame) {
-			Player player = null;
-			try {
-				player = Player.get(name);
-			} catch (CannotGetPlayerException e) {
-				e.printStackTrace();
-				return GameMessage.ERROR_PLAYER_NOT_IN_GAME(name);
-			}
-			try {
-				return GameMessage.SHOW_LAST_WILL(getCharacter(player)
-						.getLastWill());
-			} catch (CannotGetPlayerException e) {
-				return GameMessage.ERROR_GENERAL();
-			}
-		} else {
-			return GameMessage.NOT_IN_GAME_ERROR();
+		Player player = null;
+		try {
+			player = Player.get(name);
+		} catch (CannotGetPlayerException e) {
+			e.printStackTrace();
+			return GameMessage.ERROR_PLAYER_NOT_IN_GAME(name);
 		}
-	}
-
-	// --------------------------------------
-	// Get status of game
-	// -------------------------------------
-	public static String getStatus(int type) {
-		StringBuilder status = new StringBuilder();
-		status.append(GameMessage.FORMAT_STATUS(inGame));
-		if (inGame && type == 2) {
-			status.append("\n");
-			status.append(GameMessage.LIST_ROLE_MAP());
+		try {
+			return GameMessage.SHOW_LAST_WILL(getCharacter(player)
+					.getLastWill());
+		} catch (CannotGetPlayerException e) {
+			return GameMessage.ERROR_GENERAL();
 		}
-		return status.toString();
-	}
-
-	public static String getDaily() {
-		return GameMessage.FORMAT_DAILY(mafiaDaily);
 	}
 
 	// ---------------------------------------
 	// Get Other List Methods
 	// --------------------------------------------
 	public static String getAliveList() {
-		if (inGame) {
-			return GameMessage.LIST_ALIVE_PLAYERS();
-		} else {
-			return GameMessage.NOT_IN_GAME_ERROR();
-		}
+		return GameMessage.LIST_ALIVE_PLAYERS(alive_player);
 	}
 
 	public static String getDeadList() {
-		if (inGame) {
-			return GameMessage.LIST_DEAD_PLAYERS();
-		} else {
-			return GameMessage.NOT_IN_GAME_ERROR();
-		}
+		return GameMessage.LIST_DEAD_PLAYERS(dead_player);
 	}
 
 	public static String getVoteList() {
-		if (inGame) {
-			return GameMessage.LIST_VOTE_MAP();
-		} else {
-			return GameMessage.NOT_IN_GAME_ERROR();
-		}
+		return GameMessage.LIST_VOTE_MAP();
 	}
 
 	// **********************************************************************************
@@ -399,45 +273,6 @@ public class GameEngine {
 	// VISIBLITY
 	// ********************************************************************************
 	// ********************************************************************************
-
-	// --------------------------------------------------------------------
-	// GAME MECHANICS AND ACTION METHODS (PRIVATE/PROTECTED) OR SHOULD BE
-	// ---------------------------------------------------------------------
-	/**
-	 * @return TRUE if successfully killed and FALSE if not
-	 */
-	protected static boolean killCharacter(Character character) {
-		if (!dead_character.contains(character)
-				|| alive_character.contains(character)) {
-			dead_character.add(character);
-			alive_character.remove(character);
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	/**
-	 * GameEngine.performNightActions Makes each character perform his/her night
-	 * action
-	 * 
-	 * @return summary of all the deaths, last wills, etc.
-	 * @throws CannotGetPlayerException 
-	 */
-	public static String performNightActions() {
-		for(Character character : getAliveCharacter()) {
-			try {
-				character.doAction();
-			} catch (CannotGetPlayerException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		for(Character character : getAliveCharacter()) {
-			
-		}
-		return "done";
-	}
 
 	 /* GameEngine.getCharacter
 	 * 
@@ -663,8 +498,6 @@ public class GameEngine {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} catch (ParseException ex) {
-			ex.printStackTrace();
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -822,7 +655,13 @@ public class GameEngine {
 	 * @return message
 	 */
 	public static String newDay() {
-		return "not yet implemnted";
+		lynch();
+		StringBuilder log = new StringBuilder();
+		performNightActions();
+		for (Character character : player_character_map.values()) {
+			log.append(character.newDay());
+		}
+		return log.toString() + "not yet implemented";
 	}
 
 	/**

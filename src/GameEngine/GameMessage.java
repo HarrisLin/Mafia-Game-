@@ -160,10 +160,8 @@ public class GameMessage {
 				+ player2.getName() + " in game engine.";
 	}
 
-	public static final String ERROR_PLAYER_NOT_IN_GAME(String player1,
-			String player2) {
-		return "Cannot find player " + player1 + " or player " + player2
-				+ " in game engine.";
+	public static final String ERROR_PLAYER_NOT_IN_GAME(String player) {
+		return "Player " + player + " is not in the game.";
 	}
 
 	public static final String ERROR_TARGET_SIZE1() {
@@ -288,8 +286,7 @@ public class GameMessage {
 		return result.toString();
 	}
 
-	public static final String LIST_ALIVE_PLAYERS() {
-		List<Character> alivePlayers = GameEngine.getAlivePlayer();
+	public static final String LIST_ALIVE_PLAYERS(List<Character> alivePlayers) {
 		StringBuilder result = new StringBuilder();
 		result.append("People still alive in this round are: ");
 		for (int i = 0; i < alivePlayers.size(); i++) {
@@ -303,8 +300,7 @@ public class GameMessage {
 		return result.toString();
 	}
 
-	public static final String LIST_DEAD_PLAYERS() {
-		List<Character> deadPlayers = GameEngine.getDeadPlayer();
+	public static final String LIST_DEAD_PLAYERS(List<Character> deadPlayers) {
 		StringBuilder result = new StringBuilder();
 		result.append("People dead in this round are: ");
 		for (int i = 0; i < deadPlayers.size(); i++) {
