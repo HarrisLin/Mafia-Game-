@@ -1,13 +1,53 @@
 package Character;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import Character.CharacterFactory.Roles;
+import GameEngine.GameRegistration.Player;
+
 /**
  * Character in the game
  */
 public abstract class Character {
 	private final Roles role;
-
-	protected Character(Roles role) {
+	protected final Player player;
+	protected final CharacterStatus character_status;
+	/**
+	 * Constructor
+	 * 
+	 * @param role
+	 * @param player
+	 */
+	protected Character(Roles role, Player player) {
 		this.role = role;
+		this.player = player;
+		character_status = new CharacterStatus();
+	}
+	/**
+	 * Constructor
+	 * 
+	 * @param role
+	 * @param player
+	 * @param invulnerable
+	 */
+	protected Character(Roles role, Player player, boolean invulnerable) {
+		this.role = role;
+		this.player = player;
+		character_status = new CharacterStatus();
+	}
+	/**
+	 * Constructor
+	 * 
+	 * @param role
+	 * @param player
+	 * @param invulnerable
+	 * @param block_immune
+	 */
+	protected Character(Roles role, Player player, boolean invulnerable, boolean block_immune) {
+		this.role = role;
+		this.player = player;
+		character_status = new CharacterStatus();
 	}
 	
 	/**
@@ -20,110 +60,94 @@ public abstract class Character {
 	/**
 	 * Perform night action of character.
 	 * 
-	 * @return true if success, else false
+	 * @return appropriate game message string 
 	 */
-	public abstract boolean performAction();
-	
+	public abstract String performAction(Character target);
+
 	/**
-	 * Enumeration of all the roles in the game.
+	 * CharacterStatus saves all the the character status information.
 	 */
-	public enum Roles {
-
-		Bodyguard(Sides.Town, "Bodyguard"), BusDriver(Sides.Town, "BusDriver"), Citizen(
-				Sides.Town, "Citizen"), Coroner(Sides.Town, "Coroner"), Crier(
-				Sides.Town, "Crier"), Detective(Sides.Town, "Detective"), Doctor(
-				Sides.Town, "Doctor"), Escort(Sides.Town, "Escort"), Investigator(
-				Sides.Town, "Investigator"), Jailor(Sides.Town, "Jailor"), Lookout(
-				Sides.Town, "Lookout"), Marshall(Sides.Town, "Marshall"), Mason(
-				Sides.Town, "Mason"), MasonLeader(Sides.Town, "MasonLeader"), Mayor(
-				Sides.Town, "Mayor"), Sheriff(Sides.Town, "Sheriff"), Spy(
-				Sides.Town, "Spy"), Stump(Sides.Town, "Stump"), Veteran(
-				Sides.Town, "Veteran"), Vigilante(Sides.Town, "Vigilante"), Agent(
-				Sides.Mafia, "Agent"), Beguiler(Sides.Mafia, "Beguiler"), Blackmailer(
-				Sides.Mafia, "Blackmailer"), Consigliere(Sides.Mafia,
-				"Consigliere"), Consort(Sides.Mafia, "Consort"), Disguiser(
-				Sides.Mafia, "Disguiser"), Framer(Sides.Mafia, "Framer"), Godfather(
-				Sides.Mafia, "Godfather"), Janitor(Sides.Mafia, "Janitor"), Kidnapper(
-				Sides.Mafia, "Kidnapper"), Mafioso(Sides.Mafia, "Mafioso"), Administrator(
-				Sides.Triad, "Administrator"), Deceiver(Sides.Triad, "Deceiver"), DragonHead(
-				Sides.Triad, "DragonHead"), Enforcer(Sides.Triad, "Enforcer"), Forger(
-				Sides.Triad, "Forger"), IncenseMaster(Sides.Triad,
-				"IncenseMaster"), Informant(Sides.Triad, "Informant"), Interrogator(
-				Sides.Triad, "Interrogator"), Liaison(Sides.Triad, "Liaison"), Silencer(
-				Sides.Triad, "Silencer"), Vanguard(Sides.Triad, "Vanguard"), Amnesiac(
-				Sides.Neutral, "Amnesiac"), Arsonist(Sides.Neutral, "Arsonist"), Auditor(
-				Sides.Neutral, "Auditor"), Cultist(Sides.Neutral, "Cultist"), Executioner(
-				Sides.Neutral, "Executioner"), Jester(Sides.Neutral, "Jester"), Judge(
-				Sides.Neutral, "Judge"), MassMurderer(Sides.Neutral,
-				"MassMurderer"), SerialKiller(Sides.Neutral, "SerialKiller"), Survivor(
-				Sides.Neutral, "Survivor"), Witch(Sides.Neutral, "Witch"), WitchDoctor(
-				Sides.Neutral, "WitchDoctor");
-
-		private Sides side;
-		private String role;
-
+	protected class CharacterStatus {
+		private final boolean invulnerable;
+		private final boolean block_immune;
+		private final List<Player> visitors;
+		private boolean doused;
+		private boolean blocked;
+		private boolean healed;
+		
 		/**
 		 * Constructor
-		 * 
-		 * @param side
-		 *            : Side of the character
-		 * @param role
-		 *            : Role as a string
 		 */
-		Roles(Sides side, String role) {
-			this.side = side;
-			this.role = role;
+		private CharacterStatus() {
+			invulnerable = false;
+			block_immune = false;
+			visitors = new ArrayList<Player>();
+			doused = false;
+			blocked = false;
+			healed = false;
 		}
-
 		/**
-		 * 
-		 * @return the side of the character
+		 * @return true if is invulnerable, else false
 		 */
-		public String sideToString() {
-			return side.toString();
+		protected boolean isInvulnerable() {
+			return invulnerable;
 		}
-
 		/**
-		 * Returns role as a string
+		 * @return true if is block immune, else false
 		 */
-		public String toString() {
-			return role;
+		protected boolean isBlockImmune() {
+			return block_immune;
 		}
-
 		/**
-		 * Get the role from string
-		 * 
-		 * @param text
-		 * @return role
+		 * @return list of visitors
 		 */
-		public static Roles fromString(String string) {
-			if (string != null) {
-				for (Roles role : Roles.values()) {
-					if (string.equalsIgnoreCase(role.role)) {
-						return role;
-					}
-				}
-			}
-			return null;
+		protected List<Player> getVisitors() {
+			return visitors;
+		}
+		/**
+		 * @return true if doused, else false
+		 */
+		protected boolean isDoused() {
+			return doused;
+		}
+		/**
+		 * @return true if doused and false if not-doused
+		 */
+		protected boolean douse() {
+			return doused = !doused;
+		}
+		/**
+		 * @return true if blocked, else false
+		 */
+		protected boolean isBlocked() {
+			return blocked;
+		}
+		/**
+		 * @return true when blocked
+		 */
+		protected boolean block() {
+			return blocked = true;
+		}
+		/**
+		 * @return true if healed, else false
+		 */
+		protected boolean isHealed() {
+			return healed;
+		}
+		/**
+		 * @return true when healed
+		 */
+		protected boolean heal() {
+			return healed = true;
+		}
+		/**
+		 * @return true when reset
+		 */
+		public boolean reset() {
+			blocked = false;
+			healed = false;
+			visitors.clear();
+			return true;
 		}
 	}
-
-	/**
-	 * Enumeration of all the sides in the game.
-	 */
-	public enum Sides {
-		Town("Town"), Mafia("Mafia"), Triad("Triad"), Neutral("Neutral");
-
-		private final String side;
-
-		Sides(String side) {
-			this.side = side;
-		}
-
-		@Override
-		public String toString() {
-			return side;
-		}
-	}
-
 }

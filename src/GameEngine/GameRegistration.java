@@ -17,15 +17,11 @@ public class GameRegistration {
 	 * @param name of player
 	 * @return appropriate game message string
 	 */
-	protected static String registerPlayer(Boolean in_game, String name) {
-		if (!in_game) {
-			if (PlayerValidation.register(name)) {
-				return GameMessage.Registration.REGISTER_SUCCESS(name);
-			} else {
-				return GameMessage.Registration.REGISTER_FAIL(name);
-			}
+	protected static String registerPlayer(String name) {
+		if (PlayerValidation.register(name)) {
+			return GameMessage.Registration.REGISTER_SUCCESS(name);
 		} else {
-			return GameMessage.Registration.REGISTER_INGAME(name);
+			return GameMessage.Registration.REGISTER_FAIL(name);
 		}
 	}
 
@@ -35,15 +31,11 @@ public class GameRegistration {
 	 * @param name of player
 	 * @return appropriate game message string
 	 */
-	protected static String unregisterPlayer(Boolean in_game, String name) {
-		if (!in_game) {
-			if (PlayerValidation.unregister(name)) {
-				return GameMessage.Registration.UNREGISTER_SUCCESS(name);
-			} else {
-				return GameMessage.Registration.UNREGISTER_FAIL(name);
-			}
+	protected static String unregisterPlayer(String name) {
+		if (PlayerValidation.unregister(name)) {
+			return GameMessage.Registration.UNREGISTER_SUCCESS(name);
 		} else {
-			return GameMessage.Registration.UNREGISTER_INGAME(name);
+			return GameMessage.Registration.UNREGISTER_FAIL(name);
 		}
 	}
 
@@ -52,15 +44,11 @@ public class GameRegistration {
 	 * 
 	 * @return appropriate game message string
 	 */
-	protected static String unregisterAll(boolean in_game) {
-		if (!in_game) {
-			if (PlayerValidation.unregisterAll()) {
-				return GameMessage.Registration.UNREGISTER_ALL_SUCCESS();
-			} else {
-				return GameMessage.Registration.UNREGISTER_ALL_FAIL();
-			}
+	protected static String unregisterAll() {
+		if (PlayerValidation.unregisterAll()) {
+			return GameMessage.Registration.UNREGISTER_ALL_SUCCESS();
 		} else {
-			return GameMessage.Registration.UNREGISTER_ALL_INGAME();
+			return GameMessage.Registration.UNREGISTER_ALL_FAIL();
 		}
 	}
 
@@ -76,6 +64,16 @@ public class GameRegistration {
 		} else {
 			return GameMessage.Registration.NO_PLAYER_REGISTERED();
 		}
+	}
+	
+	protected static List<Player> getAllPlayers() {
+		GameRegistration gameRegistration = new GameRegistration();
+		List<String> allPlayersString = PlayerValidation.listAll();
+		List<Player> allPlayers = new ArrayList<Player>();
+		for(String playerString : allPlayersString) {
+			allPlayers.add(gameRegistration.new Player(playerString));
+		}
+		return allPlayers;
 	}
 	
 	/**

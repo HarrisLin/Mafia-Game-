@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import GameEngine.GameRegistration.Player;
+import Resources.GameMessage;
 
 public class GameTargetEngine {
 
@@ -20,11 +21,15 @@ public class GameTargetEngine {
 	}
 	
 	protected static String setTarget(Player player, Player target) {
-		return null;
+		player_target_map.get(player).clear();
+		player_target_map.get(player).add(target);
+		return GameMessage.Inputs.TARGET_SUCCESS();
 	}
 
 	protected static String setTarget(Player player, Player target1, Player target2) {
-		// TODO Auto-generated method stub
-		return null;
+		player_target_map.get(player).clear();
+		player_target_map.get(player).add(target1);
+		player_target_map.get(player).add(target2);
+		return GameMessage.Inputs.TARGET_SUCCESS();
 	}
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import Character.Character;
+import Character.CharacterFactory.Roles;
 import GameEngine.GameRegistration.Player;
 
 /**
@@ -16,13 +17,11 @@ import GameEngine.GameRegistration.Player;
  * @class 2. Game Management
  * @class 3. Game Inputs
  * @class 4. Game Information
- * @class 5. Game Help
  */
 public class GameEngine {
 
 	private static final Map<Player, Character> player_character_map = new HashMap<Player, Character>();
-	private static final List<Character> alive_characters = new ArrayList<Character>();
-	private static boolean in_game;
+	private static final List<Player> alive_players = new ArrayList<Player>();
 
 	/**
 	 * 1. Game Registration
@@ -47,7 +46,7 @@ public class GameEngine {
 		 * @return appropriate game message string
 		 */
 		public static String registerPlayer(String name) {
-			return GameRegistration.registerPlayer(in_game, name);
+			return GameRegistration.registerPlayer(name);
 		}
 
 		/**
@@ -58,7 +57,7 @@ public class GameEngine {
 		 * @return appropriate game message string
 		 */
 		public static String unregisterPlayer(String name) {
-			return GameRegistration.unregisterPlayer(in_game, name);
+			return GameRegistration.unregisterPlayer(name);
 		}
 
 		/**
@@ -67,7 +66,7 @@ public class GameEngine {
 		 * @return appropriate game message string
 		 */
 		public static String unregisterAll() {
-			return GameRegistration.unregisterAll(in_game);
+			return GameRegistration.unregisterAll();
 		}
 	}
 
@@ -82,14 +81,8 @@ public class GameEngine {
 		 * 
 		 * @return appropriate game message string
 		 */
-		public static String startGame() {
-			String message = GameManagement.startGame(in_game, player_character_map, alive_characters);
-			if(!in_game) {
-				in_game = true;
-				GameTargetEngine.setupTargetMap(new ArrayList<Player>(player_character_map.keySet()));
-				GameVoteEngine.setupVoteMap(new ArrayList<Player>(player_character_map.keySet()));
-			}
-			return message;
+		public static String startGame(List<Roles> role_list) {
+			return GameManagement.startGame(role_list, player_character_map, alive_players);
 		}
 
 		/**
@@ -97,7 +90,7 @@ public class GameEngine {
 		 * 
 		 * @return appropriate game message string
 		 */
-		public static String delayNewDay(int hours, int minutes) {
+		public static String delayGame(int hours, int minutes) {
 			return null;
 		}
 
@@ -153,22 +146,58 @@ public class GameEngine {
 	 * Character inputs for performing actions in the game
 	 */
 	public static class Inputs {
+		/**
+		 * Updates player's last will
+		 * 
+		 * @param player
+		 * @param lastwill
+		 * @return appropriate game message string
+		 */
 		public static String updateLastWill(Player player, String lastwill) {
-			return null;
+			return GameLastWillEngine.updateLastWill(player, lastwill);
 		}
-
+		
+		/**
+		 * Sets player's vote
+		 * 
+		 * @param player
+		 * @param target
+		 * @return appropriate game message string
+		 */
 		public static String setVote(Player player, Player target) {
 			return GameVoteEngine.setVote(player, target);
 		}
 
+		/**
+		 * Sets player's target
+		 * 
+		 * @param player
+		 * @param target
+		 * @return appropriate game message string
+		 */
 		public static String setTarget(Player player, Player target) {
 			return GameTargetEngine.setTarget(player, target);
 		}
-
+		
+		/**
+		 * Sets player's target
+		 * 
+		 * @param player
+		 * @param target1
+		 * @param target2
+		 * @return appropriate game message string
+		 */
 		public static String setTarget(Player player, Player target1, Player target2) {
 			return GameTargetEngine.setTarget(player, target1, target2);
 		}
 
+		/**
+		 * Taunt a player
+		 * 
+		 * @param player
+		 * @param target
+		 * @return appropriate game message string
+		 */
 		public static String tauntPlayer(Player player, Player target) {
 			return null;
 		}
@@ -188,54 +217,103 @@ public class GameEngine {
 		public static String listAllPlayers() {
 			return null;
 		}
-
+		/**
+		 * Lists all alive players in the game
+		 * 
+		 * @return appropriate game message string
+		 */
 		public static String listAlivePlayers() {
 			return null;
 		}
 
+		/**
+		 * Lists all dead players in the game
+		 * 
+		 * @return appropriate game message string
+		 */
 		public static String listDeadPlayers() {
 			return null;
 		}
 
-		public static String showLastWill(String player) {
+		/**
+		 * Show last will of the player
+		 * 
+		 * @param player
+		 * @return appropriate game message string
+		 */
+		public static String showLastWill(Player player) {
 			return null;
 		}
 
-		public static String showVote() {
+		/**
+		 * Show vote of the player
+		 * 
+		 * @return appropriate game message string
+		 */
+		public static String showVote(Player player) {
 			return null;
 		}
 
-		public static String showTarget() {
+		/**
+		 * Show target of the player
+		 * 
+		 * @return appropriate game message string
+		 */
+		public static String showTarget(Player player) {
 			return null;
 		}
 
-		public static String showTaunt() {
+		/**
+		 * Show players who taunted you
+		 * 
+		 * @return appropriate game message string
+		 */
+		public static String showTaunt(Player player) {
 			return null;
 		}
 
+		/**
+		 * Show the daily
+		 * 
+		 * @return appropriate game message strings
+		 */
 		public static String showDaily() {
 			return null;
 		}
 
-		public static String showRole(String player) {
+		/**
+		 * Show the role of the player 
+		 * 
+		 * @param player
+		 * @return appropriate game message string
+		 */
+		public static String showRole(Player player) {
 			return null;
 		}
-
+		
+		/**
+		 * Show game status
+		 * 
+		 * @return appropriate game message string
+		 */
 		public static String showGameStatus() {
 			return null;
 		}
 
+		/**
+		 * Show administrative version of game status
+		 * 
+		 * @return appropriate game message string
+		 */
 		public static String adminGameStatus() {
+			//This should return full report.
+			// - Player to character map.
+			// - Currently alive, currently dead
+			// - Player targets, votes, for each day.
+			// - player last will
+			// - Game log.
+			// - All the generated dailies.
 			return null;
 		}
-	}
-
-	/**
-	 * 5. Game Help
-	 * 
-	 * Easy navigation for game mechanics and rules
-	 */
-	public static class Help {
-
 	}
 }
