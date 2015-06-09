@@ -3,14 +3,13 @@ package Character;
 import Enumerators.Roles;
 import Enumerators.Sides;
 import GameEngine.CannotGetPlayerException;
-import GameEngine.Character;
-import GameEngine.GameMessage;
-import GameEngine.Player;
 import GameEngine.GameEngine;
+import GameEngine.Player;
 import GameOptions.SheriffOptions.DetectArsonist;
 import GameOptions.SheriffOptions.DetectCultist;
 import GameOptions.SheriffOptions.DetectMafia;
 import GameOptions.SheriffOptions.DetectMassMurderer;
+import Resources.GameMessage;
 
 // *****************************************************************
 // DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE

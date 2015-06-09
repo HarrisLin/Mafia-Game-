@@ -11,7 +11,6 @@ import org.junit.Test;
 import GameEngine.CannotGetPlayerException;
 import GameEngine.GameEngine;
 import GameEngine.Player;
-import GameEngine.Character;
 
 public class Detective_Test {
 

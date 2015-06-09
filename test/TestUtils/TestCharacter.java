@@ -3,8 +3,8 @@ package TestUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import Character.Character;
 import Enumerators.Roles;
-import GameEngine.Character;
 import GameEngine.Player;
 
 public class TestCharacter extends Character {

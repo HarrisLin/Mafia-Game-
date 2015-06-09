@@ -8,9 +8,10 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Test;
 
+import Character.Character;
 import Enumerators.Roles;
 import GameEngine.GameEngine;
-import GameEngine.DatabaseManager;
+import Resources.DatabaseManager;
 import TestUtils.TestCharacter;
 
 public class DatabaseManager_PrivateMethods_Test {

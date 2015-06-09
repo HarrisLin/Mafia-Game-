@@ -3,10 +3,9 @@ package Character;
 import java.util.List;
 
 import Enumerators.Roles;
-import GameEngine.Character;
 import GameEngine.GameEngine;
-import GameEngine.GameMessage;
 import GameEngine.Player;
+import Resources.GameMessage;
 
 public class Mafioso extends Character {
 

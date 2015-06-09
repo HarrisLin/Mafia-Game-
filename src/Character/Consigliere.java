@@ -2,11 +2,10 @@ package Character;
 
 import Enumerators.Roles;
 import GameEngine.CannotGetPlayerException;
-import GameEngine.Character;
-import GameEngine.GameMessage;
-import GameEngine.Player;
 import GameEngine.GameEngine;
+import GameEngine.Player;
 import GameOptions.ConsigliereOptions.DetectRole;
+import Resources.GameMessage;
 
 /**
  * The consigliere investigates a single Player target to discover his/her role

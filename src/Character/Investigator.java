@@ -2,11 +2,10 @@ package Character;
 
 import Enumerators.Roles;
 import GameEngine.CannotGetPlayerException;
-import GameEngine.Character;
-import GameEngine.GameMessage;
-import GameEngine.Player;
 import GameEngine.GameEngine;
+import GameEngine.Player;
 import GameOptions.InvestigatorOptions.DetectRole;
+import Resources.GameMessage;
 
 // *****************************************************************
 // DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE

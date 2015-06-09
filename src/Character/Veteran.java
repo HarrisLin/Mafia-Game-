@@ -3,7 +3,6 @@ package Character;
 import java.util.List;
 
 import Enumerators.Roles;
-import GameEngine.Character;
 import GameEngine.GameEngine;
 import GameEngine.Player;
 

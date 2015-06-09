@@ -13,11 +13,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import Character.Character;
 import Character.Godfather;
 import Character.Investigator;
 import Character.Mafioso;
 import GameEngine.GameEngine;
-import GameEngine.DatabaseManager;
+import Resources.DatabaseManager;
 
 public class DatabaseManager_Test {
 

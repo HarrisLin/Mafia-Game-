@@ -9,8 +9,8 @@ import org.junit.Test;
 
 import GameEngine.CannotGetPlayerException;
 import GameEngine.GameEngine;
-import GameEngine.GameMessage;
 import GameEngine.Player;
+import Resources.GameMessage;
 
 public class Arsonist_Test {
 	

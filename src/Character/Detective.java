@@ -4,10 +4,9 @@ import java.util.List;
 
 import Enumerators.Roles;
 import GameEngine.CannotGetPlayerException;
-import GameEngine.Character;
 import GameEngine.GameEngine;
-import GameEngine.GameMessage;
 import GameEngine.Player;
+import Resources.GameMessage;
 /**
  * Detective check who one character visited that night
  * @author Eleanor Wong

@@ -6,7 +6,7 @@ import java.util.List;
 import java.io.*;
 
 import GameEngine.GameEngine;
-import GameEngine.GameMessage;
+import Resources.GameMessage;
 import Enumerators.CLInput;
 
 /**
@@ -15,7 +15,7 @@ import Enumerators.CLInput;
  * @author pacified
  *
  */
-public class Server extends Thread {
+public class MafiaMain extends Thread {
 	protected static boolean serverContinue;
 	protected Socket clientSocket;
 
@@ -61,7 +61,7 @@ public class Server extends Thread {
 	 * 
 	 * @param clientSoc
 	 */
-	private Server(Socket clientSoc) {
+	private MafiaMain(Socket clientSoc) {
 		clientSocket = clientSoc;
 		start();
 		try {

@@ -1,8 +1,7 @@
 package Character;
 
-import GameEngine.Character;
-import GameEngine.Player;
 import Enumerators.Roles;
+import GameEngine.Player;
 
 public class Cultist extends Character {
 

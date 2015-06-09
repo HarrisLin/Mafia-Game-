@@ -1,7 +1,6 @@
 package Character;
 
 import Enumerators.Roles;
-import GameEngine.Character;
 import GameEngine.Player;
 
 public class MassMurderer extends Character {

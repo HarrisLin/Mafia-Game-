@@ -8,6 +8,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import Character.Character;
+
 public class AssignAllPlayers_Test {
 	
 	List<Player> playerList;

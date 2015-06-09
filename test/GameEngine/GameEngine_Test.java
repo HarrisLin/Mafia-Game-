@@ -13,9 +13,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import Character.Character;
 import Character.Godfather;
 import Character.Investigator;
 import Character.Mafioso;
+import Resources.DatabaseManager;
 
 public class GameEngine_Test {
 	
