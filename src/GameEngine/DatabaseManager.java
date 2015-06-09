@@ -128,6 +128,9 @@ public class DatabaseManager {
 				if (last_will_string.equals("NULL") == false ){
 					imported_character.updateLastWill(last_will_string);
 				}
+				if (lynch_string.equals("NULL") == false ){
+					imported_character.vote(Player.get(lynch_string));
+				}
 				if (doused_bool == true) {
 					imported_character.douse();
 				}
@@ -260,7 +263,7 @@ public class DatabaseManager {
 	}
 	
 	private static String getCharacterName(List<Player> player) {
-		if (player.get(0) == null) {
+		if (player.isEmpty()) {
 			return "NULL";
 		} else {
 			return player.get(0).getName();
