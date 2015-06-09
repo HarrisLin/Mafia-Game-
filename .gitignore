@@ -2,11 +2,6 @@
 /.idea/
 .idea/
 *.iml
-<<<<<<< HEAD
 /bin/
-=======
-*.class
 .classpath
 .project
-/bin/
->>>>>>> origin
