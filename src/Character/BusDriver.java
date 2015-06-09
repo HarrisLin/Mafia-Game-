@@ -59,16 +59,16 @@ public class BusDriver extends Character {
 		List<Player> targets = getTarget();
 
 		if (getTarget().size() != 2) {
-			return GameMessage.NO_ACTION();
+			return GameMessage.NO_ACTION;
 		}
 
 		if (!GameEngine.getCharacter(targets.get(0)).isAlive()
 				|| !GameEngine.getCharacter(targets.get(1)).isAlive()) {
-			return GameMessage.TARGET_DEAD();
+			return GameMessage.TARGET_DEAD;
 		}
 
 		if (this.isRoleBlocked()) {
-			return GameMessage.NO_FEEDBACK();
+			return GameMessage.ROLE_BLOCKED;
 		}
 
 		GameEngine.getCharacter(targets.get(0)).addVisitor(getPlayer());
@@ -90,6 +90,6 @@ public class BusDriver extends Character {
 				character.setTarget(players);	
 			}
 		}
-		return GameMessage.NO_FEEDBACK();
+		return GameMessage.BUS_DRIVER_FEEDBACK;
 	}
 }
