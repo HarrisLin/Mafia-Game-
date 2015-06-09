@@ -32,16 +32,14 @@ public class Player {
 	 * 
 	 * @param name
 	 *            The human name of a player
-	 * @return A Player if the name is registered, throws exception if the name
-	 *         is not registered
-	 * @throws CannotGetPlayerException
+	 * @return A Player if the name is registered, returns null if 
+	 * 		player is not registered
 	 */
-	public static Player get(String name) throws CannotGetPlayerException {
+	public static Player get(String name){
 		if (valid_names.contains(name)) {
-			Player player = new Player(name);
-			return player;
+			return new Player(name);
 		} else {
-			throw new CannotGetPlayerException("Player is not a valid name");
+			return null;
 		}
 	}
 	

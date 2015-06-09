@@ -35,7 +35,7 @@ public class GameEngine {
 	// Class
 	private static List<Character> alive_player = new ArrayList<Character>();
 	private static List<Character> dead_player = new ArrayList<Character>();
-
+	
 	// ---------------------------------------------------------
 	// GET INFORMATION METHODS
 	// ---------------------------------------------------------
