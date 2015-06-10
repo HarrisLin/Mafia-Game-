@@ -62,8 +62,7 @@ public class CharacterFactory {
 			break;
 		case Interrogator:
 			break;
-		case Investigator:
-			break;
+		case Investigator: return new Investigator(player);
 		case Jailor:
 			break;
 		case Janitor:

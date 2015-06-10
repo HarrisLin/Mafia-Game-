@@ -125,7 +125,16 @@ public class GameEngine {
 		public static String startNewDay() {
 			return GameManagement.startNewDay(player_character_map, alive_players);
 		}
-
+		
+		/**
+		 * Performs night actions
+		 * 
+		 * @return appropriate game message string
+		 */
+		public static String performNightActions() {
+			return GameManagement.performNightActions(player_character_map, alive_players);
+		}
+		
 		/**
 		 * Starts the lynch
 		 * 
@@ -296,7 +305,7 @@ public class GameEngine {
 		 * @return appropriate game message string
 		 */
 		public static String showResult(Player player) {
-			return null;
+			return GameInformation.showResult(player_character_map, player);
 		}
 		/**
 		 * Show the role of the player 

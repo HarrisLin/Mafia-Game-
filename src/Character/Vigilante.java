@@ -15,25 +15,26 @@ public class Vigilante extends Character {
 		shots = 3;
 	}
 
+	@Override
 	public boolean performAction(List<Player> alive_player, Character target) {
 		if (this.character_status.isBlocked()) {
 			shots--;
-			result = GameMessage.Character.BLOCKED(this.player)
-					+ GameMessage.Character.SHOTS_LEFT(shots);
+			result = GameMessage.Character.BLOCKED(player)
+					+ GameMessage.Character.SHOTS_LEFT(player, shots);
 			return true;
 		}
 		if (shots <= 0) {
-			result = GameMessage.Character.SHOTS_LEFT(shots);
+			result = GameMessage.Character.SHOTS_LEFT(player, shots);
 			return true;
 		}
 		target.character_status.getVisitors().add(player);
 		shots--;
 		if (!target.character_status.isHealed()) {
 			alive_player.remove(target.player);
-			result = GameMessage.Character.VIGILANTE_SUCCESS(shots);
+			result = GameMessage.Character.VIGILANTE_SUCCESS(player, shots);
 			return true;
 		} else {
-			result = GameMessage.Character.VIGILANTE_FAIL(shots);
+			result = GameMessage.Character.VIGILANTE_FAIL(player, shots);
 			return true;
 		}
 	}

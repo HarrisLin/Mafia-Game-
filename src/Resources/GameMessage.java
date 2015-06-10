@@ -129,13 +129,13 @@ public class GameMessage {
 			return null;
 		}
 
-		//Successfully performed lynch
+		// Successfully performed lynch
 		public static String LYNCH_SUCCESS() {
 			// TODO Auto-generated method stub
 			return null;
 		}
 
-		//Failed to perform lynch
+		// Failed to perform lynch
 		public static String LYNCH_FAIL() {
 			// TODO Auto-generated method stub
 			return null;
@@ -165,13 +165,13 @@ public class GameMessage {
 			return null;
 		}
 
-		//Successfully revealed mayor
+		// Successfully revealed mayor
 		public static String MAYOR_REVEALED() {
 			// TODO Auto-generated method stub
 			return null;
 		}
 
-		//Failed to reveal mayor
+		// Failed to reveal mayor
 		public static String MAYOR_FAIL() {
 			// TODO Auto-generated method stub
 			return null;
@@ -182,7 +182,7 @@ public class GameMessage {
 	 * Information for user
 	 */
 	public static class Information {
-		//List alive players
+		// List alive players
 		public static String LIST_ALIVE_PLAYERS(List<Player> alive_players) {
 			StringBuilder result = new StringBuilder();
 			result.append("Players currently alive are: ");
@@ -200,44 +200,48 @@ public class GameMessage {
 		public static String SHOW_ROLE(Roles role) {
 			return "Your role is: " + role.toString() + ".";
 		}
-		
+
+		public static String SHOW_RESULT(String result) {
+			return result;
+		}
+
 	}
-	
+
 	/**
 	 * Character feedback for log.
 	 */
 	public static class Character {
-		//Character is blocked and cannot perform action
+		// Character is blocked and cannot perform action
 		public static String BLOCKED(Player player) {
 			return player.toString()
 					+ " is blocked and cannot perform night action.";
 		}
 
-		//Successfully healed target
+		// Successfully healed target
 		public static String DOCTOR_SUCCESS(Player player, Player target) {
 			return "Doctor " + player.toString() + " successfully healed "
 					+ target.toString() + ".";
 		}
 
-		//Shots remaining
-		public static String SHOTS_LEFT(int shots) {
+		// Shots remaining
+		public static String SHOTS_LEFT(Player player, int shots) {
 			// TODO Auto-generated method stub
 			return null;
 		}
 
-		//Successful assassination
-		public static String VIGILANTE_SUCCESS(int shots) {
+		// Successful assassination
+		public static String VIGILANTE_SUCCESS(Player player, int shots) {
 			// TODO Auto-generated method stub
 			return null;
 		}
 
-		//Failed assassination
-		public static String VIGILANTE_FAIL(int shots) {
+		// Failed assassination
+		public static String VIGILANTE_FAIL(Player player, int shots) {
 			// TODO Auto-generated method stub
 			return null;
 		}
 
-		//No action taken by player
+		// No action taken by player
 		public static String NO_ACTION(Player player) {
 			// TODO Auto-generated method stub
 			return null;
@@ -251,6 +255,12 @@ public class GameMessage {
 		public static String MAYOR_NOT_REVEALED(Player player) {
 			// TODO Auto-generated method stub
 			return null;
+		}
+
+		public static String INVESTIGATION_SUCCESS(Player player,
+				Player target, String investigation) {
+			return player + " investigated " + target + " and got a result of "
+					+ investigation + ".";
 		}
 
 	}

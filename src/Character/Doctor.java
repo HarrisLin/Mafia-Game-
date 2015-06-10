@@ -12,6 +12,7 @@ public class Doctor extends Character {
 		super(Roles.Doctor, player);
 	}
 
+	@Override
 	public boolean performAction(Character target) {
 		if(this.character_status.isBlocked()) {
 			result = GameMessage.Character.BLOCKED(player);

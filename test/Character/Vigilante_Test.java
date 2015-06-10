@@ -39,7 +39,7 @@ public class Vigilante_Test {
 		Player vigilante2 = GameRegistration.get("Eleanor");
 		GameEngine.Inputs.setTarget(vigilante1, vigilante2);
 		GameEngine.Inputs.setTarget(vigilante2, vigilante1);
-		GameEngine.Management.startNewDay();
+		GameEngine.Management.performNightActions();
 		assertFalse(GameEngine.Information.listAlivePlayers().contains("Harris"));
 		assertFalse(GameEngine.Information.listAlivePlayers().contains("Eleanor"));
 	}
