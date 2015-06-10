@@ -34,13 +34,7 @@ public class Mayor extends Character {
 	public int getVoteCount() {
 		return vote_count;
 	}
-
-	@Override
-	public boolean performAction(Character target) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
+	
 	@Override
 	public boolean performAction(List<Player> alive_player, Character target) {
 		// TODO Auto-generated method stub

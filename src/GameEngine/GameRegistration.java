@@ -88,13 +88,12 @@ public class GameRegistration {
 	}
 
 	/**
-	 * Get player with name
+	 * Get player with name (TESTING ONLY)
 	 * 
 	 * @param name
 	 * @return player if valid, else null
 	 */
-	// For testing purposes. May not be needed after ShellCommands/MafiaMain is
-	// implemented.
+	// For testing purposes. Not to be used anywhere else in the code.
 	public static Player get(String name) {
 		for (Player player : valid_players) {
 			if (player.getName().equals(name)) {

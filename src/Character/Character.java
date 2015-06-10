@@ -81,7 +81,6 @@ public abstract class Character {
 	 * @param target
 	 * @return game log string message
 	 */
-	public abstract boolean performAction(Character target);
 	public abstract boolean performAction(List<Player> alive_player, Character target);
 	
 	/**

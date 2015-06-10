@@ -82,12 +82,22 @@ public class GameEngine {
 		 * @return appropriate game message string
 		 */
 		public static String startGame(List<Roles> role_list) {
-			return GameManagement.startGame(role_list, player_character_map, alive_players);
+			return GameManagement.startGame(role_list, player_character_map,
+					alive_players);
 		}
-		
-		//For testing purposes. Add option for not shuffling player order.
+
+		/**
+		 * Start a new game with no shuffle option (TESTING ONLY).
+		 * 
+		 * @param role_list
+		 * @param option
+		 * @return
+		 */
+		// For testing purposes. Add option for not shuffling player order. Not
+		// to be used anywhere else in the code
 		public static String startGame(List<Roles> role_list, int option) {
-			return GameManagement.startGame(role_list, player_character_map, alive_players, option);
+			return GameManagement.startGame(role_list, player_character_map,
+					alive_players, option);
 		}
 
 		/**
@@ -123,25 +133,28 @@ public class GameEngine {
 		 * @return appropriate game message string
 		 */
 		public static String startNewDay() {
-			return GameManagement.startNewDay(player_character_map, alive_players);
+			return GameManagement.startNewDay(player_character_map,
+					alive_players);
 		}
-		
+
 		/**
 		 * Performs night actions
 		 * 
 		 * @return appropriate game message string
 		 */
 		public static String performNightActions() {
-			return GameManagement.performNightActions(player_character_map, alive_players);
+			return GameManagement.performNightActions(player_character_map,
+					alive_players);
 		}
-		
+
 		/**
 		 * Starts the lynch
 		 * 
 		 * @return appropriate game message string
 		 */
 		public static String startLynch() {
-			return GameManagement.startLynch(player_character_map, alive_players);
+			return GameManagement.startLynch(player_character_map,
+					alive_players);
 		}
 
 		/**
@@ -170,7 +183,7 @@ public class GameEngine {
 		public static String updateLastWill(Player player, String lastwill) {
 			return GameLastWillEngine.updateLastWill(player, lastwill);
 		}
-		
+
 		/**
 		 * Sets player's vote
 		 * 
@@ -192,7 +205,7 @@ public class GameEngine {
 		public static String setTarget(Player player, Player target) {
 			return GameTargetEngine.setTarget(player, target);
 		}
-		
+
 		/**
 		 * Sets player's target
 		 * 
@@ -201,14 +214,22 @@ public class GameEngine {
 		 * @param target2
 		 * @return appropriate game message string
 		 */
-		public static String setTarget(Player player, Player target1, Player target2) {
+		public static String setTarget(Player player, Player target1,
+				Player target2) {
 			return GameTargetEngine.setTarget(player, target1, target2);
 		}
 
+		/**
+		 * If player is mayor, reveal mayor
+		 * 
+		 * @param player
+		 * @return appropriate game message string
+		 */
 		public static String revealMayor(Player player) {
 			Character character = player_character_map.get(player);
 			return GameTargetEngine.revealMayor(player, character);
 		}
+
 		/**
 		 * Taunt a player
 		 * 
@@ -235,6 +256,7 @@ public class GameEngine {
 		public static String listAllPlayers() {
 			return null;
 		}
+
 		/**
 		 * Lists all alive players in the game
 		 * 
@@ -307,8 +329,9 @@ public class GameEngine {
 		public static String showResult(Player player) {
 			return GameInformation.showResult(player_character_map, player);
 		}
+
 		/**
-		 * Show the role of the player 
+		 * Show the role of the player
 		 * 
 		 * @param player
 		 * @return appropriate game message string
@@ -316,7 +339,7 @@ public class GameEngine {
 		public static String showRole(Player player) {
 			return GameInformation.showRole(player_character_map, player);
 		}
-		
+
 		/**
 		 * Show shots left for vigilante or veteran
 		 * 
@@ -326,7 +349,7 @@ public class GameEngine {
 		public static String showShotsLeft(Player player) {
 			return null;
 		}
-		
+
 		/**
 		 * Show game status
 		 * 
@@ -342,7 +365,7 @@ public class GameEngine {
 		 * @return appropriate game message string
 		 */
 		public static String adminGameLog() {
-			//This should return full report.
+			// This should return full report.
 			// - Player to character map.
 			// - Currently alive, currently dead
 			// - Player targets, votes, for each day.

@@ -182,8 +182,9 @@ public class GameManagement {
 				case Doctor:
 				case Investigator:
 					if (!target_map.get(player).isEmpty()) {
-						character.performAction(player_character_map
-								.get(target_map.get(player).get(0)));
+						character.performAction(alive_players,
+								player_character_map.get(target_map.get(player)
+										.get(0)));
 						result.append(character.getResult());
 						result.append("\n");
 					} else {

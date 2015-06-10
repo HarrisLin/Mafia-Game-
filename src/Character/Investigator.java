@@ -18,7 +18,7 @@ public class Investigator extends Character {
 	}
 
 	@Override
-	public boolean performAction(Character target) {
+	public boolean performAction(List<Player> alive_player, Character target) {
 		if (this.character_status.isBlocked()) {
 			result = GameMessage.Character.BLOCKED(player);
 			return true;
@@ -30,12 +30,6 @@ public class Investigator extends Character {
 		result = GameMessage.Character.INVESTIGATION_SUCCESS(player,
 				target.player, investigation_list.get(index).toString());
 		return true;
-	}
-
-	@Override
-	public boolean performAction(List<Player> alive_player, Character target) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	private enum Investigations {

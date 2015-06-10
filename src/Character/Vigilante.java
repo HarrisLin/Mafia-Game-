@@ -38,10 +38,4 @@ public class Vigilante extends Character {
 			return true;
 		}
 	}
-
-	@Override
-	public boolean performAction(Character target) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 }

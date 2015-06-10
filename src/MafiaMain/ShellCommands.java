@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import GameEngine.GameRegistration.Player;
+import Resources.GameMessage;
 /**
  * Shell Commands (formerly Mafia Main) processes commands before they enter game engine.
  */
@@ -12,8 +13,75 @@ public class ShellCommands {
 	List<Player> player_list = new ArrayList<Player>();
 	boolean in_game = false;
 	
-	public static void main(String[] args) {
-		
+	public static int main(String[] args) {
+		if(args.length < 2) {
+			GameMessage.CommandFilter.BAD_LENGTH();
+			return GameMessage.exit_number;
+		}
+		CLInput CLICommand = CLInput.fromString(args[1]);
+		switch(CLICommand) {
+		case AddPlayer:
+			break;
+		case Admin:
+			break;
+		case AdminGameLog:
+			break;
+		case BadInput:
+			break;
+		case DelayGame:
+			break;
+		case ForceEndGame:
+			break;
+		case ListAlivePlayers:
+			break;
+		case ListDeadPlayers:
+			break;
+		case ListPlayers:
+			break;
+		case PauseGame:
+			break;
+		case RemoveAllPlayers:
+			break;
+		case RemovePlayer:
+			break;
+		case ResumeGame:
+			break;
+		case RevealMayor:
+			break;
+		case SetLastWill:
+			break;
+		case SetTarget:
+			break;
+		case SetVote:
+			break;
+		case ShowDaily:
+			break;
+		case ShowGameStatus:
+			break;
+		case ShowLastWill:
+			break;
+		case ShowResult:
+			break;
+		case ShowRole:
+			break;
+		case ShowShotsLeft:
+			break;
+		case ShowTarget:
+			break;
+		case ShowVote:
+			break;
+		case StartGame:
+			break;
+		case StartLynch:
+			break;
+		case StartNewDay:
+			break;
+		case TauntPlayer:
+			break;
+		default:
+			break;		
+		}		
+		return GameMessage.exit_number;
 	}
 
 	public enum CLInput {

@@ -17,6 +17,20 @@ public class GameMessage {
 	public static int exit_number;
 
 	/**
+	 * The Command Filter class stores all the strings related to command
+	 * filtering.
+	 */
+	public static class CommandFilter {
+
+		//Input is of bad length
+		public static void BAD_LENGTH() {
+			// TODO Auto-generated method stub
+			
+		}
+
+	}
+
+	/**
 	 * The Registration class stores all messages used during registration.
 	 */
 	public static class Registration {

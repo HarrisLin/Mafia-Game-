@@ -13,7 +13,7 @@ public class Doctor extends Character {
 	}
 
 	@Override
-	public boolean performAction(Character target) {
+	public boolean performAction(List<Player> alive_player, Character target) {
 		if(this.character_status.isBlocked()) {
 			result = GameMessage.Character.BLOCKED(player);
 			return true;
@@ -22,11 +22,5 @@ public class Doctor extends Character {
 		target.character_status.heal();
 		result = GameMessage.Character.DOCTOR_SUCCESS(player, target.player);
 		return true;
-	}
-
-	@Override
-	public boolean performAction(List<Player> alive_player, Character target) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 }
