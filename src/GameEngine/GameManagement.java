@@ -36,10 +36,12 @@ public class GameManagement {
 		}
 	}
 
+	//for testing purposes
 	protected static String startGame(List<Roles> role_list,
 			Map<Player, Character> player_character_map,
 			List<Player> alive_players, int option) {
-		if (assignAllCharacters(role_list, player_character_map, alive_players, option)) {
+		if (assignAllCharacters(role_list, player_character_map, alive_players,
+				option)) {
 			return GameMessage.Management.NEWGAME_SUCCESS();
 		} else {
 			return GameMessage.Management.NEWGAME_FAIL();
@@ -93,6 +95,8 @@ public class GameManagement {
 		for (int i = 0; i < alive_players.size(); i++) {
 			player_character_map.put(alive_players.get(i), CharacterFactory
 					.makeCharacter(role_list.get(i), alive_players.get(i)));
+			if(role_list.get(i).equals(Roles.Mayor)) {
+			}
 		}
 		GameTargetEngine.setupTargetMap(new ArrayList<Player>(
 				player_character_map.keySet()));
@@ -103,6 +107,7 @@ public class GameManagement {
 		return true;
 	}
 
+	//For testing purposes
 	private static boolean assignAllCharacters(List<Roles> role_list,
 			Map<Player, Character> player_character_map,
 			List<Player> alive_players, int option) {
@@ -115,6 +120,9 @@ public class GameManagement {
 		for (int i = 0; i < alive_players.size(); i++) {
 			player_character_map.put(alive_players.get(i), CharacterFactory
 					.makeCharacter(role_list.get(i), alive_players.get(i)));
+			if(role_list.get(i).equals(Roles.Mayor)) {
+				GameVoteEngine.addMayor(alive_players.get(i));
+			}
 		}
 		GameTargetEngine.setupTargetMap(new ArrayList<Player>(
 				player_character_map.keySet()));
@@ -135,29 +143,52 @@ public class GameManagement {
 	private static boolean performNightActions(
 			Map<Player, Character> player_character_map,
 			List<Player> alive_players) {
+		StringBuilder result = new StringBuilder();
 		List<Player> all_players = new ArrayList<Player>(alive_players);
 		Map<Player, List<Player>> target_map = GameTargetEngine.getTargetMap();
 		for (Player player : all_players) {
 			Character character = player_character_map.get(player);
+			//Hierarchy of type doctor, etc.
 			if (character.getRole().equals(Roles.Doctor)) {
 				if (!target_map.get(player).isEmpty()) {
 					character.performAction(player_character_map.get(target_map
 							.get(player).get(0)));
+					result.append(character.getResult());
+					result.append("\n");
+				} else {
+					character.updateResult(GameMessage.Character
+							.NO_ACTION(player));
+					result.append(character.getResult());
+					result.append("\n");
 				}
 			}
 		}
+		//Hierarchy of type vigilante/kill characters, etc.
 		for (Player player : all_players) {
 			Character character = player_character_map.get(player);
 			if (character.getRole().equals(Roles.Vigilante)) {
 				if (!target_map.get(player).isEmpty()) {
 					character.performAction(alive_players, player_character_map
 							.get(target_map.get(player).get(0)));
+					result.append(character.getResult());
+					result.append("\n");
+				} else {
+					character.updateResult(GameMessage.Character
+							.NO_ACTION(player));
+					result.append(character.getResult());
+					result.append("\n");
 				}
 			}
 		}
 		// Perform each player's night actions.
 		// Each character performAction returns a String.
 		// Append the strings and save it as a game log.
+		// This string does not all send back to user.
+		// Clear target map and vote map
+		GameTargetEngine.setupTargetMap(new ArrayList<Player>(
+				player_character_map.keySet()));
+		GameVoteEngine.setupVoteMap(new ArrayList<Player>(player_character_map
+				.keySet()));
 		return true;
 	}
 

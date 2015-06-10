@@ -13,6 +13,7 @@ public abstract class Character {
 	private final Roles role;
 	protected final Player player;
 	protected final CharacterStatus character_status;
+	protected String result; //Night action result
 	/**
 	 * Constructor
 	 * 
@@ -56,6 +57,23 @@ public abstract class Character {
 	public Roles getRole() {
 		return role;
 	}
+	
+	/**
+	 * Update night action result string
+	 * 
+	 * @return true
+	 */
+	public boolean updateResult(String result) {
+		this.result = result;
+		return true;
+	}
+	
+	/**
+	 * @return night action result string
+	 */
+	public String getResult() {
+		return result;
+	}
 
 	/**
 	 * Perform night action
@@ -63,8 +81,8 @@ public abstract class Character {
 	 * @param target
 	 * @return game log string message
 	 */
-	public abstract String performAction(Character target);
-	public abstract String performAction(List<Player> alive_player, Character target);
+	public abstract boolean performAction(Character target);
+	public abstract boolean performAction(List<Player> alive_player, Character target);
 	
 	/**
 	 * CharacterStatus saves all the the character status information.

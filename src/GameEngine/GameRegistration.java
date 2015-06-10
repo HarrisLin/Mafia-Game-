@@ -93,9 +93,11 @@ public class GameRegistration {
 	 * @param name
 	 * @return player if valid, else null
 	 */
+	// For testing purposes. May not be needed after ShellCommands/MafiaMain is
+	// implemented.
 	public static Player get(String name) {
-		for(Player player : valid_players) {
-			if(player.getName().equals(name)) {
+		for (Player player : valid_players) {
+			if (player.getName().equals(name)) {
 				return player;
 			}
 		}
@@ -130,7 +132,7 @@ public class GameRegistration {
 		public int hashCode() {
 			return name.hashCode();
 		}
-		
+
 		@Override
 		public String toString() {
 			return name;

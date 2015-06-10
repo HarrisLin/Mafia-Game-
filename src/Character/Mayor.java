@@ -4,6 +4,7 @@ import java.util.List;
 
 import Character.CharacterFactory.Roles;
 import GameEngine.GameRegistration.Player;
+import Resources.GameMessage;
 
 public class Mayor extends Character {
 	private boolean revealed;
@@ -11,6 +12,7 @@ public class Mayor extends Character {
 	
 	protected Mayor(Player player) {
 		super(Roles.Mayor, player);
+		result = GameMessage.Character.MAYOR_NOT_REVEALED(player);
 		revealed = false;
 		vote_count = 3;
 	}
@@ -19,6 +21,7 @@ public class Mayor extends Character {
 	 * Reveals mayor
 	 */
 	public boolean reveal() {
+		result = GameMessage.Character.MAYOR_REVEALED(player);
 		return revealed = true;
 	}
 	/**
@@ -33,14 +36,14 @@ public class Mayor extends Character {
 	}
 
 	@Override
-	public String performAction(Character target) {
+	public boolean performAction(Character target) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	@Override
-	public String performAction(List<Player> alive_player, Character target) {
+	public boolean performAction(List<Player> alive_player, Character target) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 }

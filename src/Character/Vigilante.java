@@ -15,28 +15,32 @@ public class Vigilante extends Character {
 		shots = 3;
 	}
 
-	public String performAction(List<Player> alive_player, Character target) {
+	public boolean performAction(List<Player> alive_player, Character target) {
 		if (this.character_status.isBlocked()) {
 			shots--;
-			return GameMessage.Character.BLOCKED(this.player)
+			result = GameMessage.Character.BLOCKED(this.player)
 					+ GameMessage.Character.SHOTS_LEFT(shots);
+			return true;
 		}
 		if (shots <= 0) {
-			return GameMessage.Character.SHOTS_LEFT(shots);
+			result = GameMessage.Character.SHOTS_LEFT(shots);
+			return true;
 		}
 		target.character_status.getVisitors().add(player);
 		shots--;
 		if (!target.character_status.isHealed()) {
 			alive_player.remove(target.player);
-			return GameMessage.Character.VIGILANTE_SUCCESS(shots);
+			result = GameMessage.Character.VIGILANTE_SUCCESS(shots);
+			return true;
 		} else {
-			return GameMessage.Character.VIGILANTE_FAIL(shots);
+			result = GameMessage.Character.VIGILANTE_FAIL(shots);
+			return true;
 		}
 	}
 
 	@Override
-	public String performAction(Character target) {
+	public boolean performAction(Character target) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 }

@@ -84,6 +84,8 @@ public class GameEngine {
 		public static String startGame(List<Roles> role_list) {
 			return GameManagement.startGame(role_list, player_character_map, alive_players);
 		}
+		
+		//For testing purposes. Add option for not shuffling player order.
 		public static String startGame(List<Roles> role_list, int option) {
 			return GameManagement.startGame(role_list, player_character_map, alive_players, option);
 		}
@@ -130,7 +132,7 @@ public class GameEngine {
 		 * @return appropriate game message string
 		 */
 		public static String startLynch() {
-			return null;
+			return GameManagement.startLynch(player_character_map, alive_players);
 		}
 
 		/**
@@ -282,12 +284,20 @@ public class GameEngine {
 		/**
 		 * Show the daily
 		 * 
-		 * @return appropriate game message strings
+		 * @return appropriate game message string
 		 */
 		public static String showDaily() {
 			return null;
 		}
 
+		/**
+		 * Show result of night action
+		 * 
+		 * @return appropriate game message string
+		 */
+		public static String showResult(Player player) {
+			return null;
+		}
 		/**
 		 * Show the role of the player 
 		 * 
@@ -296,6 +306,16 @@ public class GameEngine {
 		 */
 		public static String showRole(Player player) {
 			return GameInformation.showRole(player_character_map, player);
+		}
+		
+		/**
+		 * Show shots left for vigilante or veteran
+		 * 
+		 * @param player
+		 * @return appropriate game message string
+		 */
+		public static String showShotsLeft(Player player) {
+			return null;
 		}
 		
 		/**
@@ -312,7 +332,7 @@ public class GameEngine {
 		 * 
 		 * @return appropriate game message string
 		 */
-		public static String adminGameStatus() {
+		public static String adminGameLog() {
 			//This should return full report.
 			// - Player to character map.
 			// - Currently alive, currently dead

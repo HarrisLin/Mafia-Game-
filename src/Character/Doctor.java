@@ -12,18 +12,20 @@ public class Doctor extends Character {
 		super(Roles.Doctor, player);
 	}
 
-	public String performAction(Character target) {
+	public boolean performAction(Character target) {
 		if(this.character_status.isBlocked()) {
-			return GameMessage.Character.BLOCKED(player);
+			result = GameMessage.Character.BLOCKED(player);
+			return true;
 		}
 		target.character_status.getVisitors().add(player);
 		target.character_status.heal();
-		return GameMessage.Character.DOCTOR_SUCCESS(player, target.player);
+		result = GameMessage.Character.DOCTOR_SUCCESS(player, target.player);
+		return true;
 	}
 
 	@Override
-	public String performAction(List<Player> alive_player, Character target) {
+	public boolean performAction(List<Player> alive_player, Character target) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 }

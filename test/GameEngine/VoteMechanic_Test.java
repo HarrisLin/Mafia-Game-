@@ -1,4 +1,4 @@
-package Character;
+package GameEngine;
 
 import static org.junit.Assert.*;
 
@@ -8,13 +8,11 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import GameEngine.GameEngine;
-import GameEngine.GameRegistration;
-import GameEngine.GameRegistration.Player;
 import Character.CharacterFactory.Roles;
+import GameEngine.GameRegistration.Player;
 
-public class Doctor_Test {
-
+public class VoteMechanic_Test {
+	
 	@Before
 	public void setup() {
 		GameEngine.Registration.registerPlayer("Derek");
@@ -37,10 +35,10 @@ public class Doctor_Test {
 		Player doctor = GameRegistration.get("Derek");
 		Player vigilante = GameRegistration.get("Eleanor");
 		Player target = GameRegistration.get("Connie");
-		GameEngine.Inputs.setTarget(doctor, target);
-		GameEngine.Inputs.setTarget(vigilante, target);
-		GameEngine.Management.startNewDay();
-		assertTrue(GameEngine.Information.listAlivePlayers().contains("Connie"));
+		GameEngine.Inputs.setVote(doctor, target);
+		GameEngine.Inputs.setVote(vigilante, target);
+		GameEngine.Management.startLynch();
+		assertFalse(GameEngine.Information.listAlivePlayers().contains("Connie"));
 	}
 
 }

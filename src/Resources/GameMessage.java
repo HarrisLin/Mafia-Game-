@@ -237,5 +237,21 @@ public class GameMessage {
 			return null;
 		}
 
+		//No action taken by player
+		public static String NO_ACTION(Player player) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public static String MAYOR_REVEALED(Player player) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public static String MAYOR_NOT_REVEALED(Player player) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
 	}
 }

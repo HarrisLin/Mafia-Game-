@@ -13,7 +13,7 @@ import GameEngine.GameEngine;
 import GameEngine.GameRegistration;
 import GameEngine.GameRegistration.Player;
 
-public class Vigilante_Test {
+public class Mayor_Test {
 
 	@Before
 	public void setup() {
@@ -35,12 +35,25 @@ public class Vigilante_Test {
 	public void test() {
 		assertTrue(GameEngine.Information.listAlivePlayers().contains("Harris"));
 		assertTrue(GameEngine.Information.listAlivePlayers().contains("Eleanor"));
+		Player doctor1 = GameRegistration.get("Derek");
+		Player doctor2 = GameRegistration.get("Andy");
+		Player mayor = GameRegistration.get("Connie");
 		Player vigilante1 = GameRegistration.get("Harris");
 		Player vigilante2 = GameRegistration.get("Eleanor");
-		GameEngine.Inputs.setTarget(vigilante1, vigilante2);
-		GameEngine.Inputs.setTarget(vigilante2, vigilante1);
+		GameEngine.Inputs.setVote(doctor1, vigilante1);
+		GameEngine.Inputs.setVote(doctor2, vigilante1);
+		GameEngine.Inputs.setVote(mayor, vigilante2);
+		GameEngine.Management.startLynch();
 		GameEngine.Management.startNewDay();
 		assertFalse(GameEngine.Information.listAlivePlayers().contains("Harris"));
-		assertFalse(GameEngine.Information.listAlivePlayers().contains("Eleanor"));
+		assertTrue(GameEngine.Information.listAlivePlayers().contains("Eleanor"));
+		GameEngine.Inputs.revealMayor(mayor);
+		GameEngine.Inputs.setVote(doctor1, vigilante2);
+		GameEngine.Inputs.setVote(doctor2, vigilante2);
+		GameEngine.Inputs.setVote(mayor, doctor1);
+		GameEngine.Management.startLynch();
+		assertFalse(GameEngine.Information.listAlivePlayers().contains("Derek"));
+		assertTrue(GameEngine.Information.listAlivePlayers().contains("Connie"));
 	}
+
 }
