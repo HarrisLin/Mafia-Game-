@@ -8,7 +8,7 @@ import GameEngine.GameRegistration.Player;
 /**
  * The GameMessage class stores all messages used in the game.
  */
-public class GameMessage {
+public class GameLog {
 
 	/**
 	 * Depending on which type of message is produced, there is an exit number
@@ -154,6 +154,16 @@ public class GameMessage {
 			// TODO Auto-generated method stub
 			return null;
 		}
+
+		public static String NEWDAY_SUCCESS() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public static String NEWDAY_FAIL() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	}
 
 	/**
@@ -168,25 +178,57 @@ public class GameMessage {
 		}
 
 		// Successfully updated last will
-		public static String LASTWILL_SUCCESS() {
+		public static String LASTWILL_SUCCESS(Player player, String lastwill) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
+		public static String LASTWILL_FAIL(Player player, String lastwill) {
 			// TODO Auto-generated method stub
 			return null;
 		}
 
 		// Successfully added targets
-		public static String TARGET_SUCCESS() {
+		public static String TARGET_SUCCESS(Player player, Player target) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
+		public static String TARGET_SUCCESS(Player player, Player target1,
+				Player target2) {
 			// TODO Auto-generated method stub
 			return null;
 		}
 
 		// Successfully revealed mayor
-		public static String MAYOR_REVEALED() {
+		public static String MAYOR_REVEALED(Player player) {
 			// TODO Auto-generated method stub
 			return null;
 		}
 
 		// Failed to reveal mayor
-		public static String MAYOR_FAIL() {
+		public static String MAYOR_FAIL(Player player) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public static String VOTE_SUCCESS(Player player, Player target) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public static String VOTE_FAIL(Player player, Player target) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public static String TARGET_FAIL(Player player, Player target) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public static String TARGET_FAIL(Player player, Player target1,
+				Player target2) {
 			// TODO Auto-generated method stub
 			return null;
 		}

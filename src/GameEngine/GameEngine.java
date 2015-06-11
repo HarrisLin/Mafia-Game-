@@ -16,7 +16,7 @@ import GameEngine.GameRegistration.Player;
  * @class 1. Game Registration
  * @class 2. Game Management
  * @class 3. Game Inputs
- * @class 4. Game Information
+ * @class 4. Game Information (TO BE REMOVED)
  */
 public class GameEngine {
 
@@ -243,7 +243,7 @@ public class GameEngine {
 	}
 
 	/**
-	 * 4. Game Information
+	 * 4. Game Information (TO BE REMOVED)
 	 * 
 	 * User tool for getting current game status
 	 */

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import GameEngine.GameRegistration.Player;
-import Resources.GameMessage;
+import Resources.GameLog;
 /**
  * Game Engine's component for storing votes
  */
@@ -27,18 +27,6 @@ public class GameVoteEngine {
 			player_vote_map.put(player, null);
 		}
 		return true;
-	}
-	
-	/**
-	 * Set vote
-	 * 
-	 * @param player
-	 * @param target
-	 * @return appropriate game message string
-	 */
-	protected static String setVote(Player player, Player target) {
-		player_vote_map.put(player, target);
-		return GameMessage.Inputs.TARGET_SUCCESS();
 	}
 	
 	/**
@@ -64,5 +52,20 @@ public class GameVoteEngine {
 	 */
 	protected static List<Player> getMayors() {
 		return mayor_list;
+	}
+	
+	/**
+	 * Set vote
+	 * 
+	 * @param player
+	 * @param target
+	 * @return appropriate game message string
+	 */
+	protected static String setVote(Player player, Player target) {
+		if(player_vote_map.put(player, target) != null) {
+			return GameLog.Inputs.VOTE_SUCCESS(player, target);
+		} else {
+			return GameLog.Inputs.VOTE_FAIL(player, target);
+		}
 	}
 }

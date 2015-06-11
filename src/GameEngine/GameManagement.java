@@ -11,7 +11,7 @@ import Character.CharacterFactory;
 import Character.CharacterFactory.Roles;
 import Character.Mayor;
 import GameEngine.GameRegistration.Player;
-import Resources.GameMessage;
+import Resources.GameLog;
 
 /**
  * Game Engine's component for game management
@@ -31,21 +31,21 @@ public class GameManagement {
 			List<Player> alive_players) {
 		if (Management.assignAllCharacters(role_list, player_character_map,
 				alive_players)) {
-			return GameMessage.Management.NEWGAME_SUCCESS();
+			return GameLog.Management.NEWGAME_SUCCESS();
 		} else {
-			return GameMessage.Management.NEWGAME_FAIL();
+			return GameLog.Management.NEWGAME_FAIL();
 		}
 	}
 
-	// for testing purposes
+	// for testing purposes ***will be removed**
 	protected static String startGame(List<Roles> role_list,
 			Map<Player, Character> player_character_map,
 			List<Player> alive_players, int option) {
 		if (Management.assignAllCharacters(role_list, player_character_map,
 				alive_players, option)) {
-			return GameMessage.Management.NEWGAME_SUCCESS();
+			return GameLog.Management.NEWGAME_SUCCESS();
 		} else {
-			return GameMessage.Management.NEWGAME_FAIL();
+			return GameLog.Management.NEWGAME_FAIL();
 		}
 	}
 
@@ -58,9 +58,9 @@ public class GameManagement {
 			Map<Player, Character> player_character_map,
 			List<Player> alive_players) {
 		if (Management.startNewDay(player_character_map, alive_players)) {
-			return GameMessage.Management.LYNCH_SUCCESS();
+			return GameLog.Management.NEWDAY_SUCCESS();
 		} else {
-			return GameMessage.Management.LYNCH_FAIL();
+			return GameLog.Management.NEWDAY_FAIL();
 		}
 	}
 
@@ -75,9 +75,9 @@ public class GameManagement {
 			Map<Player, Character> player_character_map,
 			List<Player> alive_players) {
 		if (Management.performNightActions(player_character_map, alive_players)) {
-			return GameMessage.Management.NIGHTACTION_SUCCESS();
+			return GameLog.Management.NIGHTACTION_SUCCESS();
 		} else {
-			return GameMessage.Management.NIGHTACTION_FAIL();
+			return GameLog.Management.NIGHTACTION_FAIL();
 		}
 	}
 
@@ -90,9 +90,9 @@ public class GameManagement {
 			Map<Player, Character> player_character_map,
 			List<Player> alive_players) {
 		if (Management.countLynchVote(player_character_map, alive_players)) {
-			return GameMessage.Management.LYNCH_SUCCESS();
+			return GameLog.Management.LYNCH_SUCCESS();
 		} else {
-			return GameMessage.Management.LYNCH_FAIL();
+			return GameLog.Management.LYNCH_FAIL();
 		}
 	}
 
@@ -115,6 +115,7 @@ public class GameManagement {
 				player_character_map.put(alive_players.get(i), CharacterFactory
 						.makeCharacter(role_list.get(i), alive_players.get(i)));
 				if (role_list.get(i).equals(Roles.Mayor)) {
+					GameVoteEngine.addMayor(alive_players.get(i));
 				}
 			}
 			GameTargetEngine.setupTargetMap(new ArrayList<Player>(
@@ -188,7 +189,7 @@ public class GameManagement {
 						result.append(character.getResult());
 						result.append("\n");
 					} else {
-						character.updateResult(GameMessage.Character
+						character.updateResult(GameLog.Character
 								.NO_ACTION(player));
 						result.append(character.getResult());
 						result.append("\n");
@@ -209,7 +210,7 @@ public class GameManagement {
 						result.append(character.getResult());
 						result.append("\n");
 					} else {
-						character.updateResult(GameMessage.Character
+						character.updateResult(GameLog.Character
 								.NO_ACTION(player));
 						result.append(character.getResult());
 						result.append("\n");

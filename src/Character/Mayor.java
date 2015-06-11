@@ -4,7 +4,7 @@ import java.util.List;
 
 import Character.CharacterFactory.Roles;
 import GameEngine.GameRegistration.Player;
-import Resources.GameMessage;
+import Resources.GameLog;
 
 public class Mayor extends Character {
 	private boolean revealed;
@@ -12,7 +12,7 @@ public class Mayor extends Character {
 	
 	protected Mayor(Player player) {
 		super(Roles.Mayor, player);
-		result = GameMessage.Character.MAYOR_NOT_REVEALED(player);
+		result = GameLog.Character.MAYOR_NOT_REVEALED(player);
 		revealed = false;
 		vote_count = 3;
 	}
@@ -21,7 +21,7 @@ public class Mayor extends Character {
 	 * Reveals mayor
 	 */
 	public boolean reveal() {
-		result = GameMessage.Character.MAYOR_REVEALED(player);
+		result = GameLog.Character.MAYOR_REVEALED(player);
 		return revealed = true;
 	}
 	/**

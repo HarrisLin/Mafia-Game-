@@ -4,27 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import GameEngine.GameRegistration.Player;
-import Resources.GameMessage;
+import Resources.GameLog;
+
 /**
- * Shell Commands (formerly Mafia Main) processes commands before they enter game engine.
+ * Shell Commands (formerly Mafia Main) processes commands before they enter
+ * game engine.
  */
 public class ShellCommands {
 
 	List<Player> player_list = new ArrayList<Player>();
-	boolean in_game = false;
-	
+	boolean in_game;
+
 	public static int main(String[] args) {
-		if(args.length < 2) {
-			GameMessage.CommandFilter.BAD_LENGTH();
-			return GameMessage.exit_number;
+		if (args.length < 2) {
+			GameLog.CommandFilter.BAD_LENGTH();
+			return GameLog.exit_number;
 		}
 		CLInput CLICommand = CLInput.fromString(args[1]);
-		switch(CLICommand) {
+		
+		switch (CLICommand) {
 		case AddPlayer:
 			break;
 		case Admin:
-			break;
-		case AdminGameLog:
 			break;
 		case BadInput:
 			break;
@@ -32,11 +33,7 @@ public class ShellCommands {
 			break;
 		case ForceEndGame:
 			break;
-		case ListAlivePlayers:
-			break;
-		case ListDeadPlayers:
-			break;
-		case ListPlayers:
+		case ListAllPlayers:
 			break;
 		case PauseGame:
 			break;
@@ -54,22 +51,6 @@ public class ShellCommands {
 			break;
 		case SetVote:
 			break;
-		case ShowDaily:
-			break;
-		case ShowGameStatus:
-			break;
-		case ShowLastWill:
-			break;
-		case ShowResult:
-			break;
-		case ShowRole:
-			break;
-		case ShowShotsLeft:
-			break;
-		case ShowTarget:
-			break;
-		case ShowVote:
-			break;
 		case StartGame:
 			break;
 		case StartLynch:
@@ -79,19 +60,20 @@ public class ShellCommands {
 		case TauntPlayer:
 			break;
 		default:
-			break;		
-		}		
-		return GameMessage.exit_number;
+			break;
+		}
+
+		return GameLog.exit_number;
 	}
 
 	public enum CLInput {
-		ListPlayers, AddPlayer, RemovePlayer, RemoveAllPlayers, StartGame, DelayGame, PauseGame, ResumeGame, StartNewDay, StartLynch, ForceEndGame, SetLastWill, SetVote, SetTarget, RevealMayor, TauntPlayer, ListAlivePlayers, ListDeadPlayers, ShowLastWill, ShowVote, ShowTarget, ShowDaily, ShowResult, ShowRole, ShowShotsLeft, ShowGameStatus, AdminGameLog, Admin, BadInput;
+		ListAllPlayers, AddPlayer, RemovePlayer, RemoveAllPlayers, StartGame, DelayGame, PauseGame, ResumeGame, StartNewDay, StartLynch, ForceEndGame, SetLastWill, SetVote, SetTarget, RevealMayor, TauntPlayer, Admin, BadInput;
 
 		public static CLInput fromString(String input) {
 			CLInput CLICommand;
 			switch (input.toLowerCase()) {
-			case "listplayers":
-				CLICommand = CLInput.ListPlayers;
+			case "listallplayers":
+				CLICommand = CLInput.ListAllPlayers;
 				break;
 			case "addplayer":
 				CLICommand = CLInput.AddPlayer;
@@ -137,39 +119,6 @@ public class ShellCommands {
 				break;
 			case "tauntplayer":
 				CLICommand = CLInput.TauntPlayer;
-				break;
-			case "listaliveplayers":
-				CLICommand = CLInput.ListAlivePlayers;
-				break;
-			case "listdeadplayers":
-				CLICommand = CLInput.ListDeadPlayers;
-				break;
-			case "showlastwill":
-				CLICommand = CLInput.ShowLastWill;
-				break;
-			case "showvote":
-				CLICommand = CLInput.ShowVote;
-				break;
-			case "showtarget":
-				CLICommand = CLInput.ShowTarget;
-				break;
-			case "showdaily":
-				CLICommand = CLInput.ShowDaily;
-				break;
-			case "showresult":
-				CLICommand = CLInput.ShowResult;
-				break;
-			case "showrole":
-				CLICommand = CLInput.ShowRole;
-				break;
-			case "showshotsleft":
-				CLICommand = CLInput.ShowShotsLeft;
-				break;
-			case "showgamestatus":
-				CLICommand = CLInput.ShowGameStatus;
-				break;
-			case "admingamelog":
-				CLICommand = CLInput.AdminGameLog;
 				break;
 			case "harrisisgay":
 				CLICommand = CLInput.Admin;

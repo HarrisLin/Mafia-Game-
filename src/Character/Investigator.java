@@ -6,7 +6,7 @@ import java.util.Random;
 
 import Character.CharacterFactory.Roles;
 import GameEngine.GameRegistration.Player;
-import Resources.GameMessage;
+import Resources.GameLog;
 
 public class Investigator extends Character {
 
@@ -20,14 +20,14 @@ public class Investigator extends Character {
 	@Override
 	public boolean performAction(List<Player> alive_player, Character target) {
 		if (this.character_status.isBlocked()) {
-			result = GameMessage.Character.BLOCKED(player);
+			result = GameLog.Character.BLOCKED(player);
 			return true;
 		}
 		target.character_status.getVisitors().add(player);
 		List<Investigations> investigation_list = Investigations
 				.doInvestigation(target.getRole());
 		int index = random_generator.nextInt(investigation_list.size());
-		result = GameMessage.Character.INVESTIGATION_SUCCESS(player,
+		result = GameLog.Character.INVESTIGATION_SUCCESS(player,
 				target.player, investigation_list.get(index).toString());
 		return true;
 	}

@@ -8,14 +8,15 @@ import java.util.Map;
 import Character.Character;
 import Character.Mayor;
 import GameEngine.GameRegistration.Player;
-import Resources.GameMessage;
+import Resources.GameLog;
+
 /**
  * Game Engine's component for storing night actions
  */
 public class GameTargetEngine {
 
 	private static final Map<Player, List<Player>> player_target_map = new HashMap<Player, List<Player>>();
-	
+
 	/**
 	 * First setup
 	 * 
@@ -24,38 +25,12 @@ public class GameTargetEngine {
 	 */
 	protected static boolean setupTargetMap(List<Player> player_list) {
 		player_target_map.clear();
-		for(Player player : player_list) {
+		for (Player player : player_list) {
 			player_target_map.put(player, new ArrayList<Player>());
 		}
 		return true;
 	}
-	
-	/**
-	 * Set target
-	 * @param player
-	 * @param target
-	 * @return appropriate game engine message
-	 */
-	protected static String setTarget(Player player, Player target) {
-		player_target_map.get(player).clear();
-		player_target_map.get(player).add(target);
-		return GameMessage.Inputs.TARGET_SUCCESS();
-	}
 
-	/**
-	 * Set target
-	 * @param player
-	 * @param target1
-	 * @param target2
-	 * @return appropriate game engine message
-	 */
-	protected static String setTarget(Player player, Player target1, Player target2) {
-		player_target_map.get(player).clear();
-		player_target_map.get(player).add(target1);
-		player_target_map.get(player).add(target2);
-		return GameMessage.Inputs.TARGET_SUCCESS();
-	}
-	
 	/**
 	 * @return player target map
 	 */
@@ -63,13 +38,48 @@ public class GameTargetEngine {
 		return player_target_map;
 	}
 
+	/**
+	 * Set target
+	 * 
+	 * @param player
+	 * @param target
+	 * @return appropriate game engine message
+	 */
+	protected static String setTarget(Player player, Player target) {
+		player_target_map.get(player).clear();
+		if (player_target_map.get(player).add(target)) {
+			return GameLog.Inputs.TARGET_SUCCESS(player, target);
+		} else {
+			return GameLog.Inputs.TARGET_FAIL(player, target);
+		}
+	}
+
+	/**
+	 * Set target
+	 * 
+	 * @param player
+	 * @param target1
+	 * @param target2
+	 * @return appropriate game engine message
+	 */
+	protected static String setTarget(Player player, Player target1,
+			Player target2) {
+		player_target_map.get(player).clear();
+		if (player_target_map.get(player).add(target1)
+				&& player_target_map.get(player).add(target2)) {
+			return GameLog.Inputs.TARGET_SUCCESS(player, target1, target2);
+		} else {
+			return GameLog.Inputs.TARGET_FAIL(player, target1, target2);
+		}
+	}
+
 	protected static String revealMayor(Player player, Character character) {
 		List<Player> mayor_list = GameVoteEngine.getMayors();
-		if(mayor_list.contains(player)) {
+		if (mayor_list.contains(player)) {
 			((Mayor) character).reveal();
-			return GameMessage.Inputs.MAYOR_REVEALED();
+			return GameLog.Inputs.MAYOR_REVEALED(player);
 		} else {
-			return GameMessage.Inputs.MAYOR_FAIL();
+			return GameLog.Inputs.MAYOR_FAIL(player);
 		}
 	}
 }

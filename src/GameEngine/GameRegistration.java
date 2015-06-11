@@ -3,7 +3,7 @@ package GameEngine;
 import java.util.ArrayList;
 import java.util.List;
 
-import Resources.GameMessage;
+import Resources.GameLog;
 
 /**
  * Game Engine's component for game registration
@@ -23,9 +23,9 @@ public class GameRegistration {
 	 */
 	protected static String registerPlayer(String name) {
 		if (PlayerValidation.register(name)) {
-			return GameMessage.Registration.REGISTER_SUCCESS(name);
+			return GameLog.Registration.REGISTER_SUCCESS(name);
 		} else {
-			return GameMessage.Registration.REGISTER_FAIL(name);
+			return GameLog.Registration.REGISTER_FAIL(name);
 		}
 	}
 
@@ -38,9 +38,9 @@ public class GameRegistration {
 	 */
 	protected static String unregisterPlayer(String name) {
 		if (PlayerValidation.unregister(name)) {
-			return GameMessage.Registration.UNREGISTER_SUCCESS(name);
+			return GameLog.Registration.UNREGISTER_SUCCESS(name);
 		} else {
-			return GameMessage.Registration.UNREGISTER_FAIL(name);
+			return GameLog.Registration.UNREGISTER_FAIL(name);
 		}
 	}
 
@@ -51,9 +51,9 @@ public class GameRegistration {
 	 */
 	protected static String unregisterAll() {
 		if (PlayerValidation.unregisterAll()) {
-			return GameMessage.Registration.UNREGISTER_ALL_SUCCESS();
+			return GameLog.Registration.UNREGISTER_ALL_SUCCESS();
 		} else {
-			return GameMessage.Registration.UNREGISTER_ALL_FAIL();
+			return GameLog.Registration.UNREGISTER_ALL_FAIL();
 		}
 	}
 
@@ -65,9 +65,9 @@ public class GameRegistration {
 	protected static String listAllPlayers() {
 		List<String> all_players = PlayerValidation.listAll();
 		if (!all_players.isEmpty()) {
-			return GameMessage.Registration.LIST_ALL_PLAYERS(all_players);
+			return GameLog.Registration.LIST_ALL_PLAYERS(all_players);
 		} else {
-			return GameMessage.Registration.NO_PLAYER_REGISTERED();
+			return GameLog.Registration.NO_PLAYER_REGISTERED();
 		}
 	}
 
