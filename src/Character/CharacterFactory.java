@@ -121,35 +121,60 @@ public class CharacterFactory {
 	 */
 	public enum Roles {
 
-		Bodyguard(Sides.Town, "Bodyguard"), BusDriver(Sides.Town, "BusDriver"), Citizen(
-				Sides.Town, "Citizen"), Coroner(Sides.Town, "Coroner"), Crier(
-				Sides.Town, "Crier"), Detective(Sides.Town, "Detective"), Doctor(
-				Sides.Town, "Doctor"), Escort(Sides.Town, "Escort"), Investigator(
-				Sides.Town, "Investigator"), Jailor(Sides.Town, "Jailor"), Lookout(
-				Sides.Town, "Lookout"), Marshall(Sides.Town, "Marshall"), Mason(
-				Sides.Town, "Mason"), MasonLeader(Sides.Town, "MasonLeader"), Mayor(
-				Sides.Town, "Mayor"), Sheriff(Sides.Town, "Sheriff"), Spy(
-				Sides.Town, "Spy"), Stump(Sides.Town, "Stump"), Veteran(
-				Sides.Town, "Veteran"), Vigilante(Sides.Town, "Vigilante"), Agent(
-				Sides.Mafia, "Agent"), Beguiler(Sides.Mafia, "Beguiler"), Blackmailer(
-				Sides.Mafia, "Blackmailer"), Consigliere(Sides.Mafia,
-				"Consigliere"), Consort(Sides.Mafia, "Consort"), Disguiser(
-				Sides.Mafia, "Disguiser"), Framer(Sides.Mafia, "Framer"), Godfather(
-				Sides.Mafia, "Godfather"), Janitor(Sides.Mafia, "Janitor"), Kidnapper(
-				Sides.Mafia, "Kidnapper"), Mafioso(Sides.Mafia, "Mafioso"), Administrator(
-				Sides.Triad, "Administrator"), Deceiver(Sides.Triad, "Deceiver"), DragonHead(
-				Sides.Triad, "DragonHead"), Enforcer(Sides.Triad, "Enforcer"), Forger(
-				Sides.Triad, "Forger"), IncenseMaster(Sides.Triad,
-				"IncenseMaster"), Informant(Sides.Triad, "Informant"), Interrogator(
-				Sides.Triad, "Interrogator"), Liaison(Sides.Triad, "Liaison"), Silencer(
-				Sides.Triad, "Silencer"), Vanguard(Sides.Triad, "Vanguard"), Amnesiac(
-				Sides.Neutral, "Amnesiac"), Arsonist(Sides.Neutral, "Arsonist"), Auditor(
-				Sides.Neutral, "Auditor"), Cultist(Sides.Neutral, "Cultist"), Executioner(
-				Sides.Neutral, "Executioner"), Jester(Sides.Neutral, "Jester"), Judge(
-				Sides.Neutral, "Judge"), MassMurderer(Sides.Neutral,
-				"MassMurderer"), SerialKiller(Sides.Neutral, "SerialKiller"), Survivor(
-				Sides.Neutral, "Survivor"), Witch(Sides.Neutral, "Witch"), WitchDoctor(
-				Sides.Neutral, "WitchDoctor");
+		Administrator(Sides.Triad, "Administrator"),
+		Agent(Sides.Mafia, "Agent"),
+		Amnesiac(Sides.Neutral, "Amnesiac"),
+		Arsonist(Sides.Neutral, "Arsonist"),
+		Auditor(Sides.Neutral, "Auditor"),
+		Beguiler(Sides.Mafia, "Beguiler"),
+		Blackmailer(Sides.Mafia, "Blackmailer"),
+		Bodyguard(Sides.Town, "Bodyguard"),
+		BusDriver(Sides.Town, "BusDriver"),
+		Citizen(Sides.Town, "Citizen"),
+		Consigliere(Sides.Mafia,"Consigliere"),
+		Consort(Sides.Mafia, "Consort"),
+		Coroner(Sides.Town, "Coroner"),
+		Crier(Sides.Town, "Crier"),
+		Cultist(Sides.Neutral, "Cultist"),
+		Deceiver(Sides.Triad, "Deceiver"),
+		Detective(Sides.Town, "Detective"),
+		Disguiser(Sides.Mafia, "Disguiser"),
+		Doctor(Sides.Town, "Doctor"),
+		DragonHead(Sides.Triad, "DragonHead"),
+		Enforcer(Sides.Triad, "Enforcer"),
+		Escort(Sides.Town, "Escort"),
+		Executioner(Sides.Neutral, "Executioner"),
+		Forger(Sides.Triad, "Forger"),
+		Framer(Sides.Mafia, "Framer"),
+		Godfather(Sides.Mafia, "Godfather"),
+		IncenseMaster(Sides.Triad,"IncenseMaster"),
+		Informant(Sides.Triad, "Informant"),
+		Interrogator(Sides.Triad, "Interrogator"),
+		Investigator(Sides.Town, "Investigator"),
+		Jailor(Sides.Town, "Jailor"),
+		Janitor(Sides.Mafia, "Janitor"),
+		Jester(Sides.Neutral, "Jester"),
+		Judge(Sides.Neutral, "Judge"),
+		Kidnapper(Sides.Mafia, "Kidnapper"),
+		Liaison(Sides.Triad, "Liaison"),
+		Lookout(Sides.Town, "Lookout"),
+		Mafioso(Sides.Mafia, "Mafioso"),
+		Marshall(Sides.Town, "Marshall"),
+		MasonLeader(Sides.Town, "MasonLeader"),
+		Mason(Sides.Town, "Mason"),
+		MassMurderer(Sides.Neutral,"MassMurderer"),
+		Mayor(Sides.Town, "Mayor"),
+		SerialKiller(Sides.Neutral, "SerialKiller"),
+		Sheriff(Sides.Town, "Sheriff"),
+		Silencer(Sides.Triad, "Silencer"),
+		Spy(Sides.Town, "Spy"),
+		Stump(Sides.Town, "Stump"),
+		Survivor(Sides.Neutral, "Survivor"),
+		Vanguard(Sides.Triad, "Vanguard"),
+		Veteran(Sides.Town, "Veteran"),
+		Vigilante(Sides.Town, "Vigilante"),
+		Witch(Sides.Neutral, "Witch"),
+		WitchDoctor(Sides.Neutral, "WitchDoctor");
 
 		private Sides side;
 		private String role;
