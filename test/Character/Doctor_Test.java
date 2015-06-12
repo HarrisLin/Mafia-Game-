@@ -8,12 +8,12 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import Character.CharacterFactory.Roles;
 import GameEngine.GameEngine;
 import GameEngine.GameRegistration;
 import GameEngine.GameRegistration.Player;
+import Character.CharacterFactory.Roles;
 
-public class Investigator_Test {
+public class Doctor_Test {
 
 	@Before
 	public void setup() {
@@ -26,33 +26,21 @@ public class Investigator_Test {
 		role_list.add(Roles.Doctor);
 		role_list.add(Roles.Doctor);
 		role_list.add(Roles.Mayor);
-		role_list.add(Roles.Investigator);
+		role_list.add(Roles.Vigilante);
 		role_list.add(Roles.Vigilante);
 		GameEngine.Management.startGame(role_list, 1);
 	}
-
+	
 	@Test
 	public void test() {
+		assertTrue(GameEngine.Information.listAlivePlayers().contains("Connie"));
 		Player doctor = GameRegistration.get("Derek");
-		Player mayor = GameRegistration.get("Connie");
-		Player investigator = GameRegistration.get("Harris");
 		Player vigilante = GameRegistration.get("Eleanor");
-		GameEngine.Inputs.setTarget(investigator, vigilante);
+		Player target = GameRegistration.get("Connie");
+		GameEngine.Inputs.setTarget(doctor, target);
+		GameEngine.Inputs.setTarget(vigilante, target);
 		GameEngine.Management.performNightActions();
-		GameEngine.Management.startNewDay();
-		String result = GameEngine.Information.showResult(investigator);
-		assertTrue(result.contains("murder") || result.contains("trespassing"));
-		GameEngine.Inputs.setTarget(investigator, mayor);
-		GameEngine.Management.performNightActions();
-		GameEngine.Management.startNewDay();
-		result = GameEngine.Information.showResult(investigator);
-		assertTrue(result.contains("corruption"));
-		GameEngine.Inputs.setTarget(investigator, doctor);
-		GameEngine.Management.performNightActions();
-		GameEngine.Management.startNewDay();
-		result = GameEngine.Information.showResult(investigator);
-		assertTrue(result.contains("no crime"));
-		
+		assertTrue(GameEngine.Information.listAlivePlayers().contains("Connie"));
 	}
 
 }

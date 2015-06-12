@@ -1,43 +1,26 @@
 package Character;
 
-import Enumerators.Roles;
-import GameEngine.CannotGetPlayerException;
-import GameEngine.Character;
-import GameEngine.GameEngine;
-import GameEngine.GameMessage;
-import GameEngine.Player;
+import java.util.List;
 
-//****************************************************************
-//DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE DONE
-//this is a tag for all the characters/classes that are done
-//*****************************************************************
+import Character.CharacterFactory.Roles;
+import GameEngine.GameRegistration.Player;
+import Resources.GameLog;
 
 public class Doctor extends Character {
 
-	public Doctor(Player player) {
+	protected Doctor(Player player) {
 		super(Roles.Doctor, player);
 	}
 
 	@Override
-	public String doAction() throws CannotGetPlayerException {
-		
-		if (getTarget().size() != 1) {
-			return GameMessage.NO_ACTION;
+	public boolean performAction(List<Player> alive_player, Character target) {
+		if(this.character_status.isBlocked()) {
+			result = GameLog.Character.BLOCKED(player);
+			return true;
 		}
-		
-		Player target = getTarget().get(0);
-		
-		if(!GameEngine.getCharacter(target).isAlive()) {
-			return GameMessage.TARGET_DEAD;
-		}
-		if (this.isRoleBlocked()) {
-			return GameMessage.DOCTOR_FEEDBACK();
-		}
-		
-		GameEngine.getCharacter(target).addVisitor(getPlayer());
-
-		GameEngine.getCharacter(target).healPlayer();
-		
-		return GameMessage.DOCTOR_FEEDBACK();
+		target.character_status.getVisitors().add(player);
+		target.character_status.heal();
+		result = GameLog.Character.DOCTOR_SUCCESS(player, target.player);
+		return true;
 	}
 }

@@ -1,674 +1,378 @@
 package GameEngine;
 
-import Enumerators.Roles;
-import Character.*;
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.io.IOException;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import Character.Character;
+import Character.CharacterFactory.Roles;
+import GameEngine.GameRegistration.Player;
 
 /**
  * GameEngine The game engine is responsible for keeping track of everything
- * that happens in the game. This will include: - Keeping a map of all Players
- * and their Character role - Assigning roles to all Players - Acting as an
- * interface to allow human players to set targets for their actions - Invoking
- * the actions of all Characters when it is night-time
+ * that happens in the game.
+ * 
+ * @class 1. Game Registration
+ * @class 2. Game Management
+ * @class 3. Game Inputs
+ * @class 4. Game Information (TO BE REMOVED)
  */
 public class GameEngine {
-	// -------------------------------------------------------------
-	// GAME ENGINE INFORMATION
-	// -------------------------------------------------------------
-	private static Map<Player, Character> player_character_map = new HashMap<Player, Character>();
-	// List of players still alive, used for setTarget() method in Character
-	// Class
-	private static List<Character> alive_player = new ArrayList<Character>();
-	private static List<Character> dead_player = new ArrayList<Character>();
 
-	// ---------------------------------------------------------
-	// GET INFORMATION METHODS
-	// ---------------------------------------------------------
+	private static final Map<Player, Character> player_character_map = new HashMap<Player, Character>();
+	private static final List<Player> alive_players = new ArrayList<Player>();
+
 	/**
-	 * This method returns the list of dead players
+	 * 1. Game Registration
 	 * 
-	 * @return dead_player - List of Dead Players
+	 * Player registration for setting up the game
 	 */
-	public static List<Character> getDeadPlayer() {
-		return new ArrayList<Character>(dead_player);
+	public static class Registration {
+		/**
+		 * Lists all players in the game
+		 * 
+		 * @return appropriate game message string
+		 */
+		public static String listAllPlayers() {
+			return GameRegistration.listAllPlayers();
+		}
+
+		/**
+		 * Registers a player in the game
+		 * 
+		 * @param name
+		 *            of player
+		 * @return appropriate game message string
+		 */
+		public static String registerPlayer(String name) {
+			return GameRegistration.registerPlayer(name);
+		}
+
+		/**
+		 * Unregisters a player from the game
+		 * 
+		 * @param name
+		 *            of player
+		 * @return appropriate game message string
+		 */
+		public static String unregisterPlayer(String name) {
+			return GameRegistration.unregisterPlayer(name);
+		}
+
+		/**
+		 * Unregister all players from the game
+		 * 
+		 * @return appropriate game message string
+		 */
+		public static String unregisterAll() {
+			return GameRegistration.unregisterAll();
+		}
 	}
 
 	/**
-	 * @return list of all the character
-	 */
-	public static List<Character> getAlivePlayer() {
-		return new ArrayList<Character>(alive_player);
-	}
-
-	/**
-	 * @return all characters
-	 */
-	public static List<Character> getAllCharacters() {
-		return new ArrayList<Character>(player_character_map.values());
-	}
-
-	// --------------------------------------------------------------------
-	// PLAYER REGISTRATION METHODS
-	// --------------------------------------------------------------------
-
-	/**
-	 * GameEngine.registerPlayer Registers a player into the game.
+	 * 2. Game Management
 	 * 
-	 * @param name
-	 * @return true if successful, false if not.
+	 * Moderator/ management for maintaining the game
 	 */
-	public static String registerPlayer(String name) {
-		if (Player.register(name)) {
-			return GameMessage.REGISTERED_PLAYER(name);
-		} else {
-			return GameMessage.REGISTER_ERROR(name);
+	public static class Management {
+		/**
+		 * Starts a new game
+		 * 
+		 * @return appropriate game message string
+		 */
+		public static String startGame(List<Roles> role_list) {
+			return GameManagement.startGame(role_list, player_character_map,
+					alive_players);
+		}
+
+		/**
+		 * Start a new game with no shuffle option (TESTING ONLY).
+		 * 
+		 * @param role_list
+		 * @param option
+		 * @return
+		 */
+		// For testing purposes. Add option for not shuffling player order. Not
+		// to be used anywhere else in the code
+		public static String startGame(List<Roles> role_list, int option) {
+			return GameManagement.startGame(role_list, player_character_map,
+					alive_players, option);
+		}
+
+		/**
+		 * Delay progress in the game for hours : minutes.
+		 * 
+		 * @return appropriate game message string
+		 */
+		public static String delayGame(int hours, int minutes) {
+			return null;
+		}
+
+		/**
+		 * Pauses the game
+		 * 
+		 * @return appropriate game message string
+		 */
+		public static String pauseGame() {
+			return null;
+		}
+
+		/**
+		 * Resumes game if paused
+		 * 
+		 * @return appropriate game message string
+		 */
+		public static String resumeGame() {
+			return null;
+		}
+
+		/**
+		 * Starts a new day
+		 * 
+		 * @return appropriate game message string
+		 */
+		public static String startNewDay() {
+			return GameManagement.startNewDay(player_character_map,
+					alive_players);
+		}
+
+		/**
+		 * Performs night actions
+		 * 
+		 * @return appropriate game message string
+		 */
+		public static String performNightActions() {
+			return GameManagement.performNightActions(player_character_map,
+					alive_players);
+		}
+
+		/**
+		 * Starts the lynch
+		 * 
+		 * @return appropriate game message string
+		 */
+		public static String startLynch() {
+			return GameManagement.startLynch(player_character_map,
+					alive_players);
+		}
+
+		/**
+		 * Forces the game to end
+		 * 
+		 * @return appropriate game message string
+		 */
+		public static String forceEndGame() {
+			return null;
 		}
 	}
 
 	/**
-	 * GameEngine.registerPlayer De-registers a player from the game.
+	 * 3. Game Inputs
 	 * 
-	 * @param name
-	 * @return true if successful, false if not.
+	 * Character inputs for performing actions in the game
 	 */
-	public static String removePlayer(String name) {
-		if (Player.remove(name)) {
-			return GameMessage.REGISTERED_PLAYER(name);
-		} else {
-			return GameMessage.REMOVE_ERROR(name);
+	public static class Inputs {
+		/**
+		 * Updates player's last will
+		 * 
+		 * @param player
+		 * @param lastwill
+		 * @return appropriate game message string
+		 */
+		public static String updateLastWill(Player player, String lastwill) {
+			return GameLastWillEngine.updateLastWill(player, lastwill);
+		}
+
+		/**
+		 * Sets player's vote
+		 * 
+		 * @param player
+		 * @param target
+		 * @return appropriate game message string
+		 */
+		public static String setVote(Player player, Player target) {
+			return GameVoteEngine.setVote(player, target);
+		}
+
+		/**
+		 * Sets player's target
+		 * 
+		 * @param player
+		 * @param target
+		 * @return appropriate game message string
+		 */
+		public static String setTarget(Player player, Player target) {
+			return GameTargetEngine.setTarget(player, target);
+		}
+
+		/**
+		 * Sets player's target
+		 * 
+		 * @param player
+		 * @param target1
+		 * @param target2
+		 * @return appropriate game message string
+		 */
+		public static String setTarget(Player player, Player target1,
+				Player target2) {
+			return GameTargetEngine.setTarget(player, target1, target2);
+		}
+
+		/**
+		 * If player is mayor, reveal mayor
+		 * 
+		 * @param player
+		 * @return appropriate game message string
+		 */
+		public static String revealMayor(Player player) {
+			Character character = player_character_map.get(player);
+			return GameTargetEngine.revealMayor(player, character);
+		}
+
+		/**
+		 * Taunt a player
+		 * 
+		 * @param player
+		 * @param target
+		 * @return appropriate game message string
+		 */
+		public static String tauntPlayer(Player player, Player target) {
+			return null;
 		}
 	}
 
-	// -------------------------------------------------------------
-	// GAME MECHANICS AND ACTION METHODS (PUBLIC)
-	// -------------------------------------------------------------
-
-	// -----------------------------------------------
-	// Get Player Role/Get Player Chracter map
-	// ----------------------------------------------
-	public static String getRole(String name) {
-		Player player = null;
-		try {
-			player = Player.get(name);
-		} catch (CannotGetPlayerException e) {
-			return GameMessage.ERROR_PLAYER_NOT_IN_GAME(name);
-		}
-		try {
-			return GameMessage.SHOW_ROLE(getCharacter(player).getRoleString());
-		} catch (CannotGetPlayerException e) {
-			return GameMessage.ERROR_GENERAL();
-		}
-	}
-
-	// --------------------------------------
-	// Night Action Target Methods
-	// -------------------------------------
 	/**
-	 * GameEngine.setTarget
+	 * 4. Game Information (TO BE REMOVED)
 	 * 
-	 * @param player
-	 *            The player performing the action
-	 * @param targets
-	 *            The target(s) of the action
-	 * @return true if target was successfully set, false otherwise
+	 * User tool for getting current game status
 	 */
-	public static String setTarget(String name, List<String> targetList) {
-		Player player = null;
-		List<Player> target = new ArrayList<Player>();
-		try {
-			player = Player.get(name);
-			for (String targetName : targetList) {
-				target.add(Player.get(targetName));
-			}
-		} catch (CannotGetPlayerException e) {	
-			return GameMessage.ERROR_PLAYER_NOT_IN_GAME(name);
+	public static class Information {
+		/**
+		 * Lists all players in the game
+		 * 
+		 * @return appropriate game message string
+		 */
+		public static String listAllPlayers() {
+			return null;
 		}
-		try {
-			if (getCharacter(player).setTarget(target)) {
-				return GameMessage.UPDATED_TARGETS();
-			} else {
-				return GameMessage.ERROR_PLAYER_IS_DEAD("target");
-			}
-		} catch (CannotGetPlayerException e) {
-			return GameMessage.ERROR_GENERAL();
+
+		/**
+		 * Lists all alive players in the game
+		 * 
+		 * @return appropriate game message string
+		 */
+		public static String listAlivePlayers() {
+			return GameInformation.listAlivePlayers(alive_players);
 		}
-	}
 
-	public static String getTarget(String name) {
-		Player player = null;
-		try {
-			player = Player.get(name);
-		} catch (CannotGetPlayerException e) {
-			return GameMessage.ERROR_PLAYER_NOT_IN_GAME(name);
+		/**
+		 * Lists all dead players in the game
+		 * 
+		 * @return appropriate game message string
+		 */
+		public static String listDeadPlayers() {
+			return null;
 		}
-		try {
-			return GameMessage.SHOW_TARGETS(getCharacter(player).getTarget());
-		} catch (CannotGetPlayerException e) {
-			return GameMessage.ERROR_GENERAL();
+
+		/**
+		 * Show last will of the player
+		 * 
+		 * @param player
+		 * @return appropriate game message string
+		 */
+		public static String showLastWill(Player player) {
+			return null;
 		}
-	}
 
-	// ------------------------------------
-	// Vote Methods
-	// -------------------------------
-	public static boolean setVote(Player player, List<Player> target) {
-		return player_character_map.get(player).vote(target);
-	}
-
-	public static String setVote(String name, String targetName) {
-		Player player = null;
-		Player target = null;
-		try {
-			player = Player.get(name);
-		} catch (CannotGetPlayerException e) {
-			return GameMessage.ERROR_PLAYER_NOT_IN_GAME(name);
+		/**
+		 * Show vote of the player
+		 * 
+		 * @return appropriate game message string
+		 */
+		public static String showVote(Player player) {
+			return null;
 		}
-		try {
-			target = Player.get(targetName);
-		} catch (CannotGetPlayerException e) {
-			return GameMessage.ERROR_PLAYER_NOT_IN_GAME(targetName);
+
+		/**
+		 * Show target of the player
+		 * 
+		 * @return appropriate game message string
+		 */
+		public static String showTarget(Player player) {
+			return null;
 		}
-		try {
-			if (getCharacter(player).vote(target)) {
-				return GameMessage.UPDATED_VOTES();
-			} else {
-				return GameMessage.ERROR_PLAYER_IS_DEAD(targetName);
-			}
-		} catch (CannotGetPlayerException e) {
-			return GameMessage.ERROR_GENERAL();
+
+		/**
+		 * Show players who taunted you
+		 * 
+		 * @return appropriate game message string
+		 */
+		public static String showTaunt(Player player) {
+			return null;
 		}
-	}
 
-	public static String getVote(String name) {
-		Player player = null;
-		try {
-			player = Player.get(name);
-		} catch (CannotGetPlayerException e) {
-			return GameMessage.ERROR_PLAYER_NOT_IN_GAME(name);
+		/**
+		 * Show the daily
+		 * 
+		 * @return appropriate game message string
+		 */
+		public static String showDaily() {
+			return null;
 		}
-		try {
-			return GameMessage.SHOW_VOTES(getCharacter(player).getLynchTarget());
-		} catch (CannotGetPlayerException e) {
-			return GameMessage.ERROR_GENERAL();
+
+		/**
+		 * Show result of night action
+		 * 
+		 * @return appropriate game message string
+		 */
+		public static String showResult(Player player) {
+			return GameInformation.showResult(player_character_map, player);
 		}
-	}
 
-	// ----------------------------------------
-	// Last Will Methods
-	// -------------------------------------
-	public static boolean setLastWill(Player player, String lastWill) {
-		return player_character_map.get(player).updateLastWill(lastWill);
-	}
-
-	public static String setLastWill(String name, String lastWill) {
-		Player player = null;
-		try {
-			player = Player.get(name);
-		} catch (CannotGetPlayerException e) {
-			return GameMessage.ERROR_PLAYER_NOT_IN_GAME(name);
+		/**
+		 * Show the role of the player
+		 * 
+		 * @param player
+		 * @return appropriate game message string
+		 */
+		public static String showRole(Player player) {
+			return GameInformation.showRole(player_character_map, player);
 		}
-		try {
-			if (getCharacter(player).updateLastWill(lastWill)) {
-				return GameMessage.UPDATED_LAST_WILL();
-			} else {
-				return GameMessage.ERROR_PLAYER_IS_DEAD(name);
-			}
-		} catch (CannotGetPlayerException e) {
-			return GameMessage.ERROR_GENERAL();
+
+		/**
+		 * Show shots left for vigilante or veteran
+		 * 
+		 * @param player
+		 * @return appropriate game message string
+		 */
+		public static String showShotsLeft(Player player) {
+			return null;
 		}
-	}
 
-	public static String getLastWill(Player player) {
-		return player_character_map.get(player).getLastWill();
-	}
-
-	public static String getLastWill(String name) {
-		Player player = null;
-		try {
-			player = Player.get(name);
-		} catch (CannotGetPlayerException e) {
-			e.printStackTrace();
-			return GameMessage.ERROR_PLAYER_NOT_IN_GAME(name);
+		/**
+		 * Show game status
+		 * 
+		 * @return appropriate game message string
+		 */
+		public static String showGameStatus() {
+			return null;
 		}
-		try {
-			return GameMessage.SHOW_LAST_WILL(getCharacter(player)
-					.getLastWill());
-		} catch (CannotGetPlayerException e) {
-			return GameMessage.ERROR_GENERAL();
+
+		/**
+		 * Show administrative version of game status
+		 * 
+		 * @return appropriate game message string
+		 */
+		public static String adminGameLog() {
+			// This should return full report.
+			// - Player to character map.
+			// - Currently alive, currently dead
+			// - Player targets, votes, for each day.
+			// - player last will
+			// - Game log.
+			// - All the generated dailies.
+			return null;
 		}
-	}
-
-	// ---------------------------------------
-	// Get Other List Methods
-	// --------------------------------------------
-	public static String getAliveList() {
-		return GameMessage.LIST_ALIVE_PLAYERS(alive_player);
-	}
-
-	public static String getDeadList() {
-		return GameMessage.LIST_DEAD_PLAYERS(dead_player);
-	}
-
-	public static String getVoteList() {
-		return GameMessage.LIST_VOTE_MAP();
-	}
-
-	// **********************************************************************************
-	// **********************************************************************************
-	// IN THIS SECTION ARE METHODS NOT USED BY CLI AND SHOULD BE KEPT TO LOWEST
-	// VISIBLITY
-	// ********************************************************************************
-	// ********************************************************************************
-
-	 /* GameEngine.getCharacter
-	 * 
-	 * @param player
-	 *            The human name of the player
-	 * @return Gets the character role of the player
-	 * @throws CannotGetPlayerException
-	 */
-	public static Character getCharacter(Player player)
-			throws CannotGetPlayerException {
-		if (player_character_map.containsKey(player)) {
-			return player_character_map.get(player);
-		} else {
-			throw new CannotGetPlayerException("Player not in map.");
-		}
-	}
-
-	// -------------------------------------------------------------
-	// GAME SETUP METHODS
-	// -------------------------------------------------------------
-	/**
-	 * GameEngine.assignCharacters Randomly assigns a character role to all
-	 * players.
-	 * 
-	 * @param type
-	 * @return TRUE if characters successfully assigned and FALSE it not
-	 */
-	public static boolean assignAllCharacters(int type) {
-		List<Player> allPlayers = Player.listAllPlayers();
-
-		Collections.shuffle(allPlayers);
-
-		FileInputStream jsonStream;
-		try {
-			jsonStream = new FileInputStream("gamegenerator/"
-					+ allPlayers.size() + ".json");
-		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
-		}
-		try {
-			BufferedReader jsonReader = new BufferedReader(
-					new InputStreamReader(jsonStream));
-
-			String jsonLine = jsonReader.readLine();
-
-			jsonReader.close();
-			jsonStream.close();
-
-			JSONParser jsonParser = new JSONParser();
-			JSONObject jsonObject = (JSONObject) jsonParser.parse(jsonLine);
-			jsonObject = (JSONObject) jsonObject.get(allPlayers.size() + "."
-					+ type);
-
-			long id = (long) jsonObject.get("id");
-			System.out.println("Id of game type: " + id);
-			long size = (long) jsonObject.get("size");
-			System.out.println("Number of players: " + size);
-			String name = (String) jsonObject.get("name");
-			System.out.println("Name of the game type: " + name);
-			JSONArray characters = (JSONArray) jsonObject.get("characters");
-
-			for (int i = 0; i < characters.size(); i++) {
-				String character = (String) characters.get(i);
-
-				Roles role = Roles.fromString(character);
-
-				switch (role) {
-				case Administrator:
-					// assignCharacter(allPlayers.get(i), new
-					// Administrator(allPlayers.get(i)));
-					break;
-				case Agent:
-					break;
-				case Amnesiac:
-					break;
-				case Arsonist:
-					assignCharacter(allPlayers.get(i),
-							new Arsonist(allPlayers.get(i)));
-					break;
-				case Auditor:
-					break;
-				case Beguiler:
-					break;
-				case Blackmailer:
-					break;
-				case Bodyguard:
-					assignCharacter(allPlayers.get(i),
-							new Bodyguard(allPlayers.get(i)));
-					break;
-				case BusDriver:
-					assignCharacter(allPlayers.get(i),
-							new BusDriver(allPlayers.get(i)));
-					break;
-				case Citizen:
-					break;
-				case Consigliere:
-					assignCharacter(allPlayers.get(i), new Consigliere(
-							allPlayers.get(i)));
-					break;
-				case Consort:
-					assignCharacter(allPlayers.get(i),
-							new Consort(allPlayers.get(i)));
-					break;
-				case Coroner:
-					break;
-				case Crier:
-					break;
-				case Cultist:
-					break;
-				case Deceiver:
-					break;
-				case Detective:
-					assignCharacter(allPlayers.get(i),
-							new Detective(allPlayers.get(i)));
-					break;
-				case Disguiser:
-					break;
-				case Doctor:
-					assignCharacter(allPlayers.get(i),
-							new Doctor(allPlayers.get(i)));
-					break;
-				case DragonHead:
-					break;
-				case Enforcer:
-					break;
-				case Escort:
-					assignCharacter(allPlayers.get(i),
-							new Escort(allPlayers.get(i)));
-					break;
-				case Executioner:
-					break;
-				case Forger:
-					break;
-				case Framer:
-					break;
-				case Godfather:
-					assignCharacter(allPlayers.get(i),
-							new Godfather(allPlayers.get(i)));
-					break;
-				case IncenseMaster:
-					break;
-				case Informant:
-					break;
-				case Interrogator:
-					break;
-				case Investigator:
-					assignCharacter(allPlayers.get(i), new Investigator(
-							allPlayers.get(i)));
-					break;
-				case Jailor:
-					break;
-				case Janitor:
-					break;
-				case Jester:
-					break;
-				case Judge:
-					break;
-				case Kidnapper:
-					break;
-				case Liaison:
-					break;
-				case Lookout:
-					assignCharacter(allPlayers.get(i),
-							new Lookout(allPlayers.get(i)));
-					break;
-				case Mafioso:
-					assignCharacter(allPlayers.get(i),
-							new Mafioso(allPlayers.get(i)));
-					break;
-				case Marshall:
-					break;
-				case Mason:
-					break;
-				case MasonLeader:
-					break;
-				case MassMurderer:
-					assignCharacter(allPlayers.get(i), new MassMurderer(
-							allPlayers.get(i)));
-					break;
-				case Mayor:
-					assignCharacter(allPlayers.get(i),
-							new Mayor(allPlayers.get(i)));
-					break;
-				case SerialKiller:
-					assignCharacter(allPlayers.get(i), new SerialKiller(
-							allPlayers.get(i)));
-					break;
-				case Sheriff:
-					assignCharacter(allPlayers.get(i),
-							new Sheriff(allPlayers.get(i)));
-					break;
-				case Silencer:
-					break;
-				case Spy:
-					break;
-				case Stump:
-					break;
-				case Survivor:
-					break;
-				case Vanguard:
-					break;
-				case Veteran:
-					assignCharacter(allPlayers.get(i),
-							new Veteran(allPlayers.get(i)));
-					break;
-				case Vigilante:
-					assignCharacter(allPlayers.get(i),
-							new Vigilante(allPlayers.get(i)));
-					break;
-				case Witch:
-					assignCharacter(allPlayers.get(i),
-							new Witch(allPlayers.get(i)));
-					break;
-				case WitchDoctor:
-					break;
-				default:
-					break;
-
-				}
-			}
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-		return true;
-	}
-
-	/**
-	 * GameEngine.assignCharacter Assigns a single character role to a single
-	 * player
-	 * 
-	 * @return TRUE if characters successfully assigned and FALSE it not
-	 */
-	public static boolean assignCharacter(Player player, Character character) {
-		if (!Player.listAllPlayers().contains(player) || player == null
-				|| character == null) {
-			return false;
-		}
-		player_character_map.put(player, character);
-		alive_player.add(character);
-		return true;
-	}
-
-	// -------------------------------------------------------------
-	// GAME MECHANICS AND ACTION METHODS (PUBLIC)
-	// -------------------------------------------------------------
-	/**
-	 * GameEngine.setTarget
-	 * 
-	 * @param player
-	 *            The player performing the action
-	 * @param targets
-	 *            The target(s) of the action
-	 * @return true if target was successfully set, false otherwise
-	 */
-	public static boolean setTarget(Player player, List<Player> target) {
-		return player_character_map.get(player).setTarget(target);
-	}
-
-	// --------------------------------------------------------------------
-	// GAME MECHANICS AND ACTION METHODS (PRIVATE/PROTECTED) OR SHOULD BE
-	// ---------------------------------------------------------------------
-	/**
-	 * @return TRUE if successfully killed and FALSE if not
-	 */
-	protected static boolean killCharacter(Character character) {
-		if (!dead_player.contains(character)
-				|| alive_player.contains(character)) {
-			dead_player.add(character);
-			alive_player.remove(character);
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	/**
-	 * GameEngine.performNightActions Makes each character perform his/her night
-	 * action
-	 * 
-	 * @return summary of all the deaths, last wills, etc.
-	 */
-	public static String performNightActions() {
-		// TODO: implement me!
-		return null;
-	}
-
-	/**
-	 * Finds player with most lynch votes and kills them off
-	 * 
-	 * @return the player lynched
-	 */
-	protected static boolean lynch() {
-		Character topLynch = null;
-		int topVote = 0;
-		boolean good = false;
-		for (Character character : alive_player) {
-			if (character.getLynchCount() > topVote) {
-				good = true;
-				topLynch = character;
-				topVote = character.getLynchCount();
-			} else if (character.getLynchCount() == topVote) {
-				good = false;
-			}
-		}
-		if (good == true) {
-			topLynch.lynch();
-			return good;
-		} else {
-			return good;
-		}
-	}
-
-	// -------------------------------------------------------
-	// DATABASE METHODS
-	// ----------------------------------------------------------
-	/**
-	 * Utility for GameEngine to export all character data to the database
-	 * 
-	 * @return true on success, false if one or more Characters could not be
-	 *         added
-	 */
-	protected static boolean exportPlayerCharacterMap() {
-		boolean return_flag = true;
-		for (Character c : player_character_map.values()) {
-			if (!DatabaseManager.addData(c)) {
-				return_flag = false;
-			}
-		}
-		return return_flag;
-	}
-
-	/**
-	 * Utility for GameEngine to import all character data to the database. This
-	 * clears all records of players and characters in the GameEngine before
-	 * importing all of the database data.
-	 * 
-	 * @return true on success.
-	 */
-	protected static boolean importPlayerCharacterMap() {
-		reset();
-		DatabaseManager.importPlayers();
-		for (Player p : Player.listAllPlayers()) {
-			player_character_map.put(p, DatabaseManager.getData(p));
-		}
-		return true;
-	}
-
-	// ------------------------------------------------------------
-	// PUBLIC METHODS WHEN GAME STARTS
-	// -----------------------------------------------------------
-	/**
-	 * Resets the GameEngine. Clears all records of players and characters. This
-	 * does not clear the database.
-	 */
-	public static String reset() {
-		Player.removeAllPlayers();
-		player_character_map.clear();
-		alive_player.clear();
-		dead_player.clear();
-		return GameMessage.RESET_GAME();
-	}
-
-	/**
-	 * Start the game
-	 */
-	public static String start() {
-		return "not yet implemented";
-	}
-
-	/**
-	 * starts a new day
-	 * 
-	 * @return message
-	 */
-	public static String newDay() {
-		lynch();
-		StringBuilder log = new StringBuilder();
-		performNightActions();
-		for (Character character : player_character_map.values()) {
-			log.append(character.newDay());
-		}
-		return log.toString() + "not yet implemented";
-	}
-
-	/**
-	 * If the game crashes, then it will reboot from the database using this
-	 * method.
-	 */
-	public static String reboot() {
-		return "not yet implemented";
 	}
 }

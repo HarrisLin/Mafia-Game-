@@ -1,76 +1,220 @@
 package Character;
 
-import Enumerators.Roles;
-import GameEngine.Character;
-import GameEngine.Player;
+import GameEngine.GameRegistration.Player;
 
-/**
- * CharacterFactory allows us to create a character
- * object with only a Roles enum. This will be essential
- * for importing Character data from the SQL database.
- */
 public class CharacterFactory {
-
 	public static Character makeCharacter(Roles role, Player player) {
 		switch (role) {
-		case Bodyguard: return new Bodyguard(player);
-		case BusDriver: return new BusDriver(player);
-		//case Citizen: return new Citizen(player);
-		//case Coroner: return new Coroner(player);
-		//case Crier: return new Crier(player);
-		case Detective: return new Detective(player);
+		case Administrator:
+			break;
+		case Agent:
+			break;
+		case Amnesiac:
+			break;
+		case Arsonist:
+			break;
+		case Auditor:
+			break;
+		case Beguiler:
+			break;
+		case Blackmailer:
+			break;
+		case Bodyguard:
+			break;
+		case BusDriver:
+			break;
+		case Citizen:
+			break;
+		case Consigliere:
+			break;
+		case Consort:
+			break;
+		case Coroner:
+			break;
+		case Crier:
+			break;
+		case Cultist:
+			break;
+		case Deceiver:
+			break;
+		case Detective:
+			break;
+		case Disguiser:
+			break;
 		case Doctor: return new Doctor(player);
-		case Escort: return new Escort(player);
+		case DragonHead:
+			break;
+		case Enforcer:
+			break;
+		case Escort:
+			break;
+		case Executioner:
+			break;
+		case Forger:
+			break;
+		case Framer:
+			break;
+		case Godfather:
+			break;
+		case IncenseMaster:
+			break;
+		case Informant:
+			break;
+		case Interrogator:
+			break;
 		case Investigator: return new Investigator(player);
-		//case Jailor: return new Jailor(player);
-		case Lookout: return new Lookout(player);
-		//case Marshall: return new Marshall(player);
-		//case Mason: return new Mason(player);
-		//case MasonLeader: return new MasonLeader(player);
+		case Jailor:
+			break;
+		case Janitor:
+			break;
+		case Jester:
+			break;
+		case Judge:
+			break;
+		case Kidnapper:
+			break;
+		case Liaison:
+			break;
+		case Lookout:
+			break;
+		case Mafioso:
+			break;
+		case Marshall:
+			break;
+		case Mason:
+			break;
+		case MasonLeader:
+			break;
+		case MassMurderer:
+			break;
 		case Mayor: return new Mayor(player);
-		case Sheriff: return new Sheriff(player);
-		//case Spy: return new Spy(player);
-		//case Stump: return new Stump(player);
-		case Veteran: return new Veteran(player);
+		case SerialKiller:
+			break;
+		case Sheriff:
+			break;
+		case Silencer:
+			break;
+		case Spy:
+			break;
+		case Stump:
+			break;
+		case Survivor:
+			break;
+		case Vanguard:
+			break;
+		case Veteran:
+			break;
 		case Vigilante: return new Vigilante(player);
-		//case Agent: return new Agent(player);
-		//case Beguiler: return new Beguiler(player);
-		//case Blackmailer: return new Blackmailer(player);
-		case Consigliere: return new Consigliere(player);
-		case Consort: return new Consort(player);
-		//case Disguiser: return new Disguiser(player);
-		//case Framer: return new Framer(player);
-		case Godfather: return new Godfather(player);
-		//case Janitor: return new Janitor(player);
-		//case Kidnapper: return new Kidnapper(player);
-		case Mafioso: return new Mafioso(player);
-		//case Administrator: return new Administrator(player);
-		//case Deceiver: return new Deceiver(player);
-		//case DragonHead: return new DragonHead(player);
-		//case Enforcer: return new Enforcer(player);
-		//case Forger: return new Forger(player);
-		//case IncenseMaster: return new IncenseMaster(player);
-		//case Informant: return new Informant(player);
-		//case Interrogator: return new Interrogator(player);
-		//case Liaison: return new Liaison(player);
-		//case Silencer: return new Silencer(player);
-		//case Vanguard: return new Vanguard(player);
-		//case Amnesiac: return new Amnesiac(player);
-		case Arsonist: return new Arsonist(player);
-		//case Auditor: return new Auditor(player);
-		case Cultist: return new Cultist(player);
-		//case Executioner: return new Executioner(player);
-		//case Jester: return new Jester(player);
-		//case Judge: return new Judge(player);
-		case MassMurderer: return new MassMurderer(player);
-		case SerialKiller: return new SerialKiller(player);
-		//case Survivor: return new Survivor(player);
-		case Witch: return new Witch(player);
-		//case WitchDoctor: return new WitchDoctor(player);
+		case Witch:
+			break;
+		case WitchDoctor:
+			break;
 		default:
 			break;
+		
 		}
 		return null;
 	}
 	
+	/**
+	 * Enumeration of all the roles in the game.
+	 */
+	public enum Roles {
+
+		Bodyguard(Sides.Town, "Bodyguard"), BusDriver(Sides.Town, "BusDriver"), Citizen(
+				Sides.Town, "Citizen"), Coroner(Sides.Town, "Coroner"), Crier(
+				Sides.Town, "Crier"), Detective(Sides.Town, "Detective"), Doctor(
+				Sides.Town, "Doctor"), Escort(Sides.Town, "Escort"), Investigator(
+				Sides.Town, "Investigator"), Jailor(Sides.Town, "Jailor"), Lookout(
+				Sides.Town, "Lookout"), Marshall(Sides.Town, "Marshall"), Mason(
+				Sides.Town, "Mason"), MasonLeader(Sides.Town, "MasonLeader"), Mayor(
+				Sides.Town, "Mayor"), Sheriff(Sides.Town, "Sheriff"), Spy(
+				Sides.Town, "Spy"), Stump(Sides.Town, "Stump"), Veteran(
+				Sides.Town, "Veteran"), Vigilante(Sides.Town, "Vigilante"), Agent(
+				Sides.Mafia, "Agent"), Beguiler(Sides.Mafia, "Beguiler"), Blackmailer(
+				Sides.Mafia, "Blackmailer"), Consigliere(Sides.Mafia,
+				"Consigliere"), Consort(Sides.Mafia, "Consort"), Disguiser(
+				Sides.Mafia, "Disguiser"), Framer(Sides.Mafia, "Framer"), Godfather(
+				Sides.Mafia, "Godfather"), Janitor(Sides.Mafia, "Janitor"), Kidnapper(
+				Sides.Mafia, "Kidnapper"), Mafioso(Sides.Mafia, "Mafioso"), Administrator(
+				Sides.Triad, "Administrator"), Deceiver(Sides.Triad, "Deceiver"), DragonHead(
+				Sides.Triad, "DragonHead"), Enforcer(Sides.Triad, "Enforcer"), Forger(
+				Sides.Triad, "Forger"), IncenseMaster(Sides.Triad,
+				"IncenseMaster"), Informant(Sides.Triad, "Informant"), Interrogator(
+				Sides.Triad, "Interrogator"), Liaison(Sides.Triad, "Liaison"), Silencer(
+				Sides.Triad, "Silencer"), Vanguard(Sides.Triad, "Vanguard"), Amnesiac(
+				Sides.Neutral, "Amnesiac"), Arsonist(Sides.Neutral, "Arsonist"), Auditor(
+				Sides.Neutral, "Auditor"), Cultist(Sides.Neutral, "Cultist"), Executioner(
+				Sides.Neutral, "Executioner"), Jester(Sides.Neutral, "Jester"), Judge(
+				Sides.Neutral, "Judge"), MassMurderer(Sides.Neutral,
+				"MassMurderer"), SerialKiller(Sides.Neutral, "SerialKiller"), Survivor(
+				Sides.Neutral, "Survivor"), Witch(Sides.Neutral, "Witch"), WitchDoctor(
+				Sides.Neutral, "WitchDoctor");
+
+		private Sides side;
+		private String role;
+
+		/**
+		 * Constructor
+		 * 
+		 * @param side
+		 *            : Side of the character
+		 * @param role
+		 *            : Role as a string
+		 */
+		Roles(Sides side, String role) {
+			this.side = side;
+			this.role = role;
+		}
+
+		/**
+		 * 
+		 * @return the side of the character
+		 */
+		public String sideToString() {
+			return side.toString();
+		}
+
+		/**
+		 * Returns role as a string
+		 */
+		public String toString() {
+			return role;
+		}
+
+		/**
+		 * Get the role from string
+		 * 
+		 * @param text
+		 * @return role
+		 */
+		public static Roles fromString(String string) {
+			if (string != null) {
+				for (Roles role : Roles.values()) {
+					if (string.equalsIgnoreCase(role.role)) {
+						return role;
+					}
+				}
+			}
+			return null;
+		}
+	}
+
+	/**
+	 * Enumeration of all the sides in the game.
+	 */
+	public enum Sides {
+		Town("Town"), Mafia("Mafia"), Triad("Triad"), Neutral("Neutral");
+
+		private final String side;
+
+		Sides(String side) {
+			this.side = side;
+		}
+
+		@Override
+		public String toString() {
+			return side;
+		}
+	}
 }
