@@ -41,4 +41,6 @@ public class VoteMechanic_Test {
 		assertFalse(GameEngine.Information.listAlivePlayers().contains("Connie"));
 	}
 
+	
+	
 }

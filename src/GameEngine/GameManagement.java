@@ -142,7 +142,7 @@ public class GameManagement {
 						.makeCharacter(role_list.get(i), alive_players.get(i)));
 				if (role_list.get(i).equals(Roles.Mayor)) {
 					GameVoteEngine.addMayor(alive_players.get(i));
-				}
+				} 
 			}
 			GameTargetEngine.setupTargetMap(new ArrayList<Player>(
 					player_character_map.keySet()));
@@ -237,52 +237,12 @@ public class GameManagement {
 		private static boolean countLynchVote(
 				Map<Player, Character> player_character_map,
 				List<Player> alive_players) {
-			Map<Player, Integer> vote_count = new HashMap<Player, Integer>();
-			Map<Player, Player> vote_map = GameVoteEngine.getVoteMap();
-			List<Player> mayor_list = GameVoteEngine.getMayors();
-			for (Player player : alive_players) {
-				if (!mayor_list.contains(player)) {
-					if (vote_map.get(player) != null) {
-						if (vote_count.containsKey(vote_map.get(player))) {
-							vote_count.put(vote_map.get(player),
-									vote_count.get(vote_map.get(player)) + 1);
-						} else {
-							vote_count.put(vote_map.get(player), 1);
-						}
-					}
-				} else {
-					if (((Mayor) player_character_map.get(player)).isRevealed()) {
-						if (vote_map.get(player) != null) {
-							if (vote_count.containsKey(vote_map.get(player))) {
-								vote_count
-										.put(vote_map.get(player), vote_count
-												.get(vote_map.get(player)) + 3);
-							} else {
-								vote_count.put(vote_map.get(player), 3);
-							}
-						}
-					} else {
-						if (vote_map.get(player) != null) {
-							if (vote_count.containsKey(vote_map.get(player))) {
-								vote_count
-										.put(vote_map.get(player), vote_count
-												.get(vote_map.get(player)) + 1);
-							} else {
-								vote_count.put(vote_map.get(player), 1);
-							}
-						}
-					}
-				}
+			ArrayList<Player> playersToLynch = GameVoteEngine.getLynchTargets(alive_players);
+
+			for(GameRegistration.Player lynch : playersToLynch){
+				alive_players.remove(lynch);
 			}
-			Player most_vote_player = null;
-			int count = 0;
-			for (Player player : vote_count.keySet()) {
-				if (count < vote_count.get(player)) {
-					most_vote_player = player;
-					count = vote_count.get(player);
-				}
-			}
-			alive_players.remove(most_vote_player);
+			
 			return true;
 		}
 	}

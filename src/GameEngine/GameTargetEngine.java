@@ -77,6 +77,7 @@ public class GameTargetEngine {
 		List<Player> mayor_list = GameVoteEngine.getMayors();
 		if (mayor_list.contains(player)) {
 			((Mayor) character).reveal();
+			GameVoteEngine.addRevealedMayor(player);
 			return GameLog.Inputs.MAYOR_REVEALED(player);
 		} else {
 			return GameLog.Inputs.MAYOR_FAIL(player);
