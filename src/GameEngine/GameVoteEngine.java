@@ -7,14 +7,16 @@ import java.util.Map;
 
 import GameEngine.GameRegistration.Player;
 import Resources.GameLog;
+
 /**
  * Game Engine's component for storing votes
  */
 public class GameVoteEngine {
-	
+
 	private static final Map<Player, Player> player_vote_map = new HashMap<Player, Player>();
 	private static List<Player> mayor_list = new ArrayList<Player>();
-	
+	private static final Map<Player, Integer> lynchCount = new HashMap<Player, Integer>();
+
 	/**
 	 * First setup
 	 * 
@@ -23,19 +25,21 @@ public class GameVoteEngine {
 	 */
 	protected static boolean setupVoteMap(List<Player> player_list) {
 		player_vote_map.clear();
-		for(Player player : player_list) {
+		lynchCount.clear();
+		for (Player player : player_list) {
 			player_vote_map.put(player, null);
+			lynchCount.put(player, 0);
 		}
 		return true;
 	}
-	
+
 	/**
 	 * @return player vote map
 	 */
 	protected static Map<Player, Player> getVoteMap() {
 		return player_vote_map;
 	}
-	
+
 	/**
 	 * Add a mayor
 	 * 
@@ -46,14 +50,14 @@ public class GameVoteEngine {
 		mayor_list.add(player);
 		return true;
 	}
-	
+
 	/**
 	 * @return list of mayor(s)
 	 */
 	protected static List<Player> getMayors() {
 		return mayor_list;
 	}
-	
+
 	/**
 	 * Set vote
 	 * 
@@ -62,10 +66,52 @@ public class GameVoteEngine {
 	 * @return appropriate game message string
 	 */
 	protected static String setVote(Player player, Player target) {
-		if(player_vote_map.put(player, target) != null) {
+		if (player_vote_map.put(player, target) != null) {
 			return GameLog.Inputs.VOTE_SUCCESS(player, target);
 		} else {
 			return GameLog.Inputs.VOTE_FAIL(player, target);
+		}
+	}
+
+	/**
+	 * Return Lynch Targets
+	 * 
+	 * @return returns person to be lynched, more than one person if votes tied
+	 */
+	public ArrayList<GameRegistration.Player> getLynchTargets() {
+		ArrayList<GameRegistration.Player> list = new ArrayList<GameRegistration.Player>();
+
+		sumVotes();
+
+		int highestVotes = 0;
+
+		int tempVotes = 0;
+		for (GameRegistration.Player player : lynchCount.keySet()) {
+			tempVotes = lynchCount.get(player);
+			if(tempVotes > highestVotes){
+				highestVotes = tempVotes;
+			}
+		}
+		for(GameRegistration.Player person : lynchCount.keySet()){
+			if(lynchCount.get(person) == highestVotes){
+				list.add(person);
+			}
+		}
+		return list;
+	}
+
+	/*
+	 * Sums all the votes using lynchCount HashMap
+	 */
+	private void sumVotes() {
+		for (GameRegistration.Player player : lynchCount.keySet()) {
+			lynchCount.put(player, 0);
+		}
+
+		for (GameRegistration.Player Key : player_vote_map.keySet()) {
+			GameRegistration.Player vote = player_vote_map.get(Key);
+
+			lynchCount.put(vote, lynchCount.get(vote) + 1);
 		}
 	}
 }
