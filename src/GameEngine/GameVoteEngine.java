@@ -143,4 +143,15 @@ public class GameVoteEngine {
 		}
 	}
 	
+	public String displayVotes(){
+		
+		String list = "";
+		for(GameRegistration.Player nominee : lynchCount.keySet()){
+			if(lynchCount.get(nominee) > 0){
+				list = list + nominee + ": " + lynchCount.get(nominee) + "\n";
+			}
+		}
+		return list;
+	}
+	
 }
