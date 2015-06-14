@@ -3,7 +3,10 @@
 .idea/
 *.iml
 
+.gradle/
+/build/
+
 /bin/
-/target/
+
 .classpath
 .project
