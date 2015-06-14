@@ -1,10 +1,11 @@
-package MafiaMain;
+package org.mobcore.mafia.main;
+
+import org.mobcore.mafia.engine.GameRegistration.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import GameEngine.GameRegistration.Player;
-import Resources.GameLog;
+import org.mobcore.mafia.resouces.GameLog;
 
 /**
  * Shell Commands (formerly Mafia Main) processes commands before they enter

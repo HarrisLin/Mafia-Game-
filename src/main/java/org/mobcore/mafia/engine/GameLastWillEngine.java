@@ -1,11 +1,13 @@
-package GameEngine;
+package org.mobcore.mafia.engine;
+
+import org.mobcore.mafia.engine.GameRegistration.Player;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import GameEngine.GameRegistration.Player;
-import Resources.GameLog;
+import org.mobcore.mafia.resouces.GameLog;
+
 /**
  * Game Engine's component for storing last wills
  */

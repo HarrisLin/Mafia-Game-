@@ -1,19 +1,19 @@
-package GameEngine;
+package org.mobcore.mafia.engine;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import GameEngine.GameRegistration.Player;
-import Resources.GameLog;
+import org.mobcore.mafia.resouces.GameLog;
+
 /**
  * Game Engine's component for storing votes
  */
 public class GameVoteEngine {
 	
-	private static final Map<Player, Player> player_vote_map = new HashMap<Player, Player>();
-	private static List<Player> mayor_list = new ArrayList<Player>();
+	private static final Map<GameRegistration.Player, GameRegistration.Player> player_vote_map = new HashMap<GameRegistration.Player, GameRegistration.Player>();
+	private static List<GameRegistration.Player> mayor_list = new ArrayList<GameRegistration.Player>();
 	
 	/**
 	 * First setup
@@ -21,9 +21,9 @@ public class GameVoteEngine {
 	 * @param player_list
 	 * @return true
 	 */
-	protected static boolean setupVoteMap(List<Player> player_list) {
+	protected static boolean setupVoteMap(List<GameRegistration.Player> player_list) {
 		player_vote_map.clear();
-		for(Player player : player_list) {
+		for(GameRegistration.Player player : player_list) {
 			player_vote_map.put(player, null);
 		}
 		return true;
@@ -32,7 +32,7 @@ public class GameVoteEngine {
 	/**
 	 * @return player vote map
 	 */
-	protected static Map<Player, Player> getVoteMap() {
+	protected static Map<GameRegistration.Player, GameRegistration.Player> getVoteMap() {
 		return player_vote_map;
 	}
 	
@@ -42,7 +42,7 @@ public class GameVoteEngine {
 	 * @param player
 	 * @return true
 	 */
-	protected static boolean addMayor(Player player) {
+	protected static boolean addMayor(GameRegistration.Player player) {
 		mayor_list.add(player);
 		return true;
 	}
@@ -50,7 +50,7 @@ public class GameVoteEngine {
 	/**
 	 * @return list of mayor(s)
 	 */
-	protected static List<Player> getMayors() {
+	protected static List<GameRegistration.Player> getMayors() {
 		return mayor_list;
 	}
 	
@@ -61,7 +61,7 @@ public class GameVoteEngine {
 	 * @param target
 	 * @return appropriate game message string
 	 */
-	protected static String setVote(Player player, Player target) {
+	protected static String setVote(GameRegistration.Player player, GameRegistration.Player target) {
 		if(player_vote_map.put(player, target) != null) {
 			return GameLog.Inputs.VOTE_SUCCESS(player, target);
 		} else {

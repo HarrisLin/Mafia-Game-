@@ -1,12 +1,13 @@
-package Character;
+package org.mobcore.mafia.character;
+
+import org.mobcore.mafia.character.CharacterFactory.Roles;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import Character.CharacterFactory.Roles;
-import GameEngine.GameRegistration.Player;
-import Resources.GameLog;
+import org.mobcore.mafia.resouces.GameLog;
+import org.mobcore.mafia.engine.GameRegistration.Player;
 
 public class Investigator extends Character {
 

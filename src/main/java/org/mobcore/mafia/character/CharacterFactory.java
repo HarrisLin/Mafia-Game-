@@ -1,6 +1,6 @@
-package Character;
+package org.mobcore.mafia.character;
 
-import GameEngine.GameRegistration.Player;
+import org.mobcore.mafia.engine.GameRegistration.Player;
 
 public class CharacterFactory {
 	public static Character makeCharacter(Roles role, Player player) {
@@ -210,8 +210,8 @@ public class CharacterFactory {
 		/**
 		 * Get the role from string
 		 * 
-		 * @param text
-		 * @return role
+		 * @param string of a role
+		 * @return role of the strings
 		 */
 		public static Roles fromString(String string) {
 			if (string != null) {

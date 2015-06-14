@@ -1,17 +1,13 @@
-package GameEngine;
+package org.mobcore.mafia.engine;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.mobcore.mafia.character.Character;
+import org.mobcore.mafia.character.CharacterFactory;
+import org.mobcore.mafia.character.Mayor;
 
-import Character.Character;
-import Character.CharacterFactory;
-import Character.CharacterFactory.Roles;
-import Character.Mayor;
-import GameEngine.GameRegistration.Player;
-import Resources.GameLog;
+import java.util.*;
+
+import org.mobcore.mafia.resouces.GameLog;
+import org.mobcore.mafia.engine.GameRegistration.Player;
 
 /**
  * Game Engine's component for game management
@@ -26,7 +22,7 @@ public class GameManagement {
 	 * @param alive_characters
 	 * @return appropriate game message string
 	 */
-	protected static String startGame(List<Roles> role_list,
+	protected static String startGame(List<CharacterFactory.Roles> role_list,
 			Map<Player, Character> player_character_map,
 			List<Player> alive_players) {
 		if (Management.assignAllCharacters(role_list, player_character_map,
@@ -38,7 +34,7 @@ public class GameManagement {
 	}
 
 	// for testing purposes ***will be removed**
-	protected static String startGame(List<Roles> role_list,
+	protected static String startGame(List<CharacterFactory.Roles> role_list,
 			Map<Player, Character> player_character_map,
 			List<Player> alive_players, int option) {
 		if (Management.assignAllCharacters(role_list, player_character_map,
@@ -104,7 +100,7 @@ public class GameManagement {
 		 * @param alive_characters
 		 * @return true if success, else false
 		 */
-		private static boolean assignAllCharacters(List<Roles> role_list,
+		private static boolean assignAllCharacters(List<CharacterFactory.Roles> role_list,
 				Map<Player, Character> player_character_map,
 				List<Player> alive_players) {
 			alive_players.clear();
@@ -114,7 +110,7 @@ public class GameManagement {
 			for (int i = 0; i < alive_players.size(); i++) {
 				player_character_map.put(alive_players.get(i), CharacterFactory
 						.makeCharacter(role_list.get(i), alive_players.get(i)));
-				if (role_list.get(i).equals(Roles.Mayor)) {
+				if (role_list.get(i).equals(CharacterFactory.Roles.Mayor)) {
 					GameVoteEngine.addMayor(alive_players.get(i));
 				}
 			}
@@ -128,7 +124,7 @@ public class GameManagement {
 		}
 
 		// For testing purposes
-		private static boolean assignAllCharacters(List<Roles> role_list,
+		private static boolean assignAllCharacters(List<CharacterFactory.Roles> role_list,
 				Map<Player, Character> player_character_map,
 				List<Player> alive_players, int option) {
 			alive_players.clear();
@@ -140,7 +136,7 @@ public class GameManagement {
 			for (int i = 0; i < alive_players.size(); i++) {
 				player_character_map.put(alive_players.get(i), CharacterFactory
 						.makeCharacter(role_list.get(i), alive_players.get(i)));
-				if (role_list.get(i).equals(Roles.Mayor)) {
+				if (role_list.get(i).equals(CharacterFactory.Roles.Mayor)) {
 					GameVoteEngine.addMayor(alive_players.get(i));
 				}
 			}

@@ -1,14 +1,15 @@
-package GameEngine;
+package org.mobcore.mafia.engine;
+
+import org.mobcore.mafia.character.Character;
+import org.mobcore.mafia.character.Mayor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import Character.Character;
-import Character.Mayor;
-import GameEngine.GameRegistration.Player;
-import Resources.GameLog;
+import org.mobcore.mafia.resouces.GameLog;
+import org.mobcore.mafia.engine.GameRegistration.Player;
 
 /**
  * Game Engine's component for storing night actions

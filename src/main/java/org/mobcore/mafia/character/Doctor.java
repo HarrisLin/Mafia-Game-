@@ -1,15 +1,14 @@
-package Character;
+package org.mobcore.mafia.character;
 
 import java.util.List;
 
-import Character.CharacterFactory.Roles;
-import GameEngine.GameRegistration.Player;
-import Resources.GameLog;
+import org.mobcore.mafia.resouces.GameLog;
+import org.mobcore.mafia.engine.GameRegistration.Player;
 
 public class Doctor extends Character {
 
 	protected Doctor(Player player) {
-		super(Roles.Doctor, player);
+		super(CharacterFactory.Roles.Doctor, player);
 	}
 
 	@Override

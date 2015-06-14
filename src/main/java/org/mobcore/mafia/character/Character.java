@@ -1,10 +1,11 @@
-package Character;
+package org.mobcore.mafia.character;
+
+import org.mobcore.mafia.character.CharacterFactory.Roles;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import Character.CharacterFactory.Roles;
-import GameEngine.GameRegistration.Player;
+import org.mobcore.mafia.engine.GameRegistration.Player;
 
 /**
  * Character in the game
@@ -17,8 +18,8 @@ public abstract class Character {
 	/**
 	 * Constructor
 	 * 
-	 * @param role
-	 * @param player
+	 * @param role of player
+	 * @param player class
 	 */
 	protected Character(Roles role, Player player) {
 		this.role = role;

@@ -1,9 +1,10 @@
-package GameEngine;
+package org.mobcore.mafia.engine;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-import Resources.GameLog;
+import org.mobcore.mafia.resouces.GameLog;
 
 /**
  * Game Engine's component for game registration
@@ -15,8 +16,6 @@ public class GameRegistration {
 	/**
 	 * Registers a player in the game
 	 * 
-	 * @param in
-	 *            game status
 	 * @param name
 	 *            of player
 	 * @return appropriate game message string
@@ -90,7 +89,7 @@ public class GameRegistration {
 	/**
 	 * Get player with name (TESTING ONLY)
 	 * 
-	 * @param name
+	 * @param name of player
 	 * @return player if valid, else null
 	 */
 	// For testing purposes. Not to be used anywhere else in the code.

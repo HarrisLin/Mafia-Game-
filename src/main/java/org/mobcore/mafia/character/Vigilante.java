@@ -1,17 +1,16 @@
-package Character;
+package org.mobcore.mafia.character;
 
 import java.util.List;
 
-import Character.CharacterFactory.Roles;
-import GameEngine.GameRegistration.Player;
-import Resources.GameLog;
+import org.mobcore.mafia.resouces.GameLog;
+import org.mobcore.mafia.engine.GameRegistration.Player;
 
 public class Vigilante extends Character {
 
 	private int shots;
 
 	protected Vigilante(Player player) {
-		super(Roles.Vigilante, player);
+		super(CharacterFactory.Roles.Vigilante, player);
 		shots = 3;
 	}
 
