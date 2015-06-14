@@ -16,10 +16,21 @@ public class ShellCommands {
 	List<Player> player_list = new ArrayList<Player>();
 	boolean in_game;
 
-	public static int main(String[] args) {
-		if (args.length < 2) {
+	public static void main(String[] args) {
+
+		System.out.println("\nDid you successfully package this with maven and execute the .jar file?");
+		System.out.println("If you did, good for you!\n");
+
+		if (args.length < 1) {
 			GameLog.CommandFilter.BAD_LENGTH();
-			return GameLog.exit_number;
+			return;
+		}
+		else {
+			System.out.println("This is what you entered: ");
+			for(int i=0; i<args.length; i++) {
+				System.out.println(args[i]);
+			}
+			System.out.printf("\n");
 		}
 		CLInput CLICommand = CLInput.fromString(args[1]);
 		
@@ -64,7 +75,7 @@ public class ShellCommands {
 			break;
 		}
 
-		return GameLog.exit_number;
+		return;
 	}
 
 	public enum CLInput {
