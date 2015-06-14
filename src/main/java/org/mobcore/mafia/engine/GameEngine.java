@@ -2,6 +2,7 @@ package org.mobcore.mafia.engine;
 
 import org.mobcore.mafia.character.Character;
 import org.mobcore.mafia.character.CharacterFactory.Roles;
+import org.mobcore.mafia.engine.GameRegistration.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,8 +20,8 @@ import java.util.Map;
  */
 public class GameEngine {
 
-	private static final Map<GameRegistration.Player, Character> player_character_map = new HashMap<GameRegistration.Player, Character>();
-	private static final List<GameRegistration.Player> alive_players = new ArrayList<GameRegistration.Player>();
+	private static final Map<Player, Character> player_character_map = new HashMap<Player, Character>();
+	private static final List<Player> alive_players = new ArrayList<Player>();
 
 	/**
 	 * 1. Game Registration
@@ -179,7 +180,7 @@ public class GameEngine {
 		 * @param lastwill
 		 * @return appropriate game message string
 		 */
-		public static String updateLastWill(GameRegistration.Player player, String lastwill) {
+		public static String updateLastWill(Player player, String lastwill) {
 			return GameLastWillEngine.updateLastWill(player, lastwill);
 		}
 
@@ -190,7 +191,7 @@ public class GameEngine {
 		 * @param target
 		 * @return appropriate game message string
 		 */
-		public static String setVote(GameRegistration.Player player, GameRegistration.Player target) {
+		public static String setVote(Player player, Player target) {
 			return GameVoteEngine.setVote(player, target);
 		}
 
@@ -201,7 +202,7 @@ public class GameEngine {
 		 * @param target
 		 * @return appropriate game message string
 		 */
-		public static String setTarget(GameRegistration.Player player, GameRegistration.Player target) {
+		public static String setTarget(Player player, Player target) {
 			return GameTargetEngine.setTarget(player, target);
 		}
 
@@ -213,8 +214,8 @@ public class GameEngine {
 		 * @param target2
 		 * @return appropriate game message string
 		 */
-		public static String setTarget(GameRegistration.Player player, GameRegistration.Player target1,
-				GameRegistration.Player target2) {
+		public static String setTarget(Player player, Player target1,
+				Player target2) {
 			return GameTargetEngine.setTarget(player, target1, target2);
 		}
 
@@ -224,7 +225,7 @@ public class GameEngine {
 		 * @param player
 		 * @return appropriate game message string
 		 */
-		public static String revealMayor(GameRegistration.Player player) {
+		public static String revealMayor(Player player) {
 			Character character = player_character_map.get(player);
 			return GameTargetEngine.revealMayor(player, character);
 		}
@@ -236,7 +237,7 @@ public class GameEngine {
 		 * @param target
 		 * @return appropriate game message string
 		 */
-		public static String tauntPlayer(GameRegistration.Player player, GameRegistration.Player target) {
+		public static String tauntPlayer(Player player, Player target) {
 			return null;
 		}
 	}
@@ -280,7 +281,7 @@ public class GameEngine {
 		 * @param player
 		 * @return appropriate game message string
 		 */
-		public static String showLastWill(GameRegistration.Player player) {
+		public static String showLastWill(Player player) {
 			return null;
 		}
 
@@ -289,7 +290,7 @@ public class GameEngine {
 		 * 
 		 * @return appropriate game message string
 		 */
-		public static String showVote(GameRegistration.Player player) {
+		public static String showVote(Player player) {
 			return null;
 		}
 
@@ -298,7 +299,7 @@ public class GameEngine {
 		 * 
 		 * @return appropriate game message string
 		 */
-		public static String showTarget(GameRegistration.Player player) {
+		public static String showTarget(Player player) {
 			return null;
 		}
 
@@ -307,7 +308,7 @@ public class GameEngine {
 		 * 
 		 * @return appropriate game message string
 		 */
-		public static String showTaunt(GameRegistration.Player player) {
+		public static String showTaunt(Player player) {
 			return null;
 		}
 
@@ -325,7 +326,7 @@ public class GameEngine {
 		 * 
 		 * @return appropriate game message string
 		 */
-		public static String showResult(GameRegistration.Player player) {
+		public static String showResult(Player player) {
 			return GameInformation.showResult(player_character_map, player);
 		}
 
@@ -335,7 +336,7 @@ public class GameEngine {
 		 * @param player
 		 * @return appropriate game message string
 		 */
-		public static String showRole(GameRegistration.Player player) {
+		public static String showRole(Player player) {
 			return GameInformation.showRole(player_character_map, player);
 		}
 
@@ -345,7 +346,7 @@ public class GameEngine {
 		 * @param player
 		 * @return appropriate game message string
 		 */
-		public static String showShotsLeft(GameRegistration.Player player) {
+		public static String showShotsLeft(Player player) {
 			return null;
 		}
 
