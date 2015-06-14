@@ -1,17 +1,17 @@
 package org.mobcore.mafia.character;
 
 import org.mobcore.mafia.engine.GameRegistration.Player;
+import org.mobcore.mafia.character.CharacterFactory.Roles;
+import org.mobcore.mafia.resouces.GameLog;
 
 import java.util.List;
-
-import org.mobcore.mafia.resouces.GameLog;
 
 public class Mayor extends Character {
 	private boolean revealed;
 	private final int vote_count;
 	
 	protected Mayor(Player player) {
-		super(CharacterFactory.Roles.Mayor, player);
+		super(Roles.Mayor, player);
 		result = GameLog.Character.MAYOR_NOT_REVEALED(player);
 		revealed = false;
 		vote_count = 3;

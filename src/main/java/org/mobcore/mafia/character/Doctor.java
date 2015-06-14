@@ -1,9 +1,10 @@
 package org.mobcore.mafia.character;
 
-import java.util.List;
-
-import org.mobcore.mafia.resouces.GameLog;
 import org.mobcore.mafia.engine.GameRegistration.Player;
+import org.mobcore.mafia.character.CharacterFactory.Roles;
+import org.mobcore.mafia.resouces.GameLog;
+
+import java.util.List;
 
 public class Doctor extends Character {
 

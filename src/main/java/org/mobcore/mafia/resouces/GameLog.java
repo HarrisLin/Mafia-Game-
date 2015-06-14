@@ -9,7 +9,7 @@ import org.mobcore.mafia.engine.GameRegistration.Player;
 /**
  * The GameMessage class stores all messages used in the game.
  */
-public class  GameLog {
+public class GameLog {
 
 	/**
 	 * Depending on which type of message is produced, there is an exit number
