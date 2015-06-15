@@ -1,0 +1,13 @@
+repositories {
+    mavenCentral()
+}
+
+apply plugin: "java"
+
+dependencies {
+    testCompile 'junit:junit:4.11'
+}
+
+jar {
+    manifest.attributes "Main-Class": "org.mobcore.mafia.main.ShellCommands"
+}
